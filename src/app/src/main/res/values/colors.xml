@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="warning">#FFC107</color>
     <color name="success">#8BC34A</color>
+    <color name="violet">#E6E6FA</color>
 </resources>
