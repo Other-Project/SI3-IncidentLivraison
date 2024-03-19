@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Livraison</string>
     <string name="welcome_message">Bienvenue sur Livraison !</string>
     <string name="client_text">Client</string>
     <string name="livreur_text">Livreur</string>
