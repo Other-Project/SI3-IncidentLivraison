@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Livraison</string>
+    <string name="delivery_issue">Problème avec la livraison</string>
 </resources>
