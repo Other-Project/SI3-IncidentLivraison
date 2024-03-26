@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Livraison</string>
+    <string name="delivery_issue">Problème avec la livraison</string>
     <string name="welcome_message">Bienvenue sur Livraison !</string>
     <string name="client_text">Client</string>
     <string name="livreur_text">Livreur</string>
@@ -8,4 +9,7 @@
     <string name="client_icon_description">Icone du Client</string>
     <string name="livreur_icon_description">Icone du Livreur</string>
     <string name="service_client_icon_description">Icone du service client</string>
+    <string name="deliveries_map">Livraison en cours</string>
+    <string name="next_delivery">Prochaines Livraisons</string>
+    <string name="next_delivery_distance">%.2f km</string>
 </resources>
