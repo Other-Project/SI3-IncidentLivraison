@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "613428399647",
+    "project_id": "livraison-8c71a",
+    "storage_bucket": "livraison-8c71a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613428399647:android:bcd314dd67651a8f668f2a",
+        "android_client_info": {
+          "package_name": "edu.ihm.td1.livraison"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7wW108NmgNhlayoWNccmHC9pPz4BaXrY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
