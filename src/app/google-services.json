@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614949056122",
+    "project_id": "livraison-fe555",
+    "storage_bucket": "livraison-fe555.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614949056122:android:8c2da0e12d89e139b115c3",
+        "android_client_info": {
+          "package_name": "edu.ihm.td1.livraison"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_RMdejmhY2q5H4eoa2eMDMmPgwfuYyNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

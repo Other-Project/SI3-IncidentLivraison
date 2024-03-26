@@ -9,4 +9,7 @@
     <string name="client_icon_description">Icone du Client</string>
     <string name="livreur_icon_description">Icone du Livreur</string>
     <string name="service_client_icon_description">Icone du service client</string>
+    <string name="deliveries_map">Livraison en cours</string>
+    <string name="next_delivery">Prochaines Livraisons</string>
+    <string name="next_delivery_distance">%.2f km</string>
 </resources>
