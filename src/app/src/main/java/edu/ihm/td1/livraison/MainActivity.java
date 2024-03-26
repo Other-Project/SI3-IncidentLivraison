@@ -1,5 +1,8 @@
 package edu.ihm.td1.livraison;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -9,7 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
+    public final String TAF = "fred" + getClass().getSimpleName();
+    public final static String CHANNEL_ID = "freds's channel";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +24,14 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        setContentView((R.layout.activity_main));
+        String channelName = "freds's channel";
+        NotificationChannel channel = null;
+        //create channel
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            channel = new NotificationChannel(CHANNEL_ID,channelName, NotificationManager.IMPORTANCE_DEFAULT);
+        }
+
     }
 }
