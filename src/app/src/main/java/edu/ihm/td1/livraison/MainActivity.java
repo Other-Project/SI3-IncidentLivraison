@@ -3,19 +3,27 @@ package edu.ihm.td1.livraison;
 import android.content.Intent;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class MainActivity extends AppCompatActivity {
-    public final String TAF = "fred" + getClass().getSimpleName();
-    public final static String CHANNEL_ID = "freds's channel";
+    public final String TAG = "Livraison" + getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
         ImageButton deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
 
-        setContentView((R.layout.activity_main));
-        String channelName = "freds's channel";
-        NotificationChannel channel = null;
-        //create channel
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            channel = new NotificationChannel(CHANNEL_ID,channelName, NotificationManager.IMPORTANCE_DEFAULT);
-        }
+
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.d(TAG, "erreur");
+            } else {
+                //((TextView) findViewById(R.id.token)).setText("token = " + task.getResult());
+                Log.d(TAG, "Token reçu");
+                //task.getResult() => dans le log de base
+            }
+        });
 
     }
 }
