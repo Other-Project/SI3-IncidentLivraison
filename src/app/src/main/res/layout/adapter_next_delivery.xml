@@ -30,6 +30,7 @@
     </RelativeLayout>
 
     <ImageButton
+        android:id="@+id/delivery_issue"
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
@@ -39,10 +40,11 @@
         android:src="@drawable/warning" />
 
     <ImageButton
+        android:id="@+id/delivery_done"
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:background="#0000"
-        android:contentDescription="@string/delivery_issue"
+        android:contentDescription="@string/delivery_done"
         android:scaleType="fitCenter"
         android:src="@drawable/check" />
 
