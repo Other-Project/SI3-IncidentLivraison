@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DeliveryAdapter extends BaseAdapter {
     private final List<Delivery> list;
@@ -39,9 +41,27 @@ public class DeliveryAdapter extends BaseAdapter {
         Delivery element = list.get(position);
 
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
-        String s = res.getString(R.string.next_delivery_distance);
-        layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(s, element.getDistance(0, 0)));
+        layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(res.getString(R.string.next_delivery_distance), element.getDistance(0, 0)));
+
+        layoutItem.<ImageButton>findViewById(R.id.delivery_issue).setOnClickListener(view -> {
+            if (onDeliveryIssue != null) onDeliveryIssue.accept(element);
+        });
+
+        layoutItem.<ImageButton>findViewById(R.id.delivery_done).setOnClickListener(view -> {
+            if (onDeliveryDone != null) onDeliveryDone.accept(element);
+        });
 
         return layoutItem;
+    }
+
+    private Consumer<Delivery> onDeliveryDone;
+    private Consumer<Delivery> onDeliveryIssue;
+
+    public void setOnDeliveryDone(Consumer<Delivery> onDeliveryDone) {
+        this.onDeliveryDone = onDeliveryDone;
+    }
+
+    public void setOnDeliveryIssue(Consumer<Delivery> onDeliveryIssue) {
+        this.onDeliveryIssue = onDeliveryIssue;
     }
 }
