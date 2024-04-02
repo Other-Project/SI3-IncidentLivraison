@@ -8,23 +8,18 @@
     android:minHeight="?attr/actionBarSize"
     android:theme="?attr/actionBarTheme">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="44dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/icon"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/client_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="10dp"
         android:text="Eva Zion"
-        android:textSize="30dp"
-        android:textColor="@color/black"/>
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:drawablePadding="8dp"
+        app:drawableStartCompat="@drawable/icon" />
 
     <ImageView
         android:id="@+id/menu"
