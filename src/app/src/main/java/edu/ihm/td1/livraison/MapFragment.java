@@ -30,10 +30,12 @@ public class MapFragment extends Fragment {
                 PreferenceManager.getDefaultSharedPreferences(getContext()));
         map = rootView.findViewById(R.id.map);
         map.setTileSource( TileSourceFactory.MAPNIK ); //render
-        map.setBuiltInZoomControls( true ); //zoomable
+        map.setBuiltInZoomControls( true ); // TODO: delete this for the demo
+        map.setMultiTouchControls(true); // zoomable with 2 fingers
         GeoPoint startPoint = new GeoPoint( 43.61, 7.07);
         IMapController mapController = map.getController();
         mapController.setZoom( 18.0 );
+
         mapController.setCenter(startPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<>();
