@@ -10,6 +10,7 @@ constraintlayout = "2.1.4"
 playServicesMaps = "18.2.0"
 googleServices = "4.4.1"
 firebaseAuth = "22.3.1"
+osmdroid = "6.0.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,6 +23,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
