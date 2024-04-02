@@ -12,8 +12,8 @@ import java.util.List;
 
 public class CommandListActivity extends AppCompatActivity {
 
-    List<Command> commandeList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora", R.drawable.sac, false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false)));
-    List<Command> finishedCommandList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora Taille Adulte", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true)));
+    List<Command> commandeList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora", R.drawable.sac, false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false)));
+    List<Command> finishedCommandList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora Taille Adulte", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true)));
     ListView pendingListView;
     ListView finishedListView;
     @Override
