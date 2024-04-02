@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.play.services.maps)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.messaging)
     implementation(libs.osmdroid.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

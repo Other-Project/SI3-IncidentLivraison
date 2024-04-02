@@ -1,5 +1,7 @@
 package edu.ihm.td1.livraison;
 
+import androidx.annotation.NonNull;
+
 import java.util.Random;
 
 public class Delivery {
@@ -15,5 +17,11 @@ public class Delivery {
 
     public double getDistance(double currentLat, double currentLong) {
         return new Random().nextDouble() * 10;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return address;
     }
 }
