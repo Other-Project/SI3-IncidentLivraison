@@ -32,15 +32,14 @@ public class MapFragment extends Fragment {
         map.setTileSource( TileSourceFactory.MAPNIK ); //render
         map.setBuiltInZoomControls( true ); // TODO: delete this for the demo
         map.setMultiTouchControls(true); // zoomable with 2 fingers
-        GeoPoint startPoint = new GeoPoint( 43.61, 7.07);
+        GeoPoint startPoint = new GeoPoint( 43.61567, 7.07177);
         IMapController mapController = map.getController();
         mapController.setZoom( 18.0 );
-
         mapController.setCenter(startPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<>();
         OverlayItem home = new OverlayItem( "Polytech", "Polytech school", startPoint);
-        // Drawable m = home.get
+        items.add(home);
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
                 items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
