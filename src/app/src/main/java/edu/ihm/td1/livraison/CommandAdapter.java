@@ -40,8 +40,10 @@ public class CommandAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.command_list_item, null);
         TextView textView = (TextView) convertView.findViewById(R.id.textView);
         ImageView commandImg = (ImageView)convertView.findViewById(R.id.image);
+        ImageView deliveredImg = (ImageView)convertView.findViewById(R.id.logo);
         textView.setText(commandes.get(position).getDescription());
         commandImg.setImageResource(commandes.get(position).getImage());
+        deliveredImg.setImageResource(commandes.get(position).getDelivered() ? R.drawable.check : R.drawable.sablier);
         return convertView;
 
     }
