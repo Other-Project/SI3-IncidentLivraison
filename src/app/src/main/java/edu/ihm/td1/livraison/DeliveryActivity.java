@@ -20,6 +20,12 @@ public class DeliveryActivity extends AppCompatActivity {
         deliveries.add(new Delivery("435 Rue du Chemin, Valbonne 06560"));
         deliveries.add(new Delivery("25 avenue de l’église, Biot 06510"));
         deliveries.add(new Delivery("1 bis rue de l’étoile, Antibes 06600"));
+        deliveries.add(new Delivery("435 Rue du Chemin, Valbonne 06560"));
+        deliveries.add(new Delivery("25 avenue de l’église, Biot 06510"));
+        deliveries.add(new Delivery("1 bis rue de l’étoile, Antibes 06600"));
+        deliveries.add(new Delivery("435 Rue du Chemin, Valbonne 06560"));
+        deliveries.add(new Delivery("25 avenue de l’église, Biot 06510"));
+        deliveries.add(new Delivery("1 bis rue de l’étoile, Antibes 06600"));
 
         DeliveryAdapter deliveryAdapter = new DeliveryAdapter(getApplicationContext(), deliveries);
         deliveryAdapter.setOnDeliveryDone(delivery -> {

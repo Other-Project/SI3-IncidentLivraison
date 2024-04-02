@@ -103,9 +103,8 @@
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/icone_service_client"
+        app:layout_constraintStart_toStartOf="@id/icone_service_client"
         app:layout_constraintTop_toBottomOf="@+id/icone_service_client"
         app:layout_constraintVertical_bias="0.0" />
 
