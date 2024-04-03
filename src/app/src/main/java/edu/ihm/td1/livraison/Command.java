@@ -1,6 +1,12 @@
 package edu.ihm.td1.livraison;
 
-public class Command {
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Command implements Parcelable{
 
     private String description;
     private int id;
@@ -28,5 +34,20 @@ public class Command {
 
     public Boolean getDelivered() {
         return delivered;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(description);
+        dest.writeInt(id);
+        dest.writeInt(image);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            dest.writeBoolean(delivered);
+        }
     }
 }
