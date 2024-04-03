@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,7 +54,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="40dp"
         app:layout_constraintTop_toBottomOf="@id/commandelayout"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@id/fragmentPicture"
         android:background="@color/grey"
         android:gravity="top"
         android:inputType="textMultiLine"
@@ -62,32 +63,13 @@
         android:padding="30dp"
         android:hint="Décrivez votre problème ... "/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal"
+        android:name="edu.ihm.td1.livraison.PictureFragment"
+        android:layout_height="0dp"
+        android:id="@+id/fragmentPicture"
         app:layout_constraintTop_toBottomOf="@id/textInputEditText"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="50dp"
-        app:flow_horizontalGap="10dp">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ajouter_une_photo"
-            android:layout_marginHorizontal="10dp"/>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/envoyer"
-            android:layout_marginHorizontal="10dp" />
-    </LinearLayout>
+        android:layout_marginVertical="40dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
