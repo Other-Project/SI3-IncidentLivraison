@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         ImageButton deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
 
+        ImageButton clientButton = findViewById(R.id.icone_client);
+        clientButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), CommandListActivity.class)));
 
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
