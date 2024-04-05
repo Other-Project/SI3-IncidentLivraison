@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Livraison"
         tools:targetApi="31">
         <activity
+            android:name=".CommandListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
