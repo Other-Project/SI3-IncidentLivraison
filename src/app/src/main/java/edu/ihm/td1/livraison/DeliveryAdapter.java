@@ -6,16 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DeliveryAdapter extends BaseAdapter {
-    private final List<Delivery> list;
+    private final List<Order> list;
     private final Context context;
     private final LayoutInflater mInflater;
 
-    public DeliveryAdapter(Context context, List<Delivery> list) {
+    public DeliveryAdapter(Context context, List<Order> list) {
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(this.context);
@@ -36,12 +38,30 @@ public class DeliveryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View layoutItem = (convertView == null ? mInflater.inflate(R.layout.adapter_next_delivery, parent, false) : convertView);
         Resources res = context.getResources();
-        Delivery element = list.get(position);
+        Order element = list.get(position);
 
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
-        String s = res.getString(R.string.next_delivery_distance);
-        layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(s, element.getDistance(0, 0)));
+        layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(res.getString(R.string.next_delivery_distance), element.getDistance(0, 0)));
+
+        layoutItem.<ImageButton>findViewById(R.id.delivery_issue).setOnClickListener(view -> {
+            if (onDeliveryIssue != null) onDeliveryIssue.accept(element);
+        });
+
+        layoutItem.<ImageButton>findViewById(R.id.delivery_done).setOnClickListener(view -> {
+            if (onDeliveryDone != null) onDeliveryDone.accept(element);
+        });
 
         return layoutItem;
+    }
+
+    private Consumer<Order> onDeliveryDone;
+    private Consumer<Order> onDeliveryIssue;
+
+    public void setOnDeliveryDone(Consumer<Order> onDeliveryDone) {
+        this.onDeliveryDone = onDeliveryDone;
+    }
+
+    public void setOnDeliveryIssue(Consumer<Order> onDeliveryIssue) {
+        this.onDeliveryIssue = onDeliveryIssue;
     }
 }

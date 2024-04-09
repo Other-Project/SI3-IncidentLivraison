@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Livraison</string>
+    <string name="titlePendingDeliveries">Livraisons en cours : </string>
+    <string name="titleFinishedDeliveries">Livraisons terminées : </string>
     <string name="delivery_issue">Problème avec la livraison</string>
+    <string name="delivery_done">Livraison effectuée</string>
     <string name="welcome_message">Bienvenue sur Livraison !</string>
     <string name="client_text">Client</string>
     <string name="livreur_text">Livreur</string>
