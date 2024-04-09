@@ -22,6 +22,9 @@
             android:name=".CommandListActivity"
             android:exported="false" />
         <activity
+            android:name=".CalendarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
