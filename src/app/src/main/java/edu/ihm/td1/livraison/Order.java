@@ -9,6 +9,7 @@ import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Order implements Parcelable {
 
@@ -51,7 +52,10 @@ public class Order implements Parcelable {
     }
 
     public GeoPoint getPosition() {
-        return new GeoPoint(0.0, 0.0);
+        Random random1 = new Random();
+        double latitude = random1.nextDouble() * (43.61567 - 43.57398) + 43.57398;
+        double longitude = random1.nextDouble() * (7.11664 - 7.07177) + 7.07177;
+        return new GeoPoint(latitude, longitude);
     }
 
     public double getDistance(double currentLat, double currentLong) {

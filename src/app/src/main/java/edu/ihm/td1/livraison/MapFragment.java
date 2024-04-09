@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.osmdroid.api.IMapController;
@@ -19,9 +20,18 @@ import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapFragment extends Fragment {
     private MapView map;
+    private List<Order> collection = new ArrayList<>();
+    private CommandAdapter adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new CommandAdapter(getContext(), collection);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +48,11 @@ public class MapFragment extends Fragment {
         mapController.setCenter(startPoint);
 
         ArrayList<OverlayItem> items = new ArrayList<>();
-        OverlayItem home = new OverlayItem( "Polytech", "Polytech school", startPoint);
-        items.add(home);
+        int i = 1;
+        for (Order order : collection) {
+            items.add(new OverlayItem("Livraison n°" + i, order.getAddress(), order.getPosition()));
+            i++;
+        }
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
                 items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
@@ -69,6 +82,14 @@ public class MapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         map.onResume();
+    }
+
+    public void notifyCollectionReady(){
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            collection.addAll((ArrayList<Order>) bundle.get("list"));
+            adapter.notifyDataSetChanged();
+        }
     }
 
 

@@ -14,7 +14,7 @@ import java.util.List;
 public class ListFragment extends Fragment {
 
     private List<Order> collection = new ArrayList<>();
-    private CommandAdapter adapter;;
+    private CommandAdapter adapter;
 
     public ListFragment(){}
 
