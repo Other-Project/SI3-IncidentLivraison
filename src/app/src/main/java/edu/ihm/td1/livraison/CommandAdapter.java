@@ -13,9 +13,10 @@ import java.util.List;
 public class CommandAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Command> commandes;
+    private List<Order> commandes;
     private LayoutInflater inflater;
-    public CommandAdapter(Context ctx, List<Command> list){
+
+    public CommandAdapter(Context ctx, List<Order> list) {
         context = ctx;
         commandes = list;
         inflater = LayoutInflater.from(ctx);

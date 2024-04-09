@@ -1,16 +1,10 @@
 package edu.ihm.td1.livraison;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +13,7 @@ import java.util.List;
 
 public class ListFragment extends Fragment {
 
-    private List<Command> collection = new ArrayList<>();
+    private List<Order> collection = new ArrayList<>();
     private CommandAdapter adapter;;
 
     public ListFragment(){}
@@ -34,7 +28,7 @@ public class ListFragment extends Fragment {
     public void notifyCollectionReady(){
         Bundle bundle = getArguments();
         if (bundle != null) {
-            collection.addAll((ArrayList<Command>)bundle.get("list"));
+            collection.addAll((ArrayList<Order>) bundle.get("list"));
             adapter.notifyDataSetChanged();
         }
     }
