@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/toolbar"
+        android:name="edu.ihm.td1.livraison.Toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/image_profile"
+        android:layout_width="158dp"
+        android:layout_height="151dp"
+        app:srcCompat="@drawable/icon"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="102dp"
+        android:contentDescription="Image de profile"
+        android:layout_marginTop="90dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/image_profile"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/prenom"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="50px">
+        <EditText
+            android:id="@+id/prenom_edit"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Eva"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="205dp"
+            android:layout_marginTop="45dp"
+            android:hint="Prénom" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/prenom"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/nom"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="50px">
+        <EditText
+            app:layout_constraintTop_toBottomOf="@id/prenom"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/nom_edit"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Zion"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="205dp"
+            android:hint="Nom"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/nom"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/email"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="50px">
+        <EditText
+            app:layout_constraintTop_toBottomOf="@id/nom"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/email_edit"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:text="eva@gmail.com"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="371dp"
+            android:hint="Email"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/email"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/adress"
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="50px">
+        <EditText
+            android:id="@+id/adress_edit"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Adresse"
+            android:inputType="textPostalAddress"
+            android:text="54 rue des feuilles"
+            app:helperText="adresse"
+            app:helperTextEnabled="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="429dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="25dp"
+        android:text="Enregistrer les modifications"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adress" />
+</androidx.constraintlayout.widget.ConstraintLayout>
