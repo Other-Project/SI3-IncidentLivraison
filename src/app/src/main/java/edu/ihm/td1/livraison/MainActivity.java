@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        startActivity(new Intent(getApplicationContext(), ReportCommandActivity.class));
 
         ImageButton deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
@@ -50,6 +52,5 @@ public class MainActivity extends AppCompatActivity {
                 //task.getResult() => dans le log de base
             }
         });
-
     }
 }
