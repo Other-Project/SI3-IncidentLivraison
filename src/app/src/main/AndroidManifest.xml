@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,12 +25,6 @@
         android:theme="@style/Theme.Livraison"
         tools:targetApi="31">
         <activity
-            android:name=".ReportCommandActivity"
-            android:exported="false"/>
-      <activity
-            android:name=".CommandListActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -40,6 +36,13 @@
         </activity>
         <activity android:name=".DeliveryActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".ReportCommandActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommandListActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
