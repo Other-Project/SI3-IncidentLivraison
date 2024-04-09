@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class DeliveryAdapter extends BaseAdapter {
-    private final List<Delivery> list;
+    private final List<Order> list;
     private final Context context;
     private final LayoutInflater mInflater;
 
-    public DeliveryAdapter(Context context, List<Delivery> list) {
+    public DeliveryAdapter(Context context, List<Order> list) {
         this.context = context;
         this.list = list;
         mInflater = LayoutInflater.from(this.context);
@@ -38,7 +38,7 @@ public class DeliveryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View layoutItem = (convertView == null ? mInflater.inflate(R.layout.adapter_next_delivery, parent, false) : convertView);
         Resources res = context.getResources();
-        Delivery element = list.get(position);
+        Order element = list.get(position);
 
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
         layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(res.getString(R.string.next_delivery_distance), element.getDistance(0, 0)));
@@ -54,14 +54,14 @@ public class DeliveryAdapter extends BaseAdapter {
         return layoutItem;
     }
 
-    private Consumer<Delivery> onDeliveryDone;
-    private Consumer<Delivery> onDeliveryIssue;
+    private Consumer<Order> onDeliveryDone;
+    private Consumer<Order> onDeliveryIssue;
 
-    public void setOnDeliveryDone(Consumer<Delivery> onDeliveryDone) {
+    public void setOnDeliveryDone(Consumer<Order> onDeliveryDone) {
         this.onDeliveryDone = onDeliveryDone;
     }
 
-    public void setOnDeliveryIssue(Consumer<Delivery> onDeliveryIssue) {
+    public void setOnDeliveryIssue(Consumer<Order> onDeliveryIssue) {
         this.onDeliveryIssue = onDeliveryIssue;
     }
 }

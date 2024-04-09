@@ -2,23 +2,16 @@ package edu.ihm.td1.livraison;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.DisplayMetrics;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandListActivity extends AppCompatActivity {
-
-    List<Command> commandeList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora", R.drawable.sac, false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false), new Command(2, "Sac Dora Taille Enfant", R.drawable.sac,false)));
-    List<Command> finishedCommandList = new ArrayList<>(Arrays.asList(new Command(1,"Sac à dos Dora Taille Adulte", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true), new Command(2, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac,true)));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +20,15 @@ public class CommandListActivity extends AppCompatActivity {
         setContentView(R.layout.command_list_layout);
 
         //On initialise les fragments
-        ListFragment fragmentPending =(ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
-        ListFragment fragmentFinished =(ListFragment) getSupportFragmentManager().findFragmentById(R.id.finished);
+        ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
+        ListFragment fragmentFinished = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.finished);
 
         //on prépare les données qu'on leur envoie
         Bundle bundlePending = new Bundle();
         Bundle bundleFinished = new Bundle();
 
-        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) commandeList);
-        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) finishedCommandList);
+        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
+        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.stream().filter(Order::getDelivered).collect(Collectors.toList()));
 
         fragmentPending.setArguments(bundlePending);
         fragmentFinished.setArguments(bundleFinished);
