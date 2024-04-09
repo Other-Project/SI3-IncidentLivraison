@@ -20,7 +20,7 @@ public class Order implements Parcelable {
             new Order(4, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510"),
             new Order(5, "Sac à dos Dora Taille Adulte", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600"),
             new Order(6, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "435 Rue du Chemin, Valbonne 06560"),
-            new Order(7, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "25 avenue de l’église, Biot 06510"),
+            new Order(7, "Sac Dora Edition limitée Taille Adulte", R.drawable.sac, true, "25 avenue de l’église, Biot 06510"),
             new Order(8, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600")
     ));
 
