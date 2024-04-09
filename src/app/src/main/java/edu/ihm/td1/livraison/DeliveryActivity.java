@@ -39,7 +39,7 @@ public class DeliveryActivity extends AppCompatActivity {
 
         // data setup
         Bundle bundleMap = new Bundle();
-        bundleMap.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
+        bundleMap.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
         mapFragment.setArguments(bundleMap);
 
         // send data to fragment
