@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 
 import org.osmdroid.util.GeoPoint;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Order implements Parcelable {
 
-    public static final List<Order> ORDERS = new ArrayList<>(List.of(
+    public static final HashMap<Integer, Order> ORDERS = new HashMap<>(Stream.of(
             new Order(0, "Sac à dos Dora", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560"),
             new Order(1, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510"),
             new Order(2, "Sac Dora Taille Enfant", R.drawable.sac, false, "1 bis rue de l’étoile, Antibes 06600"),
@@ -22,7 +24,7 @@ public class Order implements Parcelable {
             new Order(6, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "435 Rue du Chemin, Valbonne 06560"),
             new Order(7, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "25 avenue de l’église, Biot 06510"),
             new Order(8, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600")
-    ));
+    ).collect(Collectors.toMap(Order::getId, Function.identity())));
 
 
     private int id;
