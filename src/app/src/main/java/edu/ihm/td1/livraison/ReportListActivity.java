@@ -5,18 +5,15 @@ import android.os.Parcelable;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class CommandListActivity extends AppCompatActivity {
-
+public class ReportListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.command_list_layout);
 
         //On initialise les fragments
@@ -27,8 +24,8 @@ public class CommandListActivity extends AppCompatActivity {
         Bundle bundlePending = new Bundle();
         Bundle bundleFinished = new Bundle();
 
-        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
-        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.stream().filter(Order::getDelivered).collect(Collectors.toList()));
+        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
+        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(Report::isTreated).collect(Collectors.toList()));
 
         fragmentPending.setArguments(bundlePending);
         fragmentFinished.setArguments(bundleFinished);
@@ -37,8 +34,8 @@ public class CommandListActivity extends AppCompatActivity {
         fragmentPending.notifyCollectionReady();
         fragmentFinished.notifyCollectionReady();
 
-        ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.titlePendingDeliveries));
-        ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.titleFinishedDeliveries));
+        ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.PendingReports));
+        ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.TreatedReports));
         ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
         finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
         findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);

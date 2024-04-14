@@ -19,4 +19,6 @@
     <string name="sac_dos_dora_adulte">Sac à dos Dora adulte</string>
     <string name="envoyer">Envoyer</string>
     <string name="signalement">Signalement</string>
+    <string name="PendingReports">Signalements à traiter :</string>
+    <string name="TreatedReports">Signalements traités :</string>
 </resources>

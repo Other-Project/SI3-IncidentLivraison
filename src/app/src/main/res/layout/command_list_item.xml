@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".CommandListActivity"
+    tools:context=".OrderListActivity"
     android:background="@color/grey"
     android:orientation="horizontal">
 

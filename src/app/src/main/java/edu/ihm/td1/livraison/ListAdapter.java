@@ -1,6 +1,7 @@
 package edu.ihm.td1.livraison;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,25 +11,25 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CommandAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Order> commandes;
+    private List<? extends Parcelable> list;
     private LayoutInflater inflater;
 
-    public CommandAdapter(Context ctx, List<Order> list) {
+    public ListAdapter(Context ctx, List<? extends Parcelable> list) {
         context = ctx;
-        commandes = list;
+        this.list = list;
         inflater = LayoutInflater.from(ctx);
     }
     @Override
     public int getCount() {
-        return commandes.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return commandes.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -42,9 +43,16 @@ public class CommandAdapter extends BaseAdapter {
         TextView textView = (TextView) convertView.findViewById(R.id.textView);
         ImageView commandImg = (ImageView)convertView.findViewById(R.id.image);
         ImageView deliveredImg = (ImageView)convertView.findViewById(R.id.logo);
-        textView.setText(commandes.get(position).getDescription());
-        commandImg.setImageResource(commandes.get(position).getImage());
-        deliveredImg.setImageResource(commandes.get(position).getDelivered() ? R.drawable.check : R.drawable.sablier);
+        if(list.get(0) instanceof Order){
+            textView.setText(((Order) list.get(position)).getDescription());
+            commandImg.setImageResource(((Order) list.get(position)).getImage());
+            deliveredImg.setImageResource(((Order) list.get(position)).getDelivered() ? R.drawable.check : R.drawable.sablier);
+        }else{
+            textView.setText(((Report) list.get(position)).getDescriptionProbleme());
+            commandImg.setImageResource(((Report) list.get(position)).getOrder().getImage());
+            deliveredImg.setImageResource(((Report) list.get(position)).isTreated() ? R.drawable.check : R.drawable.sablier);
+        }
+
         return convertView;
 
     }

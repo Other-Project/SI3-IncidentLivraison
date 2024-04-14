@@ -5,15 +5,18 @@ import android.os.Parcelable;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ReportActivity extends AppCompatActivity {
+public class OrderListActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.command_list_layout);
 
         //On initialise les fragments
