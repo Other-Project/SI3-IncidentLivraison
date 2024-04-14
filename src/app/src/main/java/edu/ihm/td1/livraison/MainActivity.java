@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
         ImageButton deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
 

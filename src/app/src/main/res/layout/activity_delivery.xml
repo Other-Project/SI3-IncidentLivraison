@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/toolbar"
+        android:name="edu.ihm.td1.livraison.Toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/delivery_map_title"
         android:layout_width="match_parent"
