@@ -25,12 +25,12 @@ import java.util.List;
 public class MapFragment extends Fragment {
     private MapView map;
     private List<Order> collection = new ArrayList<>();
-    private CommandAdapter adapter;
+    private ListAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new CommandAdapter(getContext(), collection);
+        adapter = new ListAdapter(getContext(), collection);
     }
 
     @Override
