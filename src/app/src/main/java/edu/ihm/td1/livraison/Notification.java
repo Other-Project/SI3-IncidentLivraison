@@ -4,11 +4,10 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
-import android.util.Log;
 
 import java.util.Objects;
 
-public class ApplicationDemo extends Application {
+public class Notification extends Application {
     public static final String CHANNEL_1_ID = "channel LOW";
     public static final String CHANNEL_2_ID = "channel DEFAULT";
     public static final String CHANNEL_3_ID = "channel HIGH";

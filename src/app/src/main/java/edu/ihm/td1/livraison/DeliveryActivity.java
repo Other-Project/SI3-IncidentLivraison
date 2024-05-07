@@ -1,11 +1,17 @@
 package edu.ihm.td1.livraison;
 
+import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
+
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -43,9 +49,28 @@ public class DeliveryActivity extends AppCompatActivity {
         deliveries.remove(delivery);
         deliveryAdapter.notifyDataSetChanged();
         Toast.makeText(getApplicationContext(), "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
+
+        //Send notification
+        String title = "Livraison validée";
+        String message = "Pour l'adresse : "+delivery.getAddress();
+        sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_DEFAULT );
     }
 
     private void onDeliveryIssue(Order delivery) {
         Toast.makeText(getApplicationContext(), "Issue with " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendNotificationOnChannel(String title, String content, String channelId, int priority) {
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.check)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(priority);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            return;
+        }
+        NotificationManagerCompat.from(this).notify(0, notification.build());
     }
 }
