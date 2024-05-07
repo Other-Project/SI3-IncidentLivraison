@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,7 +20,6 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_report_command);
 
         picturefragment = (PictureFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentPicture);
