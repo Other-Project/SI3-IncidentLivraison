@@ -18,7 +18,6 @@ public class DeliveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
 
-
         DeliveryAdapter deliveryAdapter = new DeliveryAdapter(getApplicationContext(), deliveries);
         deliveryAdapter.setOnDeliveryDone(delivery -> {
             delivery.setDelivered(true);
