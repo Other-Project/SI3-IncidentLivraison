@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -16,6 +18,8 @@ public class DeliveryAdapter extends BaseAdapter {
     private final List<Order> list;
     private final Context context;
     private final LayoutInflater mInflater;
+
+    private GeoPoint currentGPSPostion;
 
     public DeliveryAdapter(Context context, List<Order> list) {
         this.context = context;
@@ -41,7 +45,7 @@ public class DeliveryAdapter extends BaseAdapter {
         Order element = list.get(position);
 
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
-        layoutItem.<TextView>findViewById(R.id.distance).setText(String.format(res.getString(R.string.next_delivery_distance), element.getDistance(0, 0)));
+        layoutItem.<TextView>findViewById(R.id.distance).setText(currentGPSPostion == null ? null : String.format(res.getString(R.string.next_delivery_distance), element.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
 
         layoutItem.<ImageButton>findViewById(R.id.delivery_issue).setOnClickListener(view -> {
             if (onDeliveryIssue != null) onDeliveryIssue.accept(element);
