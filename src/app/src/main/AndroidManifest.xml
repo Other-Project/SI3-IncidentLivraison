@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="edu.ihm.td1.livraison.ApplicationDemo"
+        android:name="edu.ihm.td1.livraison.Notification"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
