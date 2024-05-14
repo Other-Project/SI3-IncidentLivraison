@@ -18,24 +18,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/andika_new_basic_bold"
         android:text="@string/welcome_message"
         android:textAlignment="center"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@id/imageLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:src="@drawable/logo"
-        android:id="@+id/imageLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@id/profile_selection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <TextView
         android:id="@+id/profile_selection"
@@ -54,7 +44,7 @@
         android:id="@+id/icone_client"
         android:layout_width="86dp"
         android:layout_height="82dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="#0000"
         android:contentDescription="@string/client_icon_description"
         app:layout_constraintEnd_toStartOf="@id/icone_livreur"
@@ -78,7 +68,7 @@
         android:id="@+id/icone_livreur"
         android:layout_width="86dp"
         android:layout_height="82dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="#0000"
         android:contentDescription="@string/livreur_icon_description"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -103,7 +93,7 @@
         android:id="@+id/icone_service_client"
         android:layout_width="86dp"
         android:layout_height="82dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="#0000"
         android:contentDescription="@string/service_client_icon_description"
         app:layout_constraintEnd_toEndOf="parent"

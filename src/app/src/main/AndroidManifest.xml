@@ -11,10 +11,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
-        android:name="edu.ihm.td1.livraison.Notification"
+        android:name=".Notification"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,12 +27,15 @@
         android:theme="@style/Theme.Livraison"
         tools:targetApi="31">
         <activity
+            android:name=".OrderViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReportCommandActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ReportListActivity"
-            android:exported="false"/>
-      <activity
+            android:exported="false" />
+        <activity
             android:name=".OrderListActivity"
             android:exported="false" />
         <activity
@@ -45,9 +50,11 @@
         </activity>
         <activity android:name=".DeliveryActivity" />
         <activity android:name=".ProfileActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <service
             android:name=".NotificationService"
             android:exported="false">

@@ -1,11 +1,14 @@
 package edu.ihm.td1.livraison;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +56,16 @@ public class ListAdapter extends BaseAdapter {
             deliveredImg.setImageResource(((Report) list.get(position)).isTreated() ? R.drawable.check : R.drawable.arrow);
         }
 
+        ImageView image = convertView.findViewById(R.id.image);
+        image.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof OrderListActivity) {
+                    ((OrderListActivity)context).startActivity(new Intent(context, ReportCommandActivity.class));
+
+                }
+            }
+        });
         return convertView;
 
     }
