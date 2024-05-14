@@ -1,5 +1,6 @@
 package edu.ihm.td1.livraison;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -49,11 +50,10 @@ public class ListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(itemList.get(0) instanceof Order){
-                    /**
-                    Intent intent = new Intent(getContext(),OrderView Activity);
-                    intent.putExtra("object",itemList.get(i));
+
+                    Intent intent = new Intent(getContext(),OrderViewActivity.class);
+                    intent.putExtra("order",itemList.get(i));
                     startActivity(intent);
-                    */
                     Log.d(TAG, "click sur une order");
                 }else{
                     /*
@@ -66,13 +66,6 @@ public class ListFragment extends Fragment {
 
             }
         });
-        /*
-        spinner.setOnItemClickListener((parent, view, position, id) -> {
-            Log.d(TAG, "in onCreateView(), callbackActivity = " + callbackActivity);
-            Log.d(TAG, "in onCreateView(), this = " + this);
-            callbackActivity.onItemChoosen(this, position);
-        });
-       */
         return rootView;
     }
 }
