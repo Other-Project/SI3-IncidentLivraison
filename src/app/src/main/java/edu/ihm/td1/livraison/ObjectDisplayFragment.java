@@ -67,7 +67,7 @@ public class ObjectDisplayFragment extends Fragment {
         if(item instanceof Order){
             Order o = (Order)item;
             img.setImageResource(o.getImage());
-            txt.setText(o.getDescription());
+            txt.setText(o.fullDesc());
         }else if(item instanceof Report){
             Report r = (Report)item;
             img.setImageResource(r.getOrder().getImage());

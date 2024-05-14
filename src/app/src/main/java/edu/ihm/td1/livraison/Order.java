@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -39,18 +40,19 @@ public class Order implements Parcelable {
     private long date;
     private GeoPoint position;
 
-    public Order(int id, String desc, int img, boolean del, String address, long d) {
+    public Order(int id, String desc, int img, boolean del, String a, long d) {
         this.id = id;
         description = desc;
         image = img;
         delivered = del;
-        this.address = address;
+        this.address = a;
         this.date = d;
         position = createPosition();
     }
 
     protected Order(Parcel in) {
         description = in.readString();
+        address = in.readString();
         id = in.readInt();
         image = in.readInt();
         delivered = in.readInt() == 1;
@@ -108,10 +110,18 @@ public class Order implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(description);
+        dest.writeString(address);
         dest.writeInt(id);
         dest.writeInt(image);
         dest.writeInt(delivered ? 1 : 0);
         dest.writeLong(date);
+    }
+
+    public String fullDesc(){
+        SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
+        return getDescription()+"\n"
+                +"arrivera au "+this.address+"\n"
+                +"le "+d.format(this.getDate());
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
