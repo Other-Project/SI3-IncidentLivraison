@@ -92,7 +92,7 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
                 picturefragment.setImage(picture);      // .setImage(picture selon Rallo
                 savepicturefragment.setEnableButtonSave();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Picrture canceled", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(), "Picture canceled", Toast.LENGTH_LONG);
                 toast.show();
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Action failed", Toast.LENGTH_LONG);

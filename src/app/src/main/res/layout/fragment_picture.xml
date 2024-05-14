@@ -18,6 +18,7 @@
             android:paddingHorizontal="50dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingVertical="0dp"
             android:layout_weight="50"
             android:id="@+id/phototaken"
             android:src="@drawable/plus" />
@@ -27,22 +28,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
     <Button
         android:id="@+id/buttonImage"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/ajouter_une_photo"
-        android:layout_marginHorizontal="10dp"/>
+        />
 
-    <Button
-        android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/envoyer"
-        android:layout_marginHorizontal="10dp" />
     </LinearLayout>
 </LinearLayout>
