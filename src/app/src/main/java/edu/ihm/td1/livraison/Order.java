@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.HashMap;
@@ -18,15 +19,15 @@ import java.util.stream.Stream;
 public class Order implements Parcelable {
 
     public static final HashMap<Integer, Order> ORDERS = new HashMap<>(Stream.of(
-            new Order(0, "Sac à dos Dora", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560"),
-            new Order(1, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510"),
-            new Order(2, "Sac Dora Taille Enfant", R.drawable.sac, false, "1 bis rue de l’étoile, Antibes 06600"),
-            new Order(3, "Sac Dora Taille Enfant", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560"),
-            new Order(4, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510"),
-            new Order(5, "Sac à dos Dora Taille Adulte", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600"),
-            new Order(6, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "435 Rue du Chemin, Valbonne 06560"),
-            new Order(7, "Sac Dora Edition limitée Taille Adulte", R.drawable.sac, true, "25 avenue de l’église, Biot 06510"),
-            new Order(8, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600")
+            new Order(0, "Sac à dos Dora", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,5,18,9,0).getTimeInMillis()),
+            new Order(1, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,5,25,9,0).getTimeInMillis()),
+            new Order(2, "Sac Dora Taille Enfant", R.drawable.sac, false, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,12,18,9,0).getTimeInMillis()),
+            new Order(3, "Sac Dora Taille Enfant", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,7,14,9,0).getTimeInMillis()),
+            new Order(4, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,9,28,9,0).getTimeInMillis()),
+            new Order(5, "Sac à dos Dora Taille Adulte", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,8,1,9,0).getTimeInMillis()),
+            new Order(6, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,8,25,9,0).getTimeInMillis()),
+            new Order(7, "Sac Dora Edition limitée Taille Adulte", R.drawable.sac, true, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,8,18,9,0).getTimeInMillis()),
+            new Order(8, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,8,8,9,0).getTimeInMillis())
     ).collect(Collectors.toMap(Order::getId, Function.identity())));
 
 
@@ -35,13 +36,17 @@ public class Order implements Parcelable {
     private int image;
     private boolean delivered;
     private String address;
+    private long date;
+    private GeoPoint position;
 
-    public Order(int id, String desc, int img, boolean del, String address) {
+    public Order(int id, String desc, int img, boolean del, String address, long d) {
         this.id = id;
         description = desc;
         image = img;
         delivered = del;
         this.address = address;
+        this.date = d;
+        position = createPosition();
     }
 
     protected Order(Parcel in) {
@@ -49,17 +54,22 @@ public class Order implements Parcelable {
         id = in.readInt();
         image = in.readInt();
         delivered = in.readInt() == 1;
+        date = in.readLong();
     }
 
     public String getAddress() {
         return address;
     }
 
-    public GeoPoint getPosition() {
+    private GeoPoint createPosition() {
         Random random1 = new Random();
         double latitude = random1.nextDouble() * (43.61567 - 43.57398) + 43.57398;
         double longitude = random1.nextDouble() * (7.11664 - 7.07177) + 7.07177;
         return new GeoPoint(latitude, longitude);
+    }
+
+    public GeoPoint getPosition() {
+        return position;
     }
 
     public double getDistance(double currentLat, double currentLong) {
@@ -86,6 +96,10 @@ public class Order implements Parcelable {
         this.delivered = delivered;
     }
 
+    public long getDate() {
+        return date;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -97,6 +111,7 @@ public class Order implements Parcelable {
         dest.writeInt(id);
         dest.writeInt(image);
         dest.writeInt(delivered ? 1 : 0);
+        dest.writeLong(date);
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {

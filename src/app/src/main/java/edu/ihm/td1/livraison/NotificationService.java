@@ -18,7 +18,7 @@ public class NotificationService extends FirebaseMessagingService {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             // send notification
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), ApplicationDemo.CHANNEL_3_ID)
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), Notification.CHANNEL_3_ID)
                     .setSmallIcon(R.drawable.ic_launcher_background)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
