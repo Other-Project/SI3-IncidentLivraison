@@ -20,6 +20,7 @@ public class DeliveryActivity extends AppCompatActivity {
     private ArrayList<Order> deliveries = new ArrayList<>(Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
 
     private DeliveryAdapter deliveryAdapter;
+    private MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class DeliveryActivity extends AppCompatActivity {
         ((ListView) findViewById(R.id.next_delivery)).setAdapter(deliveryAdapter);
 
         // map fragment initialisation
-        MapFragment mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.delivery_map);
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.delivery_map);
         assert mapFragment != null;
 
         // data setup
@@ -49,6 +50,9 @@ public class DeliveryActivity extends AppCompatActivity {
         deliveries.remove(delivery);
         deliveryAdapter.notifyDataSetChanged();
         Toast.makeText(getApplicationContext(), "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
+
+        //update orders
+        mapFragment.updateOrders(delivery);
 
         //Send notification
         String title = "Livraison validée";

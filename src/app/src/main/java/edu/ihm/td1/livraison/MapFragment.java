@@ -26,6 +26,7 @@ public class MapFragment extends Fragment {
     private MapView map;
     private List<Order> collection = new ArrayList<>();
     private ListAdapter adapter;
+    private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,27 +48,8 @@ public class MapFragment extends Fragment {
         mapController.setZoom( 16.0 );
         mapController.setCenter(startPoint);
 
-        ArrayList<OverlayItem> items = new ArrayList<>();
-        int i = 1;
-        for (Order order : collection) {
-            items.add(new OverlayItem("Livraison n°" + i, order.getAddress(), order.getPosition()));
-            i++;
-        }
+        mOverlay = createOverlay();
 
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
-
-        mOverlay.setFocusItemsOnTap( true );
         map.getOverlays().add(mOverlay);
         return rootView;
     }
@@ -92,5 +74,38 @@ public class MapFragment extends Fragment {
         }
     }
 
+    public void updateOrders(Order order) {
+        collection.remove(order);
+        /* map.getOverlays().clear();
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = createOverlay();
+        map.getOverlays().add(mOverlay); */
+        mOverlay.removeItem(orderToOverlayItem(order));
+    }
 
+    private  ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
+        ArrayList<OverlayItem> items = new ArrayList<>();
+        int i = 1;
+        for (Order o : collection) {
+            items.add(new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition()));
+            i++;
+        }
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
+                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
+            }
+        });
+        mOverlay.setFocusItemsOnTap( true );
+        return mOverlay;
+    }
+
+    private OverlayItem orderToOverlayItem(Order order) {
+        return mOverlay.getDisplayedItems().stream().filter(oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst().get();
+    }
 }
