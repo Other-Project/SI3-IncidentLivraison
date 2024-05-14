@@ -1,0 +1,11 @@
+Button button = findViewById(R.id.button2);
+button.setOnClickListener(view -> {
+    Intent intent = new Intent(Intent.ACTION_INSERT);
+    intent.setType("vnd.android.cursor.item/event");
+    intent.putExtra("title", "Livraison "+order.getDescription());
+    intent.putExtra("description", "Votre colis devrait arriver à cette date, n'oubliez pas vos papiers d'identité !");
+    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, order.getDate());
+    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, ( order.getDate() + 8*(60*60*1000) ) );
+    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, order.getAddress());
+    startActivity(intent);
+});

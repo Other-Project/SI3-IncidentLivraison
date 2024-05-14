@@ -26,6 +26,7 @@ public class MapFragment extends Fragment {
     private MapView map;
     private List<Order> collection = new ArrayList<>();
     private ListAdapter adapter;
+    private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,32 +43,18 @@ public class MapFragment extends Fragment {
         map.setTileSource( TileSourceFactory.MAPNIK ); //render
         map.setBuiltInZoomControls( true ); // TODO: delete this for the demo
         map.setMultiTouchControls(true); // zoomable with 2 fingers
-        GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
         IMapController mapController = map.getController();
-        mapController.setZoom( 16.0 );
-        mapController.setCenter(startPoint);
-
-        ArrayList<OverlayItem> items = new ArrayList<>();
-        int i = 1;
-        for (Order order : collection) {
-            items.add(new OverlayItem("Livraison n°" + i, order.getAddress(), order.getPosition()));
-            i++;
+        mapController.setZoom( 15.0 );
+        if (collection.stream().findFirst().isPresent()) {
+            GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
+            mapController.setCenter(startPoint);
         }
+        else {
+            GeoPoint startPoint = new GeoPoint(43.61611135829526, 7.0717782);
+            mapController.setCenter(startPoint);
+        }
+        mOverlay = createOverlay();
 
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
-
-        mOverlay.setFocusItemsOnTap( true );
         map.getOverlays().add(mOverlay);
         return rootView;
     }
@@ -92,5 +79,35 @@ public class MapFragment extends Fragment {
         }
     }
 
+    public void updateOrders(Order order) {
+        collection.remove(order);
+        mOverlay.removeItem(orderToOverlayItem(order));
+    }
 
+    private  ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
+        ArrayList<OverlayItem> items = new ArrayList<>();
+        int i = 1;
+        for (Order o : collection) {
+            items.add(new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition()));
+            i++;
+        }
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
+                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
+            }
+        });
+        mOverlay.setFocusItemsOnTap( true );
+        return mOverlay;
+    }
+
+    private OverlayItem orderToOverlayItem(Order order) {
+        return mOverlay.getDisplayedItems().stream().filter(oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst().get();
+    }
 }

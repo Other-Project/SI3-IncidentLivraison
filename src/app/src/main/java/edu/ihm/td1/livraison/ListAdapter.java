@@ -50,7 +50,7 @@ public class ListAdapter extends BaseAdapter {
         }else{
             textView.setText(((Report) list.get(position)).getDescriptionProbleme());
             commandImg.setImageResource(((Report) list.get(position)).getOrder().getImage());
-            deliveredImg.setImageResource(((Report) list.get(position)).isTreated() ? R.drawable.check : R.drawable.sablier);
+            deliveredImg.setImageResource(((Report) list.get(position)).isTreated() ? R.drawable.check : R.drawable.arrow);
         }
 
         return convertView;
