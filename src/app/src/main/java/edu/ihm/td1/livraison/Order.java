@@ -37,6 +37,8 @@ public class Order implements Parcelable {
     private boolean delivered;
     private String address;
     private long date;
+    private GeoPoint position;
+
     public Order(int id, String desc, int img, boolean del, String address, long d) {
         this.id = id;
         description = desc;
@@ -44,6 +46,7 @@ public class Order implements Parcelable {
         delivered = del;
         this.address = address;
         this.date = d;
+        position = createPosition();
     }
 
     protected Order(Parcel in) {
@@ -58,11 +61,15 @@ public class Order implements Parcelable {
         return address;
     }
 
-    public GeoPoint getPosition() {
+    private GeoPoint createPosition() {
         Random random1 = new Random();
         double latitude = random1.nextDouble() * (43.61567 - 43.57398) + 43.57398;
         double longitude = random1.nextDouble() * (7.11664 - 7.07177) + 7.07177;
         return new GeoPoint(latitude, longitude);
+    }
+
+    public GeoPoint getPosition() {
+        return position;
     }
 
     public double getDistance(double currentLat, double currentLong) {

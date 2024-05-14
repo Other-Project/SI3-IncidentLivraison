@@ -4,7 +4,7 @@
     <string name="titleFinishedDeliveries">Livraisons terminées : </string>
     <string name="delivery_issue">Problème avec la livraison</string>
     <string name="delivery_done">Livraison effectuée</string>
-    <string name="welcome_message">Bienvenue sur Livraison !</string>
+    <string name="welcome_message">Bienvenue sur</string>
     <string name="client_text">Client</string>
     <string name="livreur_text">Livreur</string>
     <string name="service_client_text">Service client</string>
