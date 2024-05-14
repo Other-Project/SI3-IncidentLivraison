@@ -1,13 +1,23 @@
 package edu.ihm.td1.livraison;
 
-import android.graphics.drawable.Drawable;
+import static android.content.Context.LOCATION_SERVICE;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import org.osmdroid.api.IMapController;
@@ -18,15 +28,22 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment {
+    private final String TAG = getClass().getSimpleName();
+
     private MapView map;
     private List<Order> collection = new ArrayList<>();
     private ListAdapter adapter;
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
+    private Button centerOnPos;
+
+    private boolean followPosition = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,26 +54,81 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        Configuration.getInstance().load( getContext(),
+        Configuration.getInstance().load(getContext(),
                 PreferenceManager.getDefaultSharedPreferences(getContext()));
         map = rootView.findViewById(R.id.map);
-        map.setTileSource( TileSourceFactory.MAPNIK ); //render
-        map.setBuiltInZoomControls( true ); // TODO: delete this for the demo
+        map.setTileSource(TileSourceFactory.MAPNIK); //render
+        map.setBuiltInZoomControls(true); // TODO: delete this for the demo
         map.setMultiTouchControls(true); // zoomable with 2 fingers
         IMapController mapController = map.getController();
-        mapController.setZoom( 15.0 );
+        mapController.setZoom(15.0);
         if (collection.stream().findFirst().isPresent()) {
             GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
             mapController.setCenter(startPoint);
-        }
-        else {
-            GeoPoint startPoint = new GeoPoint(43.61611135829526, 7.0717782);
+        } else {
+            GeoPoint startPoint = new GeoPoint(43.61, 7.07);
             mapController.setCenter(startPoint);
         }
-        mOverlay = createOverlay();
 
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
+        mLocationOverlay.enableMyLocation();
+        map.getOverlays().add(mLocationOverlay);
+
+        centerOnPos = rootView.findViewById(R.id.centerPos);
+        centerOnPos.setOnClickListener(view -> setFollowPosition(!followPosition));
+
+        mOverlay = createOverlay();
         map.getOverlays().add(mOverlay);
         return rootView;
+    }
+
+    private void initGpsListener() {
+        assert getContext() != null;
+
+        boolean permissionGranted = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        Log.d(TAG, "GPS permissionGranted = " + permissionGranted);
+        if (permissionGranted) {
+            LocationManager locationManager = (LocationManager) (getContext().getSystemService(LOCATION_SERVICE));
+            LocationListener listener = new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    if (!followPosition) {
+                        locationManager.removeUpdates(this);
+                        return;
+                    }
+                    GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
+                    map.getController().animateTo(point);
+                }
+
+                @Override
+                public void onStatusChanged(String s, int i, Bundle bundle) {
+                    Log.d(TAG, "status changed=" + s);
+                }
+
+                @Override
+                public void onProviderEnabled(@NonNull String s) {
+                    Log.d(TAG, s + " sensor ON");
+                }
+
+                @Override
+                public void onProviderDisabled(@NonNull String s) {
+                    Log.d(TAG, s + " sensor OFF");
+                    setFollowPosition(false);
+                }
+            };
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, listener);
+        } else {
+            Log.d(TAG, "GPS Permission NOT GRANTED  ! ");
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+        }
+    }
+
+    private void setFollowPosition(boolean followPosition) {
+        if (this.followPosition == followPosition) return;
+        Log.d(TAG, "Follow position: " + followPosition);
+        this.followPosition = followPosition;
+        //centerOnPos.setVisibility(followPosition ? View.INVISIBLE : View.VISIBLE);
+        if (followPosition) initGpsListener();
     }
 
     @Override
@@ -71,7 +143,7 @@ public class MapFragment extends Fragment {
         map.onResume();
     }
 
-    public void notifyCollectionReady(){
+    public void notifyCollectionReady() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             collection.addAll((ArrayList<Order>) bundle.get("list"));
@@ -84,7 +156,7 @@ public class MapFragment extends Fragment {
         mOverlay.removeItem(orderToOverlayItem(order));
     }
 
-    private  ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
+    private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
         ArrayList<OverlayItem> items = new ArrayList<>();
         int i = 1;
         for (Order o : collection) {
@@ -103,7 +175,7 @@ public class MapFragment extends Fragment {
                 return false;
             }
         });
-        mOverlay.setFocusItemsOnTap( true );
+        mOverlay.setFocusItemsOnTap(true);
         return mOverlay;
     }
 
