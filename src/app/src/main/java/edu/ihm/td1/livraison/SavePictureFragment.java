@@ -1,7 +1,6 @@
 package edu.ihm.td1.livraison;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -28,7 +27,7 @@ import android.Manifest;
 public class SavePictureFragment extends Fragment {
     private ISavePictureActivity activity;
     private Button buttonSave;
-    private Button buttonLoad;
+    //private Button buttonLoad;
 
     public String getPictureName() {
         return pictureName;
@@ -64,7 +63,7 @@ public class SavePictureFragment extends Fragment {
         ContextWrapper contextWrapper = new ContextWrapper(getContext());
         directoryName = contextWrapper.getDir("imagedir", ContextWrapper.MODE_PRIVATE).getPath(); // : /data/user
 
-        buttonLoad = rootView.findViewById(R.id.button_load);
+
         buttonSave = rootView.findViewById(R.id.button_save);
         setDisableButtonSave();
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,7 @@ public class SavePictureFragment extends Fragment {
                 }
             }
         });
-
+        /*
         buttonLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +97,7 @@ public class SavePictureFragment extends Fragment {
                 }
             }
         });
+         */
         return rootView;
 
     }
@@ -135,15 +135,9 @@ public class SavePictureFragment extends Fragment {
         buttonSave.setEnabled(false);
     }
 
-    public void setEnableButtonLoad() {
-        buttonLoad.setEnabled(true);
-    }
 
     public void setEnableButtonSave() {
         buttonSave.setEnabled(true);
     }
 
-    public void setDisableButtonLoad() {
-        buttonLoad.setEnabled(false);
-    }
 }

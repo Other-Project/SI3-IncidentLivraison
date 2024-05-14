@@ -27,7 +27,20 @@ public class PictureFragment extends Fragment {
         View rootView = inflater.inflate( R.layout.fragment_picture, container, false);
 
         imageView = rootView.findViewById(R.id.phototaken);
+
         rootView.findViewById( R.id.buttonImage).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(ContextCompat.checkSelfPermission( getContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
+                    ActivityCompat.requestPermissions( getActivity(), new String[] {Manifest.permission.CAMERA}, IPictureActivity.REQUEST_CAMERA );
+                }
+                else{
+                    takePicture();
+                }
+            }
+        });
+
+        rootView.findViewById( R.id.phototaken).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if(ContextCompat.checkSelfPermission( getContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
