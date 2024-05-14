@@ -1,8 +1,10 @@
 package edu.ihm.td1.livraison;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,5 +42,7 @@ public class OrderListActivity extends AppCompatActivity {
         ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
         finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
         findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
+
+
     }
 }

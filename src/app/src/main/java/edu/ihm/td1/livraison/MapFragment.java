@@ -43,11 +43,16 @@ public class MapFragment extends Fragment {
         map.setTileSource( TileSourceFactory.MAPNIK ); //render
         map.setBuiltInZoomControls( true ); // TODO: delete this for the demo
         map.setMultiTouchControls(true); // zoomable with 2 fingers
-        GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
         IMapController mapController = map.getController();
-        mapController.setZoom( 16.0 );
-        mapController.setCenter(startPoint);
-
+        mapController.setZoom( 15.0 );
+        if (collection.stream().findFirst().isPresent()) {
+            GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
+            mapController.setCenter(startPoint);
+        }
+        else {
+            GeoPoint startPoint = new GeoPoint(43.61611135829526, 7.0717782);
+            mapController.setCenter(startPoint);
+        }
         mOverlay = createOverlay();
 
         map.getOverlays().add(mOverlay);
@@ -76,9 +81,6 @@ public class MapFragment extends Fragment {
 
     public void updateOrders(Order order) {
         collection.remove(order);
-        /* map.getOverlays().clear();
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = createOverlay();
-        map.getOverlays().add(mOverlay); */
         mOverlay.removeItem(orderToOverlayItem(order));
     }
 
