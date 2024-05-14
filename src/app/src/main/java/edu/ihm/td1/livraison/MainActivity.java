@@ -1,5 +1,6 @@
 package edu.ihm.td1.livraison;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "erreur");
             } else {
                 //((TextView) findViewById(R.id.token)).setText("token = " + task.getResult());
-                Log.d(TAG, "Token reçu");
+                Log.d(TAG, "Token reçu :"+task.getResult());
                 //task.getResult() => dans le log de base
             }
         });

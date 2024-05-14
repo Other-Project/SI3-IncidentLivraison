@@ -3,6 +3,7 @@ package edu.ihm.td1.livraison;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -28,5 +29,14 @@ public class NotificationService extends FirebaseMessagingService {
         } else {
 //todo: message is null
         }
+    }
+    public static String getToken(Context context) {
+        return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty");
+    }
+    @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+        Log.e("newToken", s);
+        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", s).apply();
     }
 }
