@@ -17,7 +17,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:fontFamily="@font/andika_new_basic_bold" />
 
         <TextView
             android:id="@+id/distance"
@@ -26,7 +27,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:fontFamily="@font/andika_new_basic_bold"/>
     </RelativeLayout>
 
     <ImageButton
@@ -36,6 +38,7 @@
         android:adjustViewBounds="true"
         android:background="#0000"
         android:contentDescription="@string/delivery_issue"
+        android:textAlignment="center"
         android:scaleType="fitCenter"
         android:src="@drawable/warning" />
 
@@ -45,6 +48,7 @@
         android:layout_height="match_parent"
         android:background="#0000"
         android:contentDescription="@string/delivery_done"
+        android:textAlignment="center"
         android:scaleType="fitCenter"
         android:src="@drawable/check" />
 

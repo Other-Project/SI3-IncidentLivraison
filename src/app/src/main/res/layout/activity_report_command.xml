@@ -21,6 +21,7 @@
         android:layout_marginTop="88dp"
         android:clickable="false"
         android:text="@string/signalement"
+        android:fontFamily="@font/andika_new_basic_bold"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +53,8 @@
         android:lines="20"
         android:minLines="5"
         android:padding="30dp"
-        android:hint="Décrivez votre problème ... "/>
+        android:hint="Décrivez votre problème ... "
+        android:fontFamily="@font/andika_new_basic_bold"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="0dp"
