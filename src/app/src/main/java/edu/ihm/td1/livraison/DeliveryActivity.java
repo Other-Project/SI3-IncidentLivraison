@@ -25,7 +25,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
-        viewModel = new DeliveryViewModel(getApplicationContext());
+        viewModel = new DeliveryViewModel(this);
         viewModel.addObserver(this);
 
         deliveryAdapter = new DeliveryAdapter(getApplicationContext(), viewModel.getDeliveries());
