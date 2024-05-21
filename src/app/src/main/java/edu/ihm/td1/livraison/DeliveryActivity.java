@@ -1,8 +1,11 @@
 package edu.ihm.td1.livraison;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.ListView;
@@ -62,6 +65,11 @@ public class DeliveryActivity extends AppCompatActivity {
 
     private void onDeliveryIssue(Order delivery) {
         Toast.makeText(getApplicationContext(), "Issue with " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
+
+        Uri uri = Uri.parse("smsto:12346556");
+        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+        it.putExtra("sms_body", "Bonjour, c'est le livreur !\nJ'ai un problème avec votre commande n°"+delivery.getId());
+        startActivity(it);
     }
 
     private void sendNotificationOnChannel(String title, String content, String channelId, int priority) {
