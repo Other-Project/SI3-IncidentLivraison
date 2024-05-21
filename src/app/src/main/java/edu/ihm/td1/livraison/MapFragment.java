@@ -33,6 +33,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MapFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
@@ -62,13 +63,11 @@ public class MapFragment extends Fragment {
         map.setMultiTouchControls(true); // zoomable with 2 fingers
         IMapController mapController = map.getController();
         mapController.setZoom(15.0);
-        if (collection.stream().findFirst().isPresent()) {
-            GeoPoint startPoint = collection.stream().findFirst().get().getPosition();
-            mapController.setCenter(startPoint);
-        } else {
-            GeoPoint startPoint = new GeoPoint(43.61, 7.07);
-            mapController.setCenter(startPoint);
-        }
+
+        Optional<Order> firstPoint = collection.stream().findFirst();
+        mapController.setCenter(firstPoint.isPresent()
+                ? firstPoint.get().getPosition()
+                : new GeoPoint(43.61, 7.07));
 
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
         mLocationOverlay.enableMyLocation();
