@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 /**
  * This is the View Model
+ * View : {@link DeliveryActivity}
+ * Model : {@link Order}
  */
 public class DeliveryViewModel extends Observable {
     private final Context context;

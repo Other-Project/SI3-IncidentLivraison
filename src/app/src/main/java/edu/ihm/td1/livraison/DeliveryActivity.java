@@ -11,6 +11,8 @@ import java.util.Observer;
 
 /**
  * This is the View
+ * ViewModel : {@link DeliveryViewModel}
+ * Model : {@link Order}
  */
 public class DeliveryActivity extends AppCompatActivity implements Observer {
 

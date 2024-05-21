@@ -8,15 +8,18 @@ import androidx.annotation.NonNull;
 import org.osmdroid.util.GeoPoint;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Random;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This is the Model
+ * View : {@link DeliveryActivity}
+ * ViewModel : {@link DeliveryViewModel}
+ */
 public class Order implements Parcelable {
 
     public static final HashMap<Integer, Order> ORDERS = new HashMap<>(Stream.of(
