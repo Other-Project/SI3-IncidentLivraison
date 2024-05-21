@@ -2,15 +2,12 @@ package edu.ihm.td1.livraison;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.CalendarContract;
 import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class OrderViewActivity extends AppCompatActivity {
     private static String TAG = "OrderViewActivity";
@@ -22,7 +19,16 @@ public class OrderViewActivity extends AppCompatActivity {
         Log.d(TAG, "Lancement de l'activity");
         order = (Order)getIntent().getParcelableExtra("order");
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
-        //MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMap);
+        MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMap);
+
+
+        // data setup
+        Bundle bundleMap = new Bundle();
+        ArrayList<Order> listForFragMap = new ArrayList<>();
+        listForFragMap.add(order);
+        bundleMap.putParcelableArrayList("list", listForFragMap);
+        mapFrag.setArguments(bundleMap); // send data to fragment
+        mapFrag.notifyCollectionReady();
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, order);
