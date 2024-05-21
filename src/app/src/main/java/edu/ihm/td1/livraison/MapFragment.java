@@ -40,7 +40,6 @@ public class MapFragment extends Fragment {
 
     private MapView map;
     private List<Order> collection = new ArrayList<>();
-    private ListAdapter adapter;
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
     private Button centerOnPos;
 
@@ -49,7 +48,6 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ListAdapter(getContext(), collection);
     }
 
     @Override
@@ -146,7 +144,6 @@ public class MapFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             collection.addAll((ArrayList<Order>) bundle.get("list"));
-            adapter.notifyDataSetChanged();
         }
     }
 
