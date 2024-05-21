@@ -18,19 +18,21 @@ public class OrderViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_view);
         Log.d(TAG, "Lancement de l'activity");
         order = (Order)getIntent().getParcelableExtra("order");
+
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
         MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentMap);
 
 
         // data setup
         Bundle bundleMap = new Bundle();
+        Bundle bundle = new Bundle();
+
         ArrayList<Order> listForFragMap = new ArrayList<>();
         listForFragMap.add(order);
+
         bundleMap.putParcelableArrayList("list", listForFragMap);
         mapFrag.setArguments(bundleMap); // send data to fragment
         mapFrag.notifyCollectionReady();
-
-        Bundle bundle = new Bundle();
         bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, order);
         objectFrag.setArguments(bundle);
 
@@ -42,6 +44,12 @@ public class OrderViewActivity extends AppCompatActivity {
             intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, order.getDate());
             intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, ( order.getDate() + 8*(60*60*1000) ) );
             intent.putExtra(CalendarContract.Events.EVENT_LOCATION, order.getAddress());
+            startActivity(intent);
+        });
+
+        findViewById(R.id.buttonReport).setOnClickListener( (view) -> {
+            Intent intent = new Intent(getApplicationContext(), ReportCommandActivity.class);
+            intent.putExtra("order", this.order);
             startActivity(intent);
         });
     }
