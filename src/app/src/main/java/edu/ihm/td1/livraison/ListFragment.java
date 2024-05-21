@@ -60,11 +60,9 @@ public class ListFragment extends Fragment {
                     startActivity(intent);
                     Log.d(TAG, "click sur une order");
                 }else{
-                    /*
-                    Intent intent = new Intent(getContext(), ReportViewAcvtivity );
-                    intent.putExtra("object",itemList.get(i));
+                    Intent intent = new Intent(getContext(), ReviewReportActivity.class );
+                    intent.putExtra("report",itemList.get(i));
                     startActivity(intent);
-                     */
                     Log.d(TAG,"click sur un report");
                 }
 
