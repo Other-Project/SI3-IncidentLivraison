@@ -119,9 +119,15 @@ public class Order implements Parcelable {
 
     public String fullDesc(){
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
-        return getDescription()+"\n"
-                +"arrivera au "+this.address+"\n"
-                +"le "+d.format(this.getDate());
+        String res = (this.getDelivered() ? getDescription()+"\n"
+                                            +"est arrivé au "+this.address+"\n"
+                                            +"le "+d.format(this.getDate())
+                                            :
+                                            getDescription()+"\n"
+                                            +"arrivera au "+this.address+"\n"
+                                            +"le "+d.format(this.getDate())
+        );
+        return res;
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {

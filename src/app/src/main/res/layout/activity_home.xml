@@ -7,18 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/toolbar"
-        android:name="edu.ihm.td1.livraison.Toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="150dp"
         android:fontFamily="@font/andika_new_basic_bold"
         android:text="@string/welcome_message"
         android:textAlignment="center"
@@ -26,6 +19,16 @@
         app:layout_constraintBottom_toTopOf="@id/profile_selection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="160dp"
+        android:layout_height="126dp"
+        android:contentDescription="logo de l'app"
+        android:src="@drawable/logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
 
     <TextView
         android:id="@+id/profile_selection"
@@ -38,7 +41,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible" />
 
     <ImageButton
         android:id="@+id/icone_client"
@@ -50,7 +54,8 @@
         app:layout_constraintEnd_toStartOf="@id/icone_livreur"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_client" />
+        app:srcCompat="@drawable/icone_client"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/text_client"
@@ -62,7 +67,8 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/icone_client"
         app:layout_constraintStart_toStartOf="@id/icone_client"
-        app:layout_constraintTop_toBottomOf="@id/icone_client" />
+        app:layout_constraintTop_toBottomOf="@id/icone_client"
+        android:visibility="invisible" />
 
     <ImageButton
         android:id="@+id/icone_livreur"
@@ -74,7 +80,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_livreur" />
+        app:srcCompat="@drawable/icone_livreur"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/text_livreur"
@@ -86,7 +93,8 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/icone_livreur"
         app:layout_constraintStart_toStartOf="@id/icone_livreur"
-        app:layout_constraintTop_toBottomOf="@id/icone_livreur" />
+        app:layout_constraintTop_toBottomOf="@id/icone_livreur"
+        android:visibility="invisible" />
 
 
     <ImageButton
@@ -99,7 +107,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icone_livreur"
         app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_service_client" />
+        app:srcCompat="@drawable/icone_service_client"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/text_service_client"
@@ -113,7 +122,8 @@
         app:layout_constraintEnd_toEndOf="@id/icone_service_client"
         app:layout_constraintStart_toStartOf="@id/icone_service_client"
         app:layout_constraintTop_toBottomOf="@+id/icone_service_client"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:visibility="invisible"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

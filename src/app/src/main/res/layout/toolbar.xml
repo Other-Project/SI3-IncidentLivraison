@@ -16,6 +16,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="10dp"
         android:text="Eva Zion"
+        android:fontFamily="@font/andika_new_basic_bold"
         android:textSize="35sp"
         android:textColor="@color/black"
         android:drawablePadding="8dp"

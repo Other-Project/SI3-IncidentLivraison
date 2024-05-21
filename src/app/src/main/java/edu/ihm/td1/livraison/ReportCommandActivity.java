@@ -16,7 +16,7 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
     private Bitmap picture;
     private PictureFragment picturefragment;
     private SavePictureFragment savepicturefragment;
-
+    private Order order;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,12 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
             transaction.addToBackStack(null);
             transaction.commit();
         }
+
+        order = (Order)getIntent().getParcelableExtra("order");
+        ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, order);
+        objectFrag.setArguments(bundle);
     }
 
     @Override

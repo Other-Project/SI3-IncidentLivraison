@@ -21,39 +21,23 @@
         android:layout_marginTop="88dp"
         android:clickable="false"
         android:text="@string/signalement"
+        android:fontFamily="@font/andika_new_basic_bold"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/commandelayout"
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentObjectDisplay"
+        android:name="edu.ihm.td1.livraison.ObjectDisplayFragment"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
-        app:layout_constraintTop_toBottomOf="@+id/signalement"
-        app:layout_constraintVertical_bias="0.324"
-        tools:layout_editor_absoluteX="-4dp">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/sac"
-            android:contentDescription="commande" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/sac_dos_dora_adulte" />
-    </LinearLayout>
-
+        app:layout_constraintTop_toBottomOf="@id/signalement"
+        app:layout_constraintBottom_toTopOf="@id/textInputEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <EditText
         android:id="@+id/textInputEditText"
@@ -61,7 +45,7 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="40dp"
-        app:layout_constraintTop_toBottomOf="@id/commandelayout"
+        app:layout_constraintTop_toBottomOf="@id/fragmentObjectDisplay"
         app:layout_constraintBottom_toTopOf="@id/fragmentPicture"
         android:background="@color/grey"
         android:gravity="top"
@@ -69,7 +53,8 @@
         android:lines="20"
         android:minLines="5"
         android:padding="30dp"
-        android:hint="Décrivez votre problème ... "/>
+        android:hint="Décrivez votre problème ... "
+        android:fontFamily="@font/andika_new_basic_bold"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="0dp"

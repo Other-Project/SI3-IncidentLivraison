@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(priority)
-                .setLargeIcon(bitmap);
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
             return;
