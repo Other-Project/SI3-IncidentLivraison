@@ -1,26 +1,22 @@
 package edu.ihm.td1.livraison;
 
-import static androidx.core.content.ContextCompat.startActivity;
-import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
-
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DeliveryActivity extends AppCompatActivity {
-    private ArrayList<Order> deliveries = new ArrayList<>(Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
+
+/**
+ * This is the View
+ * ViewModel : {@link DeliveryViewModel}
+ * Model : {@link Order}
+ */
+public class DeliveryActivity extends AppCompatActivity implements Observer {
+
+    private DeliveryViewModel viewModel;
 
     private DeliveryAdapter deliveryAdapter;
     private MapFragment mapFragment;
@@ -29,10 +25,12 @@ public class DeliveryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
+        viewModel = new DeliveryViewModel(getApplicationContext());
+        viewModel.addObserver(this);
 
-        deliveryAdapter = new DeliveryAdapter(getApplicationContext(), deliveries);
-        deliveryAdapter.setOnDeliveryDone(this::onDeliveryDone);
-        deliveryAdapter.setOnDeliveryIssue(this::onDeliveryIssue);
+        deliveryAdapter = new DeliveryAdapter(getApplicationContext(), viewModel.getDeliveries());
+        deliveryAdapter.setOnDeliveryDone(viewModel::onDeliveryDone);
+        deliveryAdapter.setOnDeliveryIssue(viewModel::onDeliveryIssue);
         ((ListView) findViewById(R.id.next_delivery)).setAdapter(deliveryAdapter);
 
         // map fragment initialisation
@@ -41,48 +39,16 @@ public class DeliveryActivity extends AppCompatActivity {
 
         // data setup
         Bundle bundleMap = new Bundle();
-        bundleMap.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
+        bundleMap.putParcelableArrayList("list", viewModel.getDeliveries());
         mapFragment.setArguments(bundleMap); // send data to fragment
         mapFragment.notifyCollectionReady();
-
     }
 
-    private void onDeliveryDone(Order delivery) {
-        delivery.setDelivered(true);
-        Order.ORDERS.put(delivery.getId(), delivery);
-        deliveries.remove(delivery);
-        deliveryAdapter.notifyDataSetChanged();
-        Toast.makeText(getApplicationContext(), "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
-
+    @Override
+    public void update(Observable o, Object arg) {
         //update orders
-        mapFragment.updateOrders(delivery);
-
-        //Send notification
-        String title = "Livraison validée";
-        String message = "Pour l'adresse : "+delivery.getAddress();
-        sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_DEFAULT );
-    }
-
-    private void onDeliveryIssue(Order delivery) {
-        Toast.makeText(getApplicationContext(), "Issue with " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
-
-        Uri uri = Uri.parse("smsto:12346556");
-        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
-        it.putExtra("sms_body", "Bonjour, c'est le livreur !\nJ'ai un problème avec votre commande n°"+delivery.getId());
-        startActivity(it);
-    }
-
-    private void sendNotificationOnChannel(String title, String content, String channelId, int priority) {
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.check)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setPriority(priority);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            return;
-        }
-        NotificationManagerCompat.from(this).notify(0, notification.build());
+        if (!(arg instanceof Order)) return;
+        deliveryAdapter.notifyDataSetChanged();
+        mapFragment.updateOrders((Order) arg);
     }
 }

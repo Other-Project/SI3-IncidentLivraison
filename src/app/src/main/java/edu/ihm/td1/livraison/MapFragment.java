@@ -142,14 +142,14 @@ public class MapFragment extends Fragment {
 
     public void notifyCollectionReady() {
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            collection.addAll((ArrayList<Order>) bundle.get("list"));
-        }
+        if (bundle == null) return;
+        ArrayList<Order> list = bundle.getParcelableArrayList("list");
+        if (list != null) collection.addAll(list);
     }
 
     public void updateOrders(Order order) {
         collection.remove(order);
-        mOverlay.removeItem(orderToOverlayItem(order));
+        orderToOverlayItem(order).ifPresent(mOverlay::removeItem);
     }
 
     private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
@@ -175,7 +175,7 @@ public class MapFragment extends Fragment {
         return mOverlay;
     }
 
-    private OverlayItem orderToOverlayItem(Order order) {
-        return mOverlay.getDisplayedItems().stream().filter(oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst().get();
+    private Optional<OverlayItem> orderToOverlayItem(Order order) {
+        return mOverlay.getDisplayedItems().stream().filter(oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst();
     }
 }
