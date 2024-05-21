@@ -30,13 +30,4 @@ public class NotificationService extends FirebaseMessagingService {
 //todo: message is null
         }
     }
-    public static String getToken(Context context) {
-        return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty");
-    }
-    @Override
-    public void onNewToken(String s) {
-        super.onNewToken(s);
-        Log.e("newToken", s);
-        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", s).apply();
-    }
 }
