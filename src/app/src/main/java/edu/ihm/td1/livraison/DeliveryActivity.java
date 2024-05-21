@@ -1,15 +1,12 @@
 package edu.ihm.td1.livraison;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.stream.Collectors;
 
 
 /**
@@ -27,6 +24,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
         viewModel = new DeliveryViewModel(getApplicationContext());
+        viewModel.addObserver(this);
 
         deliveryAdapter = new DeliveryAdapter(getApplicationContext(), viewModel.getDeliveries());
         deliveryAdapter.setOnDeliveryDone(viewModel::onDeliveryDone);
@@ -39,7 +37,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
 
         // data setup
         Bundle bundleMap = new Bundle();
-        bundleMap.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
+        bundleMap.putParcelableArrayList("list", viewModel.getDeliveries());
         mapFragment.setArguments(bundleMap); // send data to fragment
         mapFragment.notifyCollectionReady();
     }
@@ -47,7 +45,8 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //update orders
+        if (!(arg instanceof Order)) return;
         deliveryAdapter.notifyDataSetChanged();
-        mapFragment.notifyCollectionReady();
+        mapFragment.updateOrders((Order) arg);
     }
 }

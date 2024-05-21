@@ -147,10 +147,6 @@ public class MapFragment extends Fragment {
         }
     }
 
-    public void notifyCollectionUpdate() {
-
-    }
-
     public void updateOrders(Order order) {
         collection.remove(order);
         mOverlay.removeItem(orderToOverlayItem(order));

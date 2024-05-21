@@ -38,6 +38,9 @@ public class DeliveryViewModel extends Observable {
         deliveries.remove(delivery);
         Toast.makeText(context, "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
 
+        this.setChanged();
+        this.notifyObservers(delivery);
+
         //Send notification
         String title = "Livraison validée";
         String message = "Pour l'adresse : " + delivery.getAddress();
