@@ -20,6 +20,7 @@ import edu.ihm.td1.livraison.userFactory.User;
 public class Toolbar extends Fragment {
     private TextView profile;
     private String nomPrenom;
+    private User user;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +28,14 @@ public class Toolbar extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar, container, false);
-        System.out.println("profile pas null");
         profile =  rootView.findViewById(R.id.client_toolbar);
-        profile.setOnClickListener(view -> startActivity(new Intent(getContext(), ProfileActivity.class)));
+
+        profile.setOnClickListener(view ->{
+            Intent intent = new Intent(getContext(), ProfileActivity.class);
+            intent.putExtra("User",user);
+            startActivity(intent);
+        });
+
 
         profile.setText(nomPrenom);
 
@@ -39,7 +45,7 @@ public class Toolbar extends Fragment {
     public void notifyClientIsReady(TextView textView) {
         Bundle bundle = getArguments();
         if(bundle != null){
-            User user = bundle.getParcelable("User");
+            user = bundle.getParcelable("User");
             nomPrenom = user.getPrenom()+" "+user.getNom();
         }
     }
