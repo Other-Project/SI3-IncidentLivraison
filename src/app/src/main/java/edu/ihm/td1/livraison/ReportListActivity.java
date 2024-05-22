@@ -19,6 +19,16 @@ public class ReportListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.command_list_layout);
 
+        ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.PendingReports));
+        ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.TreatedReports));
+        ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
+        finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
+        findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         //On initialise les fragments
         ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
         ListFragment fragmentFinished = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.finished);
@@ -36,12 +46,6 @@ public class ReportListActivity extends AppCompatActivity {
         //on envoie les données aux fragments
         fragmentPending.notifyCollectionReady();
         fragmentFinished.notifyCollectionReady();
-
-        ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.PendingReports));
-        ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.TreatedReports));
-        ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
-        finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
-        findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
 
         UserFactory userFactory = new UserFactory();
         User user = userFactory.getUser("SAV");

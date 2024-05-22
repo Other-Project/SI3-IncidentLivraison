@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,9 +49,13 @@ public class OrderViewActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.buttonReport).setOnClickListener( (view) -> {
-            Intent intent = new Intent(getApplicationContext(), ReportCommandActivity.class);
-            intent.putExtra("order", this.order);
-            startActivity(intent);
+            if(order.getDelivered()){
+                Intent intent = new Intent(getApplicationContext(), ReportCommandActivity.class);
+                intent.putExtra("order", this.order);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Vous ne pourrez effectuer un signalement que lorsque votre commande sera arrivée", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
