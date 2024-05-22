@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import edu.ihm.td1.livraison.userFactory.User;
+import edu.ihm.td1.livraison.userFactory.UserFactory;
+
 public class ReportListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,5 +42,16 @@ public class ReportListActivity extends AppCompatActivity {
         ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
         finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
         findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
+
+        UserFactory userFactory = new UserFactory();
+        User user = userFactory.getUser("SAV");
+        // data setup
+        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
+        assert toolbar != null;
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("User", user);
+        toolbar.setArguments(bundle); // send data to fragment
+        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
+
     }
 }

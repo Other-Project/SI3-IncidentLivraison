@@ -12,11 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import edu.ihm.td1.livraison.userFactory.User;
+import edu.ihm.td1.livraison.userFactory.UserFactory;
+
 public class OrderListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.command_list_layout);
 
         //On initialise les fragments
@@ -43,6 +47,16 @@ public class OrderListActivity extends AppCompatActivity {
         finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
         findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
 
+
+        UserFactory userFactory = new UserFactory();
+        User user = userFactory.getUser("CLIENT");
+        // data setup
+        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
+        assert toolbar != null;
+        Bundle bundleMap = new Bundle();
+        bundleMap.putParcelable("User", user);
+        toolbar.setArguments(bundleMap); // send data to fragment
+        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
 
     }
 }

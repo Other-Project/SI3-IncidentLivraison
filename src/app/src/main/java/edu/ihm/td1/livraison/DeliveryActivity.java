@@ -16,6 +16,9 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import edu.ihm.td1.livraison.userFactory.User;
+import edu.ihm.td1.livraison.userFactory.UserFactory;
+
 public class DeliveryActivity extends AppCompatActivity {
     private ArrayList<Order> deliveries = new ArrayList<>(Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
 
@@ -41,6 +44,16 @@ public class DeliveryActivity extends AppCompatActivity {
         bundleMap.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Order.ORDERS.values().stream().filter(order -> !order.getDelivered()).collect(Collectors.toList()));
         mapFragment.setArguments(bundleMap); // send data to fragment
         mapFragment.notifyCollectionReady();
+
+        UserFactory userFactory = new UserFactory();
+        User user = userFactory.getUser("LIVREUR");
+        // data setup
+        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
+        assert toolbar != null;
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("User", user);
+        toolbar.setArguments(bundle); // send data to fragment
+        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
 
     }
 

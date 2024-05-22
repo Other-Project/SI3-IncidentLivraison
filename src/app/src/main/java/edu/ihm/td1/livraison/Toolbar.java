@@ -10,17 +10,37 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.concurrent.TimeUnit;
+
+import edu.ihm.td1.livraison.userFactory.User;
 
 public class Toolbar extends Fragment {
     private TextView profile;
+    private String nomPrenom;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar, container, false);
-
+        System.out.println("profile pas null");
         profile =  rootView.findViewById(R.id.client_toolbar);
         profile.setOnClickListener(view -> startActivity(new Intent(getContext(), ProfileActivity.class)));
 
+        profile.setText(nomPrenom);
+
         return rootView;
+    }
+
+    public void notifyClientIsReady(TextView textView) {
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            User user = bundle.getParcelable("User");
+            nomPrenom = user.getPrenom()+" "+user.getNom();
+        }
     }
 }
