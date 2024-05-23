@@ -3,6 +3,7 @@ package edu.ihm.td1.livraison;
 import static android.content.Context.LOCATION_SERVICE;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -39,7 +40,7 @@ public class MapFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private MapView map;
-    private List<Order> collection = new ArrayList<>();
+    private final List<Order> collection = new ArrayList<>();
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
     private Button centerOnPos;
 
@@ -50,6 +51,7 @@ public class MapFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
@@ -70,6 +72,11 @@ public class MapFragment extends Fragment {
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
         mLocationOverlay.enableMyLocation();
         map.getOverlays().add(mLocationOverlay);
+        map.setOnTouchListener((v, event) -> {
+            if (!followPosition) return false;
+            setFollowPosition(false);
+            return true;
+        });
 
         centerOnPos = rootView.findViewById(R.id.centerPos);
         centerOnPos.setOnClickListener(view -> setFollowPosition(!followPosition));
@@ -84,47 +91,47 @@ public class MapFragment extends Fragment {
 
         boolean permissionGranted = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         Log.d(TAG, "GPS permissionGranted = " + permissionGranted);
-        if (permissionGranted) {
-            LocationManager locationManager = (LocationManager) (getContext().getSystemService(LOCATION_SERVICE));
-            LocationListener listener = new LocationListener() {
-                @Override
-                public void onLocationChanged(@NonNull Location location) {
-                    if (!followPosition) {
-                        locationManager.removeUpdates(this);
-                        return;
-                    }
-                    GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
-                    map.getController().animateTo(point);
-                }
-
-                @Override
-                public void onStatusChanged(String s, int i, Bundle bundle) {
-                    Log.d(TAG, "status changed=" + s);
-                }
-
-                @Override
-                public void onProviderEnabled(@NonNull String s) {
-                    Log.d(TAG, s + " sensor ON");
-                }
-
-                @Override
-                public void onProviderDisabled(@NonNull String s) {
-                    Log.d(TAG, s + " sensor OFF");
-                    setFollowPosition(false);
-                }
-            };
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, listener);
-        } else {
-            Log.d(TAG, "GPS Permission NOT GRANTED  ! ");
+        if (!permissionGranted) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+            return;
         }
+
+        LocationManager locationManager = (LocationManager) (getContext().getSystemService(LOCATION_SERVICE));
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                if (!followPosition) {
+                    locationManager.removeUpdates(this);
+                    return;
+                }
+                GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
+                map.getController().animateTo(point);
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+                Log.d(TAG, "status changed=" + s);
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String s) {
+                Log.d(TAG, s + " sensor ON");
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String s) {
+                Log.d(TAG, s + " sensor OFF");
+                setFollowPosition(false);
+            }
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, listener);
     }
 
     private void setFollowPosition(boolean followPosition) {
         if (this.followPosition == followPosition) return;
         Log.d(TAG, "Follow position: " + followPosition);
         this.followPosition = followPosition;
-        //centerOnPos.setVisibility(followPosition ? View.INVISIBLE : View.VISIBLE);
+        centerOnPos.setVisibility(followPosition ? View.INVISIBLE : View.VISIBLE);
         if (followPosition) initGpsListener();
     }
 
