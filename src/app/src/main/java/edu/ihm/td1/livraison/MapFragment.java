@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +42,7 @@ public class MapFragment extends Fragment {
     private MapView map;
     private final List<Order> collection = new ArrayList<>();
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
-    private Button centerOnPos;
+    private ImageButton centerOnPos;
 
     private boolean followPosition = false;
 
