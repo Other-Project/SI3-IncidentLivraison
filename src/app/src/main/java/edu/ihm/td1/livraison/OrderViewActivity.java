@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,14 +50,12 @@ public class OrderViewActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        findViewById(R.id.buttonReport).setOnClickListener( (view) -> {
-            if(order.getDelivered()){
-                Intent intent = new Intent(getApplicationContext(), ReportCommandActivity.class);
-                intent.putExtra("order", this.order);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, "Vous ne pourrez effectuer un signalement que lorsque votre commande sera arrivée", Toast.LENGTH_SHORT).show();
-            }
+        Button reportButton = findViewById(R.id.buttonReport);
+        if (!order.getDelivered()) reportButton.setVisibility(View.INVISIBLE);
+        reportButton.setOnClickListener( (view) -> {
+            Intent intent = new Intent(getApplicationContext(), ReportCommandActivity.class);
+            intent.putExtra("order", this.order);
+            startActivity(intent);
         });
     }
 }
