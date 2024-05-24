@@ -1,11 +1,13 @@
 package edu.ihm.td1.livraison;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -37,6 +39,9 @@ public class DeliveryViewModel extends Observable {
     }
 
     void onDeliveryDone(Order delivery) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(40);
+
         delivery.setDelivered(true);
         Order.ORDERS.put(delivery.getId(), delivery);
         deliveries.remove(delivery);

@@ -3,10 +3,12 @@ package edu.ihm.td1.livraison;
 import static android.content.ContentValues.TAG;
 import static android.widget.Toast.makeText;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.widget.Button;
@@ -34,6 +36,8 @@ public class ReviewReportActivity extends AppCompatActivity {
         Button signalementTraite = findViewById(R.id.button_traite);
 
         signalementTraite.setOnClickListener(view -> {
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(40);
             Report.setIsTreated(report, true);
             startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
         });
