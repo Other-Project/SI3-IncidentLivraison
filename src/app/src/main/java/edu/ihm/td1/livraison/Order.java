@@ -60,6 +60,7 @@ public class Order implements Parcelable {
         image = in.readInt();
         delivered = in.readInt() == 1;
         date = in.readLong();
+        position = createPosition();
     }
 
     public String getAddress() {

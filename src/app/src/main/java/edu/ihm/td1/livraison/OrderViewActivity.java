@@ -36,8 +36,10 @@ public class OrderViewActivity extends AppCompatActivity {
         bundleMap.putParcelableArrayList("list", listForFragMap);
         mapFrag.setArguments(bundleMap); // send data to fragment
         mapFrag.notifyCollectionReady();
+
         bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, order);
         objectFrag.setArguments(bundle);
+        Log.d("OrderTest", mapFrag.getArguments().toString());
 
         findViewById(R.id.buttonCalendar).setOnClickListener( (view) ->{
             Intent intent = new Intent(Intent.ACTION_INSERT);
