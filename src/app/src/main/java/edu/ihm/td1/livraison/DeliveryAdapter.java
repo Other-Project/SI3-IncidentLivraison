@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import org.osmdroid.util.GeoPoint;
-
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -22,7 +21,7 @@ public class DeliveryAdapter extends BaseAdapter {
     private final Context context;
     private final LayoutInflater mInflater;
 
-    private GeoPoint currentGPSPostion;
+    private Location currentGPSPostion;
 
     public DeliveryAdapter(Context context, List<Order> list) {
         this.context = context;
@@ -73,7 +72,8 @@ public class DeliveryAdapter extends BaseAdapter {
     }
 
     public void onLocationChanged(@NonNull Location location) {
-        this.currentGPSPostion = new GeoPoint(location.getLatitude(), location.getLongitude());
+        this.currentGPSPostion = location;
+        list.sort(Comparator.comparingDouble(o -> o.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
         notifyDataSetChanged();
     }
 }
