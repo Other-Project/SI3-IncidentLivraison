@@ -4,12 +4,12 @@ import static android.content.Context.LOCATION_SERVICE;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -54,9 +55,11 @@ public class MapFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Context ctx = requireContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        Configuration.getInstance().load(getContext(),
-                PreferenceManager.getDefaultSharedPreferences(getContext()));
+
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK); //render
         map.setBuiltInZoomControls(true); // TODO: delete this for the demo
@@ -69,7 +72,7 @@ public class MapFragment extends Fragment {
                 ? firstPoint.get().getPosition()
                 : new GeoPoint(43.61, 7.07));
 
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), map);
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(ctx), map);
         mLocationOverlay.enableMyLocation();
         map.getOverlays().add(mLocationOverlay);
         map.setOnTouchListener((v, event) -> {
@@ -87,16 +90,14 @@ public class MapFragment extends Fragment {
     }
 
     private void initGpsListener() {
-        assert getContext() != null;
-
-        boolean permissionGranted = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        boolean permissionGranted = ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         Log.d(TAG, "GPS permissionGranted = " + permissionGranted);
         if (!permissionGranted) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
             return;
         }
 
-        LocationManager locationManager = (LocationManager) (getContext().getSystemService(LOCATION_SERVICE));
+        LocationManager locationManager = (LocationManager) (requireContext().getSystemService(LOCATION_SERVICE));
         LocationListener listener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
@@ -166,7 +167,7 @@ public class MapFragment extends Fragment {
             items.add(new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition()));
             i++;
         }
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(getContext(),
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(requireContext(),
                 items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
