@@ -6,9 +6,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,23 +32,41 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class MapFragment extends Fragment {
+
+    private final static Paint circlePaint;
+    private final static Paint borderPaint;
+    private final static Paint accuracyPaint;
+
+    static {
+        circlePaint = new Paint();
+        circlePaint.setARGB(255, 66, 134, 245);
+
+        borderPaint = new Paint();
+        borderPaint.setColor(Color.WHITE);
+
+        accuracyPaint = new Paint(circlePaint);
+        accuracyPaint.setAlpha(100);
+    }
+
     private final String TAG = getClass().getSimpleName();
 
     private MapView map;
     private final List<Order> collection = new ArrayList<>();
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
     private ImageButton centerOnPos;
+
+    private Location currentLocation;
 
     private boolean followPosition = false;
 
@@ -80,12 +103,35 @@ public class MapFragment extends Fragment {
             setFollowPosition(false);
             return true;
         });
+        map.getOverlays().add(new Overlay() {
+            @Override
+            public void draw(Canvas c, MapView osmv, boolean shadow) {
+                if (!isEnabled() || shadow) return;
+
+                c.save();
+
+                final Projection pj = osmv.getProjection();
+
+                Point pxPos = pj.toPixels(new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()), null);
+                float radius = Math.max(pj.metersToPixels(1), 15);
+                if (currentLocation.hasAccuracy())
+                    c.drawCircle(pxPos.x, pxPos.y, pj.metersToPixels(currentLocation.getAccuracy()), accuracyPaint);
+                c.drawCircle(pxPos.x, pxPos.y, radius * 1.5f, borderPaint);
+                c.drawCircle(pxPos.x, pxPos.y, radius, circlePaint);
+
+                c.restore();
+            }
+        });
+
 
         centerOnPos = rootView.findViewById(R.id.centerPos);
         centerOnPos.setOnClickListener(view -> setFollowPosition(!followPosition));
 
         mOverlay = createOverlay();
         map.getOverlays().add(mOverlay);
+
+        initGpsListener();
+
         return rootView;
     }
 
@@ -102,9 +148,9 @@ public class MapFragment extends Fragment {
         LocationListener listener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                currentLocation = location;
                 if (followPosition)
-                    map.getController().animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
-                else locationManager.removeUpdates(this);
+                    map.getController().setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
             }
 
             @Override
@@ -125,7 +171,7 @@ public class MapFragment extends Fragment {
                 centerOnPos.setVisibility(View.INVISIBLE);
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, listener);
+        locationManager.requestLocationUpdates(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? LocationManager.FUSED_PROVIDER : LocationManager.GPS_PROVIDER, 100, 0, listener);
     }
 
     private void setFollowPosition(boolean followPosition) {
@@ -133,7 +179,6 @@ public class MapFragment extends Fragment {
         Log.d(TAG, "Follow position: " + followPosition);
         this.followPosition = followPosition;
         centerOnPos.setVisibility(followPosition ? View.INVISIBLE : View.VISIBLE);
-        if (followPosition) initGpsListener();
     }
 
     @Override
