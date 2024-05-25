@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -30,6 +31,7 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     private final static Paint PAINT_CIRCLE;
     private final static Paint PAINT_BORDER;
     private final static Paint PAINT_ACCURACY;
+    private final static Paint PAINT_ROTATION;
 
     static {
         PAINT_CIRCLE = new Paint();
@@ -40,12 +42,15 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
 
         PAINT_ACCURACY = new Paint(PAINT_CIRCLE);
         PAINT_ACCURACY.setAlpha(100);
+
+        PAINT_ROTATION = new Paint(PAINT_CIRCLE);
+        PAINT_ROTATION.setAlpha(200);
     }
 
     private final MapView map;
 
     private Location currentLocation;
-    private int currentRotation = 0;
+    private Integer currentRotation;
 
     private boolean followPosition = false;
 
@@ -64,13 +69,19 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
         Log.d(TAG, "Follow position: " + followPosition);
         this.followPosition = followPosition;
         map.setFlingEnabled(!this.followPosition);
+        if (followPosition) zoomIn = true;
         if (onFollowPositionChange != null) onFollowPositionChange.accept(followPosition);
     }
+
+
+    boolean zoomIn = false;
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
         currentLocation = location;
-        if (followPosition) map.getController().setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
+        if (followPosition)
+            map.getController().animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()), zoomIn ? 19.0 : null, 250L);
+        zoomIn = false;
     }
 
     @Override
@@ -97,11 +108,21 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
         c.save();
 
         final Projection pj = osmv.getProjection();
-
         Point pxPos = pj.toPixels(new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()), null);
+
         float radius = Math.max(pj.metersToPixels(1), 15);
-        if (currentLocation.hasAccuracy())
-            c.drawCircle(pxPos.x, pxPos.y, pj.metersToPixels(currentLocation.getAccuracy()), PAINT_ACCURACY);
+        float rotationRadius = radius * 5;
+        if (currentRotation != null)
+            c.drawArc(
+                    new RectF(pxPos.x - rotationRadius, pxPos.y - rotationRadius, pxPos.x + rotationRadius, pxPos.y + rotationRadius),
+                    currentRotation - 90 - ROTATION_ACCURACY,
+                    ROTATION_ACCURACY * 2,
+                    true,
+                    PAINT_ROTATION
+            );
+
+        if (currentLocation.hasAccuracy()) c.drawCircle(pxPos.x, pxPos.y, pj.metersToPixels(currentLocation.getAccuracy()), PAINT_ACCURACY);
+
         c.drawCircle(pxPos.x, pxPos.y, radius * 1.5f, PAINT_BORDER);
         c.drawCircle(pxPos.x, pxPos.y, radius, PAINT_CIRCLE);
 
@@ -122,22 +143,24 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) mGravity = event.values;
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) mGeomagnetic = event.values;
+        if (!followPosition) return;
 
-        if (!followPosition) currentRotation = 0;
-        if (!followPosition || mGravity == null || mGeomagnetic == null) return;
+        if (mGravity == null || mGeomagnetic == null) {
+            currentRotation = null;
+            return;
+        }
 
         float[] R = new float[9];
         if (!SensorManager.getRotationMatrix(R, new float[9], mGravity, mGeomagnetic)) return;
         float[] orientation = SensorManager.getOrientation(R, new float[3]);
 
-        double rotation = Math.toDegrees(-orientation[0]) % 360;
-        if (rotation < 0) rotation += 360;
-        if (rotation > currentRotation + ROTATION_ACCURACY || rotation < currentRotation - ROTATION_ACCURACY) currentRotation = (int) rotation;
-        map.setMapOrientation(currentRotation);
+        int rotation = Math.round(((float) Math.toDegrees(orientation[0]) + 360) % 360);
+        if (currentRotation == null || Math.abs(rotation - currentRotation) > ROTATION_ACCURACY / 6)
+            currentRotation = rotation;
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        Log.d(TAG, sensor.getStringType() + " accuracy changed " + accuracy);
     }
 }
