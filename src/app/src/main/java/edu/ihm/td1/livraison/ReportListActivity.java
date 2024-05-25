@@ -1,8 +1,9 @@
 package edu.ihm.td1.livraison;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +22,6 @@ public class ReportListActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.PendingReports));
         ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.TreatedReports));
-        ViewGroup.LayoutParams finishedListParams = findViewById(R.id.finished).findViewById(R.id.List).getLayoutParams();
-        finishedListParams.height = (int) ((int) 255 * getApplicationContext().getResources().getDisplayMetrics().density);
-        findViewById(R.id.finished).findViewById(R.id.List).setLayoutParams(finishedListParams);
 
         UserFactory userFactory = new UserFactory();
         User user = userFactory.getUser("SAV");
@@ -35,6 +33,8 @@ public class ReportListActivity extends AppCompatActivity {
         toolbar.setArguments(bundle); // send data to fragment
         toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
 
+        int currentOrientation = getResources().getConfiguration().orientation;
+        ((LinearLayout) findViewById(R.id.lists)).setOrientation(currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
     }
 
     @Override

@@ -3,7 +3,9 @@ package edu.ihm.td1.livraison;
 import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
 
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +61,8 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
         toolbar.setArguments(bundle); // send data to fragment
         toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
 
+        int currentOrientation = getResources().getConfiguration().orientation;
+        ((LinearLayout) findViewById(R.id.layout)).setOrientation(currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
     }
 
     @Override
