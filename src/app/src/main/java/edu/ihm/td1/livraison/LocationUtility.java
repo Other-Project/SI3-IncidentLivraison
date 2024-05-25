@@ -145,7 +145,6 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) mGravity = event.values;
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) mGeomagnetic = event.values;
-        if (!followPosition) return;
 
         if (mGravity == null || mGeomagnetic == null) {
             currentRotation = null;
