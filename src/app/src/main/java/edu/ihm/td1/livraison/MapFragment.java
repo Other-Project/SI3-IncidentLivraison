@@ -107,20 +107,15 @@ public class MapFragment extends Fragment {
                     .setMinUpdateIntervalMillis(500)
                     .setMaxUpdateDelayMillis(1000)
                     .build();
-            LocationServices.getFusedLocationProviderClient(requireContext()).requestLocationUpdates(locationRequest,
-                    locationUtility,
-                    Looper.getMainLooper());
+            LocationServices.getFusedLocationProviderClient(requireContext()).requestLocationUpdates(locationRequest, locationUtility, Looper.getMainLooper());
         } else {
             LocationManager locationManager = (LocationManager) (requireContext().getSystemService(LOCATION_SERVICE));
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationUtility);
         }
 
         SensorManager mSensorManager = (SensorManager) requireContext().getSystemService(Context.SENSOR_SERVICE);
-        Sensor mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        Sensor mSensorMagneticField = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-        mSensorManager.registerListener(locationUtility, mSensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
-        mSensorManager.registerListener(locationUtility, mSensorMagneticField, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(locationUtility, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(locationUtility, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
