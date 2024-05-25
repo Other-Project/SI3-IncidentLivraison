@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -61,7 +66,7 @@ public class MapFragment extends Fragment {
         map = rootView.findViewById(R.id.map);
         locationUtility = new LocationUtility(map);
         map.setTileSource(TileSourceFactory.MAPNIK); //render
-        map.setBuiltInZoomControls(true); // TODO: delete this for the demo
+        map.setBuiltInZoomControls(Build.PRODUCT.contains("sdk"));
         map.setMultiTouchControls(true); // zoomable with 2 fingers
         IMapController mapController = map.getController();
         mapController.setZoom(15.0);
@@ -94,8 +99,19 @@ public class MapFragment extends Fragment {
             return;
         }
 
-        LocationManager locationManager = (LocationManager) (requireContext().getSystemService(LOCATION_SERVICE));
-        locationManager.requestLocationUpdates(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? LocationManager.FUSED_PROVIDER : LocationManager.GPS_PROVIDER, 100, 0, locationUtility);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
+                    .setWaitForAccurateLocation(false)
+                    .setMinUpdateIntervalMillis(500)
+                    .setMaxUpdateDelayMillis(1000)
+                    .build();
+            LocationServices.getFusedLocationProviderClient(requireContext()).requestLocationUpdates(locationRequest,
+                    locationUtility,
+                    Looper.getMainLooper());
+        } else {
+            LocationManager locationManager = (LocationManager) (requireContext().getSystemService(LOCATION_SERVICE));
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationUtility);
+        }
     }
 
     @Override

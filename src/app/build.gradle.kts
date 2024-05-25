@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.osmdroid.android)
     implementation(libs.preference)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -19,7 +19,7 @@ import org.osmdroid.views.overlay.Overlay;
 
 import java.util.function.Consumer;
 
-public class LocationUtility extends Overlay implements LocationListener {
+public class LocationUtility extends Overlay implements LocationListener, com.google.android.gms.location.LocationListener {
 
     private final static Paint circlePaint;
     private final static Paint borderPaint;
