@@ -79,7 +79,7 @@ public class Order implements Parcelable {
     }
 
     public double getDistance(double currentLat, double currentLong) {
-        return getPosition().distanceToAsDouble(new GeoPoint(currentLat, currentLong));
+        return getPosition().distanceToAsDouble(new GeoPoint(currentLat, currentLong)) / 1000;
     }
 
     public String getDescription() {

@@ -14,7 +14,6 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.Observable;
 import java.util.Observer;
 
-
 import edu.ihm.td1.livraison.userFactory.User;
 import edu.ihm.td1.livraison.userFactory.UserFactory;
 /**
@@ -42,6 +41,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
         // map fragment initialisation
         mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.delivery_map);
         assert mapFragment != null;
+        mapFragment.setOnLocationChanged(deliveryAdapter::onLocationChanged);
 
         // data setup
         Bundle bundleMap = new Bundle();

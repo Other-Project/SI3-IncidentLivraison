@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class MapFragment extends Fragment {
 
@@ -51,6 +53,7 @@ public class MapFragment extends Fragment {
     private ImageButton centerOnPos;
 
     private LocationUtility locationUtility;
+    private Consumer<Location> onLocationChanged;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +69,6 @@ public class MapFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         map = rootView.findViewById(R.id.map);
-        locationUtility = new LocationUtility(map);
         map.setTileSource(TileSourceFactory.MAPNIK); //render
         map.setBuiltInZoomControls(Build.PRODUCT.contains("sdk"));
         map.setMultiTouchControls(true); // zoomable with 2 fingers
@@ -78,8 +80,10 @@ public class MapFragment extends Fragment {
                 ? firstPoint.get().getPosition()
                 : new GeoPoint(43.61, 7.07));
 
-        map.getOverlays().add(locationUtility);
+        locationUtility = new LocationUtility(map);
         locationUtility.setOnFollowPositionChange(followPosition -> centerOnPos.setVisibility(followPosition ? View.INVISIBLE : View.VISIBLE));
+        locationUtility.setOnLocationChanged(onLocationChanged);
+        map.getOverlays().add(locationUtility);
 
         centerOnPos = rootView.findViewById(R.id.centerPos);
         centerOnPos.setOnClickListener(view -> locationUtility.setFollowPosition(true));
@@ -167,5 +171,9 @@ public class MapFragment extends Fragment {
 
     private Optional<OverlayItem> orderToOverlayItem(Order order) {
         return mOverlay.getDisplayedItems().stream().filter(oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst();
+    }
+
+    public void setOnLocationChanged(Consumer<Location> onLocationChanged) {
+        this.onLocationChanged = onLocationChanged;
     }
 }

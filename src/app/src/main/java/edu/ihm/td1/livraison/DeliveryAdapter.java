@@ -1,11 +1,8 @@
 package edu.ihm.td1.livraison;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.osmdroid.util.GeoPoint;
 
-import java.net.URI;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -72,5 +70,10 @@ public class DeliveryAdapter extends BaseAdapter {
 
     public void setOnDeliveryIssue(Consumer<Order> onDeliveryIssue) {
         this.onDeliveryIssue = onDeliveryIssue;
+    }
+
+    public void onLocationChanged(@NonNull Location location) {
+        this.currentGPSPostion = new GeoPoint(location.getLatitude(), location.getLongitude());
+        notifyDataSetChanged();
     }
 }

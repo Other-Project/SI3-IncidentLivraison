@@ -55,6 +55,7 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     private boolean followPosition = false;
 
     private Consumer<Boolean> onFollowPositionChange;
+    private Consumer<Location> onLocationChanged;
 
     public LocationUtility(MapView map) {
         this.map = map;
@@ -79,6 +80,7 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     @Override
     public void onLocationChanged(@NonNull Location location) {
         currentLocation = location;
+        if (onLocationChanged != null) onLocationChanged.accept(location);
         if (followPosition)
             map.getController().animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()), zoomIn ? 19.0 : null, 250L);
         zoomIn = false;
@@ -162,5 +164,9 @@ public class LocationUtility extends Overlay implements LocationListener, com.go
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.d(TAG, sensor.getStringType() + " accuracy changed " + accuracy);
+    }
+
+    public void setOnLocationChanged(Consumer<Location> onLocationChanged) {
+        this.onLocationChanged = onLocationChanged;
     }
 }
