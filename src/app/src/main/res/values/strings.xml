@@ -22,4 +22,5 @@
     <string name="PendingReports">Signalements à traiter :</string>
     <string name="TreatedReports">Signalements traités :</string>
     <string name="me_localiser">Me localiser</string>
+    <string name="image_de_l_article">Image de l\'article</string>
 </resources>
