@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="25dp"
     tools:context=".MainActivity">
 
     <TextView
@@ -18,14 +19,18 @@
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@id/profile_selection"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="160dp"
-        android:layout_height="126dp"
-        android:contentDescription="logo de l'app"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/logo_de_l_app"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@id/profile_selection"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView2" />
@@ -38,24 +43,26 @@
         android:text="@string/profile_selection"
         android:textAlignment="center"
         android:textSize="24sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/icone_client"
-        android:layout_width="86dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:background="#0000"
         android:contentDescription="@string/client_icon_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icone_client"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
         app:layout_constraintEnd_toStartOf="@id/icone_livreur"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_client"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toTopOf="@id/icone_livreur" />
 
     <TextView
         android:id="@+id/text_client"
@@ -65,23 +72,25 @@
         android:text="@string/client_text"
         android:textAlignment="center"
         android:textSize="14sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/icone_client"
         app:layout_constraintStart_toStartOf="@id/icone_client"
-        app:layout_constraintTop_toBottomOf="@id/icone_client"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toBottomOf="@id/icone_client" />
 
     <ImageButton
         android:id="@+id/icone_livreur"
-        android:layout_width="86dp"
+        android:layout_width="wrap_content"
         android:layout_height="82dp"
-        android:layout_marginTop="50dp"
+        android:adjustViewBounds="true"
         android:background="#0000"
         android:contentDescription="@string/livreur_icon_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icone_livreur"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_livreur"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toBottomOf="@id/profile_selection" />
 
     <TextView
         android:id="@+id/text_livreur"
@@ -91,24 +100,26 @@
         android:text="@string/livreur_text"
         android:textAlignment="center"
         android:textSize="14sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/icone_livreur"
         app:layout_constraintStart_toStartOf="@id/icone_livreur"
-        app:layout_constraintTop_toBottomOf="@id/icone_livreur"
-        android:visibility="invisible" />
+        app:layout_constraintTop_toBottomOf="@id/icone_livreur" />
 
 
     <ImageButton
         android:id="@+id/icone_service_client"
-        android:layout_width="86dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:background="#0000"
         android:contentDescription="@string/service_client_icon_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icone_service_client"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icone_livreur"
-        app:layout_constraintTop_toBottomOf="@id/profile_selection"
-        app:srcCompat="@drawable/icone_service_client"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toTopOf="@id/icone_livreur" />
 
     <TextView
         android:id="@+id/text_service_client"
@@ -118,12 +129,10 @@
         android:text="@string/service_client_text"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/icone_service_client"
         app:layout_constraintStart_toStartOf="@id/icone_service_client"
-        app:layout_constraintTop_toBottomOf="@+id/icone_service_client"
-        app:layout_constraintVertical_bias="0.0"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toBottomOf="@+id/icone_service_client" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
