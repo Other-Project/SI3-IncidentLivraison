@@ -6,6 +6,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -112,6 +114,13 @@ public class MapFragment extends Fragment {
             LocationManager locationManager = (LocationManager) (requireContext().getSystemService(LOCATION_SERVICE));
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationUtility);
         }
+
+        SensorManager mSensorManager = (SensorManager) requireContext().getSystemService(Context.SENSOR_SERVICE);
+        Sensor mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor mSensorMagneticField = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        mSensorManager.registerListener(locationUtility, mSensorAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(locationUtility, mSensorMagneticField, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
