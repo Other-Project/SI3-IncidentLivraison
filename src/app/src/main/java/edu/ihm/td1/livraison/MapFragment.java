@@ -93,6 +93,7 @@ public class MapFragment extends Fragment {
         boolean permissionGranted = ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         Log.d(TAG, "GPS permissionGranted = " + permissionGranted);
         if (!permissionGranted) {
+            setFollowPosition(false);
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
             return;
         }
@@ -101,12 +102,9 @@ public class MapFragment extends Fragment {
         LocationListener listener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                if (!followPosition) {
-                    locationManager.removeUpdates(this);
-                    return;
-                }
-                GeoPoint point = new GeoPoint(location.getLatitude(), location.getLongitude());
-                map.getController().animateTo(point);
+                if (followPosition)
+                    map.getController().animateTo(new GeoPoint(location.getLatitude(), location.getLongitude()));
+                else locationManager.removeUpdates(this);
             }
 
             @Override
@@ -117,15 +115,17 @@ public class MapFragment extends Fragment {
             @Override
             public void onProviderEnabled(@NonNull String s) {
                 Log.d(TAG, s + " sensor ON");
+                setFollowPosition(followPosition);
             }
 
             @Override
             public void onProviderDisabled(@NonNull String s) {
                 Log.d(TAG, s + " sensor OFF");
-                setFollowPosition(false);
+                followPosition = false;
+                centerOnPos.setVisibility(View.INVISIBLE);
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 1, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, listener);
     }
 
     private void setFollowPosition(boolean followPosition) {
