@@ -15,6 +15,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import edu.ihm.td1.livraison.userFactory.Client;
+import edu.ihm.td1.livraison.userFactory.User;
+import edu.ihm.td1.livraison.userFactory.UserFactory;
+
 /**
  * This is the Model
  * View : {@link DeliveryActivity}
@@ -43,6 +47,8 @@ public class Order implements Parcelable {
     private long date;
     private GeoPoint position;
 
+    private User destinatedTo;
+
     public Order(int id, String desc, int img, boolean del, String a, long d) {
         this.id = id;
         description = desc;
@@ -50,6 +56,8 @@ public class Order implements Parcelable {
         delivered = del;
         this.address = a;
         this.date = d;
+        UserFactory factory = new UserFactory();
+        this.destinatedTo = factory.getUser("CLIENT");
         position = createPosition();
     }
 
@@ -60,6 +68,8 @@ public class Order implements Parcelable {
         image = in.readInt();
         delivered = in.readInt() == 1;
         date = in.readLong();
+        UserFactory factory = new UserFactory();
+        this.destinatedTo = factory.getUser("CLIENT");
         position = createPosition();
     }
 
@@ -105,6 +115,8 @@ public class Order implements Parcelable {
     public long getDate() {
         return date;
     }
+
+    public User getDestinatedTo(){ return destinatedTo; }
 
     @Override
     public int describeContents() {
