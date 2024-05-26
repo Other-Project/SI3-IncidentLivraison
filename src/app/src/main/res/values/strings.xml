@@ -24,4 +24,6 @@
     <string name="me_localiser">Me localiser</string>
     <string name="image_de_l_article">Image de l\'article</string>
     <string name="logo_de_l_app">logo de l\'app</string>
+    <string name="add_to_calendar">Ajouter un évènement au Calendrier</string>
+    <string name="report_problem">Signaler un problème</string>
 </resources>

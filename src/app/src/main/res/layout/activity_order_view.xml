@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="@drawable/empty_divider"
+    android:orientation="vertical"
+    android:showDividers="middle"
     tools:context=".OrderViewActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/toolbar"
         android:name="edu.ihm.td1.livraison.Toolbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="wrap_content" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentObjectDisplay"
         android:name="edu.ihm.td1.livraison.ObjectDisplayFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        />
-
+        android:layout_marginHorizontal="10dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentMap"
         android:name="edu.ihm.td1.livraison.MapFragment"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        app:layout_constraintTop_toBottomOf="@id/fragmentObjectDisplay"
-        app:layout_constraintBottom_toTopOf="@id/buttonCalendar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/buttonCalendar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter un évènement au Calendrier  >"
-        android:fontFamily="@font/andika_new_basic_bold"
-
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonReport"/>
-
-    <Button
-        android:id="@+id/buttonReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Signaler un problème                            >"
-        android:fontFamily="@font/andika_new_basic_bold"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="20dp"
-        />
+        android:divider="@drawable/empty_divider"
+        android:showDividers="middle">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/buttonCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/andika_new_basic_bold"
+            android:text="@string/add_to_calendar"
+            android:textAlignment="center"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/buttonReport"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/andika_new_basic_bold"
+            android:text="@string/report_problem"
+            android:textAlignment="center"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>

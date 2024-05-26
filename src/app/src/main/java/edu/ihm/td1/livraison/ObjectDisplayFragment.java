@@ -1,17 +1,14 @@
 package edu.ihm.td1.livraison;
 
-import android.media.Image;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,9 +58,8 @@ public class ObjectDisplayFragment extends Fragment {
         // Inflate the layout for this fragment
         item = getArguments().getParcelable(ARG_ITEM);
         View rootView = inflater.inflate(R.layout.fragment_object_display, container, false);
-        LinearLayout layout = rootView.findViewById(R.id.lin_layout);
-        ImageView img = layout.findViewById(R.id.imageColis);
-        TextView txt = layout.findViewById(R.id.textView);
+        ImageView img = rootView.findViewById(R.id.imageColis);
+        TextView txt = rootView.findViewById(R.id.textView);
         if(item instanceof Order){
             Order o = (Order)item;
             img.setImageResource(o.getImage());

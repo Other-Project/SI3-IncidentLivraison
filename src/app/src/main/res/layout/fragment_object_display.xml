@@ -1,35 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ObjectDisplayFragment">
-    <LinearLayout
-        android:id="@+id/lin_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".ObjectDisplayFragment"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    android:layout_gravity="center_horizontal"
+    android:divider="@drawable/empty_divider"
+    android:showDividers="middle">
 
-        >
         <ImageView
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:id="@+id/imageColis"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_gravity="start|center"
-            />
-
+            android:contentDescription="@string/image_de_l_article" />
 
         <TextView
-            android:layout_marginStart="20dp"
             android:id="@+id/textView"
-            android:layout_width="230dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30sp"
-            android:gravity="center"
             android:textColor="@color/black"
             android:textSize="17sp" />
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>
