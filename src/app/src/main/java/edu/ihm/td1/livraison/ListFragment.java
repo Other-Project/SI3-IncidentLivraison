@@ -1,9 +1,6 @@
 package edu.ihm.td1.livraison;
 
 import android.content.Intent;
-import static java.util.Objects.*;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -18,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 public class ListFragment extends Fragment {
     private static String TAG = "ListFragment";
@@ -39,6 +35,7 @@ public class ListFragment extends Fragment {
     public void notifyCollectionReady(){
         Bundle bundle = getArguments();
         if (bundle != null) {
+            itemList.clear();
             itemList.addAll((Collection<? extends Parcelable>) bundle.get("list"));
             listAdapter.notifyDataSetChanged();
         }
