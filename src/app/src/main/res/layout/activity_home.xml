@@ -1,138 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="25dp"
+    android:layout_margin="25dp"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
         android:fontFamily="@font/andika_new_basic_bold"
         android:text="@string/welcome_message"
         android:textAlignment="center"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@id/profile_selection"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="48sp" />
 
-    <ImageView
-        android:id="@+id/appLogo"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:contentDescription="@string/logo_de_l_app"
-        android:scaleType="fitCenter"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@id/profile_selection"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
+        android:layout_marginTop="10dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/logo_de_l_app"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintHeight_min="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/profile_selection"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/andika_new_basic_bold"
         android:text="@string/profile_selection"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="invisible" />
 
-    <ImageButton
-        android:id="@+id/icone_client"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:background="#0000"
-        android:contentDescription="@string/client_icon_description"
-        android:scaleType="fitCenter"
-        android:src="@drawable/icone_client"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
-        app:layout_constraintEnd_toStartOf="@id/icone_livreur"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/icone_livreur" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/andika_new_basic_bold"
-        android:text="@string/client_text"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/icone_client"
-        app:layout_constraintStart_toStartOf="@id/icone_client"
-        app:layout_constraintTop_toBottomOf="@id/icone_client" />
+        <ImageButton
+            android:id="@+id/icone_client"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:background="#0000"
+            android:contentDescription="@string/client_icon_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icone_client"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
+            app:layout_constraintEnd_toStartOf="@id/icone_livreur"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/icone_livreur" />
 
-    <ImageButton
-        android:id="@+id/icone_livreur"
-        android:layout_width="wrap_content"
-        android:layout_height="82dp"
-        android:adjustViewBounds="true"
-        android:background="#0000"
-        android:contentDescription="@string/livreur_icon_description"
-        android:scaleType="fitCenter"
-        android:src="@drawable/icone_livreur"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_selection" />
+        <TextView
+            android:id="@+id/text_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/andika_new_basic_bold"
+            android:text="@string/client_text"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/icone_client"
+            app:layout_constraintStart_toStartOf="@id/icone_client"
+            app:layout_constraintTop_toBottomOf="@id/icone_client" />
 
-    <TextView
-        android:id="@+id/text_livreur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/andika_new_basic_bold"
-        android:text="@string/livreur_text"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/icone_livreur"
-        app:layout_constraintStart_toStartOf="@id/icone_livreur"
-        app:layout_constraintTop_toBottomOf="@id/icone_livreur" />
+        <ImageButton
+            android:id="@+id/icone_livreur"
+            android:layout_width="wrap_content"
+            android:layout_height="82dp"
+            android:adjustViewBounds="true"
+            android:background="#0000"
+            android:contentDescription="@string/livreur_icon_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icone_livreur"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/text_livreur"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageButton
-        android:id="@+id/icone_service_client"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:background="#0000"
-        android:contentDescription="@string/service_client_icon_description"
-        android:scaleType="fitCenter"
-        android:src="@drawable/icone_service_client"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icone_livreur"
-        app:layout_constraintTop_toTopOf="@id/icone_livreur" />
-
-    <TextView
-        android:id="@+id/text_service_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/andika_new_basic_bold"
-        android:text="@string/service_client_text"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/icone_service_client"
-        app:layout_constraintStart_toStartOf="@id/icone_service_client"
-        app:layout_constraintTop_toBottomOf="@+id/icone_service_client" />
+        <TextView
+            android:id="@+id/text_livreur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/andika_new_basic_bold"
+            android:text="@string/livreur_text"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/icone_livreur"
+            app:layout_constraintStart_toStartOf="@id/icone_livreur"
+            app:layout_constraintTop_toBottomOf="@id/icone_livreur" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/icone_service_client"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:background="#0000"
+            android:contentDescription="@string/service_client_icon_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icone_service_client"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icone_livreur"
+            app:layout_constraintTop_toTopOf="@id/icone_livreur" />
+
+        <TextView
+            android:id="@+id/text_service_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/andika_new_basic_bold"
+            android:text="@string/service_client_text"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/icone_service_client"
+            app:layout_constraintStart_toStartOf="@id/icone_service_client"
+            app:layout_constraintTop_toBottomOf="@+id/icone_service_client" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
