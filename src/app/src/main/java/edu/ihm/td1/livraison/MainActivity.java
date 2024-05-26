@@ -1,33 +1,26 @@
 package edu.ihm.td1.livraison;
 
-import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.function.Consumer;
+
 public class MainActivity extends AppCompatActivity {
     public final String TAG = "Livraison" + getClass().getSimpleName();
-    private ImageView logo;
-    private TextView welcomeMessage;
     private TextView profileSelection;
-    private ImageView clientButton;
-    private TextView clientText;
-    private ImageView deliveryButton;
-    private TextView deliveryText;
-    private ImageView savButton;
-    private TextView savText;
+    private ConstraintLayout user_buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,80 +28,63 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        deliveryButton = findViewById(R.id.icone_livreur);
+        ImageView deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
 
-        clientButton = findViewById(R.id.icone_client);
+        ImageView clientButton = findViewById(R.id.icone_client);
         clientButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), OrderListActivity.class)));
 
-        savButton = findViewById(R.id.icone_service_client);
-        savButton.setOnClickListener(view-> startActivity(new Intent(getApplicationContext(), ReportListActivity.class)));
+        ImageView savButton = findViewById(R.id.icone_service_client);
+        savButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ReportListActivity.class)));
 
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.d(TAG, "erreur");
             } else {
                 //((TextView) findViewById(R.id.token)).setText("token = " + task.getResult());
-                Log.d(TAG, "Token reçu :"+task.getResult());
+                Log.d(TAG, "Token reçu :" + task.getResult());
                 //task.getResult() => dans le log de base
             }
         });
-        logo = findViewById(R.id.appLogo);
-        welcomeMessage = findViewById(R.id.textView2);
+        ImageView logo = findViewById(R.id.appLogo);
+        TextView welcomeMessage = findViewById(R.id.textView2);
         profileSelection = findViewById(R.id.profile_selection);
-        clientText = findViewById(R.id.text_client);
-        deliveryText = findViewById(R.id.text_livreur);
-        savText = findViewById(R.id.text_service_client);
+        user_buttons = findViewById(R.id.user_buttons);
 
-        Animation firstFadeIn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.first_fadein);
-        Animation secondFadeIn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.second_fadein);
-        Animation thirdFadeIn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.third_fadein);
+        Animation firstFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.first_fadein);
+        Animation secondFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.second_fadein);
+        Animation thirdFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.third_fadein);
 
+        profileSelection.setVisibility(View.INVISIBLE);
+        user_buttons.setVisibility(View.INVISIBLE);
         welcomeMessage.startAnimation(firstFadeIn);
         logo.startAnimation(firstFadeIn);
 
-        firstFadeIn.setAnimationListener(new Animation.AnimationListener() {
+        firstFadeIn.setAnimationListener(animationEndListener(animation -> {
+            profileSelection.setVisibility(View.VISIBLE);
+            profileSelection.startAnimation(secondFadeIn);
+        }));
+
+        secondFadeIn.setAnimationListener(animationEndListener(animation -> {
+            user_buttons.setVisibility(View.VISIBLE);
+            user_buttons.startAnimation(thirdFadeIn);
+        }));
+    }
+
+    private Animation.AnimationListener animationEndListener(Consumer<Animation> onEnd) {
+        return new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                profileSelection.setVisibility(View.VISIBLE);
-                profileSelection.startAnimation(secondFadeIn);
+                onEnd.accept(animation);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
-        });
-
-        secondFadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                clientButton.setVisibility(View.VISIBLE);
-                clientText.setVisibility(View.VISIBLE);
-                deliveryButton.setVisibility(View.VISIBLE);
-                deliveryText.setVisibility(View.VISIBLE);
-                savButton.setVisibility(View.VISIBLE);
-                savText.setVisibility(View.VISIBLE);
-                clientButton.startAnimation(thirdFadeIn);
-                clientText.startAnimation(thirdFadeIn);
-                deliveryButton.startAnimation(thirdFadeIn);
-                deliveryText.startAnimation(thirdFadeIn);
-                savButton.startAnimation(thirdFadeIn);
-                savText.startAnimation(thirdFadeIn);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
+        };
     }
 }

@@ -49,10 +49,10 @@
         android:fontFamily="@font/andika_new_basic_bold"
         android:text="@string/profile_selection"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:visibility="invisible" />
+        android:textSize="24sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -65,7 +65,6 @@
             android:contentDescription="@string/client_icon_description"
             android:scaleType="fitCenter"
             android:src="@drawable/icone_client"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
             app:layout_constraintEnd_toStartOf="@id/icone_livreur"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +78,6 @@
             android:text="@string/client_text"
             android:textAlignment="center"
             android:textSize="14sp"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/icone_client"
             app:layout_constraintStart_toStartOf="@id/icone_client"
             app:layout_constraintTop_toBottomOf="@id/icone_client" />
@@ -93,7 +91,6 @@
             android:contentDescription="@string/livreur_icon_description"
             android:scaleType="fitCenter"
             android:src="@drawable/icone_livreur"
-            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/text_livreur"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -107,7 +104,6 @@
             android:text="@string/livreur_text"
             android:textAlignment="center"
             android:textSize="14sp"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/icone_livreur"
             app:layout_constraintStart_toStartOf="@id/icone_livreur"
@@ -123,7 +119,6 @@
             android:contentDescription="@string/service_client_icon_description"
             android:scaleType="fitCenter"
             android:src="@drawable/icone_service_client"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/icone_livreur"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icone_livreur"
@@ -137,7 +132,6 @@
             android:text="@string/service_client_text"
             android:textAlignment="center"
             android:textSize="14sp"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/icone_service_client"
             app:layout_constraintStart_toStartOf="@id/icone_service_client"
             app:layout_constraintTop_toBottomOf="@+id/icone_service_client" />
