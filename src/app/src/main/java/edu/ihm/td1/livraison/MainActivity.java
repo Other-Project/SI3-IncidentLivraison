@@ -33,9 +33,23 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView clientButton = findViewById(R.id.icone_client);
         clientButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), OrderListActivity.class)));
-
+        /*
         ImageView savButton = findViewById(R.id.icone_service_client);
         savButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ReportListActivity.class)));
+        */
+
+        ImageView savButton = findViewById(R.id.icone_service_client);
+        savButton.setOnClickListener(view -> {
+            if(isTablet()){
+                Log.d(TAG, "En mode tablette");
+                startActivity(new Intent(getApplicationContext(), TabletActivity.class));
+            }
+            else{
+                Log.d(TAG, "pas en mode tablette");
+                startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
+            }
+        });
+
 
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -69,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
             user_buttons.setVisibility(View.VISIBLE);
             user_buttons.startAnimation(thirdFadeIn);
         }));
+    }
+
+    private boolean isTablet() {
+        return getResources().getBoolean(R.bool.is_tablet);
+
     }
 
     private Animation.AnimationListener animationEndListener(Consumer<Animation> onEnd) {
