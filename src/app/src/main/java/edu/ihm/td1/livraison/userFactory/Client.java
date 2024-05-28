@@ -4,31 +4,25 @@ import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 
-public class Client implements User{
-    protected Client() {
-
-    }
+public class Client extends User{
+    private final long numTelephone;
+    private final Adresse adresse;
     protected Client(Parcel in) {
-
-    }
-    @Override
-    public String getPrenom() {
-        return "Eva";
+        this(in.readString(), in.readString(), in.readString(),in.readLong(),in.readParcelable(Adresse.class.getClassLoader()));
     }
 
-    @Override
-    public String getNom() {
-        return "Zion";
+    protected Client(String prenom, String nom, String imageProfile,long numTelephone, Adresse adresse) {
+        super(prenom,nom,imageProfile);
+        this.numTelephone = numTelephone;
+        this.adresse = adresse;
     }
 
-    @Override
-    public String getNumeroTelephone() {
-        return "0666666666";
+    public long getNumTelephone() {
+        return numTelephone;
     }
 
-    @Override
-    public String getAdresse() {
-        return "67 rue de l'arbre rouge, Biot";
+    public Adresse getAdresse() {
+        return adresse;
     }
 
     @Override
@@ -40,8 +34,9 @@ public class Client implements User{
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(getPrenom());
         dest.writeString(getNom());
-        dest.writeString(getNumeroTelephone());
-        dest.writeString(getAdresse());
+        dest.writeString(getImageProfile());
+        dest.writeLong(getNumTelephone());
+        dest.writeParcelable(getAdresse(),flags);
     }
     public static final Creator<Client> CREATOR = new Creator<Client>() {
         @Override

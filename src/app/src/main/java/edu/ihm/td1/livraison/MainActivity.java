@@ -17,6 +17,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.function.Consumer;
 
+import edu.ihm.td1.livraison.userFactory.Client;
+import edu.ihm.td1.livraison.userFactory.ClientFactory;
+import edu.ihm.td1.livraison.userFactory.Livreur;
+import edu.ihm.td1.livraison.userFactory.LivreurFactory;
+import edu.ihm.td1.livraison.userFactory.SavFactory;
 import edu.ihm.td1.livraison.userFactory.UserFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,19 +37,19 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view ->{
-            Toolbar.setUser(new UserFactory().getUser("LIVREUR"));
+            Toolbar.setUser(new LivreurFactory().build());
             startActivity(new Intent(getApplicationContext(), DeliveryActivity.class));
         } );
 
         ImageView clientButton = findViewById(R.id.icone_client);
         clientButton.setOnClickListener(view ->{
-            Toolbar.setUser(new UserFactory().getUser("CLIENT"));
+            Toolbar.setUser(new ClientFactory().build());
             startActivity(new Intent(getApplicationContext(), OrderListActivity.class));
         });
 
         ImageView savButton = findViewById(R.id.icone_service_client);
         savButton.setOnClickListener(view ->{
-            Toolbar.setUser(new UserFactory().getUser("SAV"));
+            Toolbar.setUser(new SavFactory().build());
             startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
         } );
 

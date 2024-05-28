@@ -5,33 +5,19 @@ import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 
-import edu.ihm.td1.livraison.Order;
-
-public class Livreur implements User{
-    protected Livreur() {
-
-    }
+public class Livreur extends User {
+    private final long numTelephone;
     protected Livreur(Parcel in) {
-
-    }
-    @Override
-    public String getPrenom() {
-        return "Camille";
+        this(in.readString(), in.readString(), in.readString(),in.readLong());
     }
 
-    @Override
-    public String getNom() {
-        return "Honnete";
+    protected Livreur(String prenom, String nom, String imageProfile, long numTelephone) {
+        super(prenom,nom,imageProfile);
+        this.numTelephone = numTelephone;
     }
 
-    @Override
-    public String getNumeroTelephone() {
-        return "0777777777";
-    }
-
-    @Override
-    public String getAdresse() {
-        return null;
+    public long getNumTelephone() {
+        return numTelephone;
     }
 
     @Override
@@ -43,8 +29,8 @@ public class Livreur implements User{
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(getPrenom());
         dest.writeString(getNom());
-        dest.writeString(getNumeroTelephone());
-        dest.writeString(getAdresse());
+        dest.writeString(getImageProfile());
+        dest.writeLong(getNumTelephone());
     }
     public static final Creator<Livreur> CREATOR = new Creator<Livreur>() {
         @Override
