@@ -1,6 +1,5 @@
 package edu.ihm.td1.livraison;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,13 +16,11 @@ import java.util.stream.Collectors;
  * Model : {@link Order}
  */
 public class DeliveryViewModel extends Observable {
-    private final Activity activity;
     private final Context context;
     private final ArrayList<Order> deliveries = new ArrayList<>();
 
-    public DeliveryViewModel(Activity activity) {
-        this.activity = activity;
-        this.context = activity.getApplicationContext();
+    public DeliveryViewModel(Context context) {
+        this.context = context;
         deliveries.addAll(Order.ORDERS.values().stream()
                 .filter(order -> !order.getDelivered())
                 .collect(Collectors.toList()));
@@ -44,11 +41,6 @@ public class DeliveryViewModel extends Observable {
 
         this.setChanged();
         this.notifyObservers(delivery);
-
-        //Send notification
-        String title = "Livraison validée";
-        String message = "Pour l'adresse : " + delivery.getAddress();
-        Notification.sendNotificationOnChannel(activity, title, message);
     }
 
     void onDeliveryIssue(Order delivery) {

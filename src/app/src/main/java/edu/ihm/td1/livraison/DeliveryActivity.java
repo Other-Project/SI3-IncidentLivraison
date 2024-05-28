@@ -50,7 +50,13 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
     public void update(Observable o, Object arg) {
         //update orders
         if (!(arg instanceof Order)) return;
+        Order order = (Order) arg;
         deliveryAdapter.notifyDataSetChanged();
-        mapFragment.updateOrders((Order) arg);
+        mapFragment.updateOrders(order);
+
+        //Send notification
+        String title = "Livraison validée";
+        String message = "Pour l'adresse : " + order.getAddress();
+        Notification.sendNotificationOnChannel(this, title, message);
     }
 }
