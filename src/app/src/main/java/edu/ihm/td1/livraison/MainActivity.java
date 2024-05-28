@@ -17,6 +17,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.function.Consumer;
 
+import edu.ihm.td1.livraison.userFactory.UserFactory;
+
 public class MainActivity extends AppCompatActivity {
     public final String TAG = "Livraison" + getClass().getSimpleName();
     private TextView profileSelection;
@@ -29,13 +31,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         ImageView deliveryButton = findViewById(R.id.icone_livreur);
-        deliveryButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), DeliveryActivity.class)));
+        deliveryButton.setOnClickListener(view ->{
+            Toolbar.setUser(new UserFactory().getUser("LIVREUR"));
+            startActivity(new Intent(getApplicationContext(), DeliveryActivity.class));
+        } );
 
         ImageView clientButton = findViewById(R.id.icone_client);
-        clientButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), OrderListActivity.class)));
+        clientButton.setOnClickListener(view ->{
+            Toolbar.setUser(new UserFactory().getUser("CLIENT"));
+            startActivity(new Intent(getApplicationContext(), OrderListActivity.class));
+        });
 
         ImageView savButton = findViewById(R.id.icone_service_client);
-        savButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ReportListActivity.class)));
+        savButton.setOnClickListener(view ->{
+            Toolbar.setUser(new UserFactory().getUser("SAV"));
+            startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
+        } );
 
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -69,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             user_buttons.setVisibility(View.VISIBLE);
             user_buttons.startAnimation(thirdFadeIn);
         }));
+
+        Toolbar.setUser(null);
     }
 
     private Animation.AnimationListener animationEndListener(Consumer<Animation> onEnd) {

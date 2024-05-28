@@ -51,16 +51,6 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
         mapFragment.setArguments(bundleMap); // send data to fragment
         mapFragment.notifyCollectionReady();
 
-        UserFactory userFactory = new UserFactory();
-        User user = userFactory.getUser("LIVREUR");
-        // data setup
-        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
-        assert toolbar != null;
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("User", user);
-        toolbar.setArguments(bundle); // send data to fragment
-        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
-
         int currentOrientation = getResources().getConfiguration().orientation;
         ((LinearLayout) findViewById(R.id.layout)).setOrientation(currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
     }

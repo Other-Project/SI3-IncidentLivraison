@@ -43,17 +43,6 @@ public class OrderListActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.titlePendingDeliveries));
         ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.titleFinishedDeliveries));
 
-
-        UserFactory userFactory = new UserFactory();
-        User user = userFactory.getUser("CLIENT");
-        // data setup
-        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
-        assert toolbar != null;
-        Bundle bundleMap = new Bundle();
-        bundleMap.putParcelable("User", user);
-        toolbar.setArguments(bundleMap); // send data to fragment
-        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
-
         int currentOrientation = getResources().getConfiguration().orientation;
         ((LinearLayout) findViewById(R.id.lists)).setOrientation(currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
     }

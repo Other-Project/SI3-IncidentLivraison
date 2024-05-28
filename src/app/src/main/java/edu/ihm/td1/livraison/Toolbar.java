@@ -19,8 +19,7 @@ import java.util.concurrent.TimeUnit;
 import edu.ihm.td1.livraison.userFactory.User;
 
 public class Toolbar extends Fragment {
-    private String nomPrenom;
-    private User user;
+    private static User user;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,18 +42,17 @@ public class Toolbar extends Fragment {
             intent.putExtra("User", user);
             startActivity(intent);
         });
-        profile.setText(nomPrenom);
+        profile.setText(user.getPrenom()+" "+user.getNom());
 
 
 
         return rootView;
     }
 
-    public void notifyClientIsReady(TextView textView) {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            user = bundle.getParcelable("User");
-            nomPrenom = user.getPrenom() + " " + user.getNom();
-        }
+    public static User getUser() {
+        return user;
+    }
+    public static void setUser(User user) {
+        Toolbar.user = user;
     }
 }

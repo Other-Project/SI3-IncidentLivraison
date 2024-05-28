@@ -46,12 +46,6 @@ public class ProfileActivity extends AppCompatActivity {
             String message = "Modifications enregristré";
             sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_DEFAULT );
         });
-        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
-        assert toolbar != null;
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("User", user);
-        toolbar.setArguments(bundle); // send data to fragment
-        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
 
         TextView prenom = findViewById(R.id.prenom_edit);
         prenom.setText(user.getPrenom());
