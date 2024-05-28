@@ -40,8 +40,8 @@ public class OrderListActivity extends AppCompatActivity {
         fragmentPending.notifyCollectionReady();
         fragmentFinished.notifyCollectionReady();
 
-        ((TextView) findViewById(R.id.pending).findViewById(R.id.listTitle)).setText(getString(R.string.titlePendingDeliveries));
-        ((TextView) findViewById(R.id.finished).findViewById(R.id.listTitle)).setText(getString(R.string.titleFinishedDeliveries));
+        fragmentFinished.setTitle(getString(R.string.titlePendingDeliveries));
+        fragmentPending.setTitle(getString(R.string.titleFinishedDeliveries));
 
 
         UserFactory userFactory = new UserFactory();
