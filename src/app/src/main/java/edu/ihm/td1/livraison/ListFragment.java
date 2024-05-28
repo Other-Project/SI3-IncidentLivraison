@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +22,7 @@ public class ListFragment extends Fragment {
     private List<Parcelable> itemList = new ArrayList<>();
 
     private ListAdapter listAdapter;
-
+    private View currentView;
 
     public ListFragment(){}
 
@@ -31,6 +32,9 @@ public class ListFragment extends Fragment {
         listAdapter = new ListAdapter(getContext(), itemList);
     }
 
+    public void setTitle(String str){
+        ((TextView)this.currentView.findViewById(R.id.listTitle)).setText(str);
+    }
 
     public void notifyCollectionReady(){
         Bundle bundle = getArguments();
@@ -44,6 +48,7 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_liste_livraisons, container, false);
+        this.currentView = rootView;
         // Log.d(TAG, "in onCreateView(), collection = " + collection);
         ListView listView = rootView.findViewById(R.id.List);
         listView.setAdapter(listAdapter);
