@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 
 import edu.ihm.td1.livraison.userFactory.Client;
 import edu.ihm.td1.livraison.userFactory.Livreur;
@@ -47,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         findViewById( R.id.button ).setOnClickListener( click -> {
             String title = "Livraisoon";
-            String message = "Modifications enregristré";
+            String message = "Modifications enregristrées";
             sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_HIGH );
         });
 
