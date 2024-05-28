@@ -1,20 +1,36 @@
 package edu.ihm.td1.livraison.userFactory;
 
-public class UserFactory {
-    public User getUser(String userType){
-        if(userType == null){
-            return null;
-        }
-        if(userType.equalsIgnoreCase("CLIENT")){
-            return new Client();
+public abstract class UserFactory<T extends UserFactory, U extends User> {
+    private String prenom;
+    private String nom;
+    private String imageProfile;
 
-        } else if(userType.equalsIgnoreCase("LIVREUR")){
-            return new Livreur();
+    public abstract U build();
 
-        } else if(userType.equalsIgnoreCase("SAV")){
-            return new Sav();
-        }
+    public String getPrenom() {
+        return prenom;
+    }
 
-        return null;
+    public T setPrenom(String prenom) {
+        this.prenom = prenom;
+        return (T) this;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public T setNom(String nom) {
+        this.nom = nom;
+        return (T) this;
+    }
+
+    public String getImageProfile() {
+        return imageProfile;
+    }
+
+    public T setImageProfile(String imageProfile) {
+        this.imageProfile = imageProfile;
+        return (T) this;
     }
 }

@@ -59,7 +59,7 @@ public class DeliveryViewModel extends Observable {
     void onDeliveryIssue(Order delivery) {
         Toast.makeText(context, "Issue with " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
 
-        Uri uri = Uri.parse("smsto:"+delivery.getDestinatedTo().getNumeroTelephone()    );
+        Uri uri = Uri.parse("smsto:"+delivery.getDestinatedTo().getNumTelephone()    );
         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
         it.putExtra("sms_body", "Bonjour, c'est le livreur !\nJ'ai un problème avec votre commande n°" + delivery.getId());
         context.startActivity(it);
