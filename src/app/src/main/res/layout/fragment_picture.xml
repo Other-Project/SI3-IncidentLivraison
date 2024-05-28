@@ -9,21 +9,16 @@
     android:orientation="horizontal"
     app:flow_horizontalGap="10dp"
     tools:context=".PictureFragment">
-    <Button
-        android:id="@+id/buttonImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/ajouter_une_photo"
-        android:fontFamily="@font/andika_new_basic_bold"/>
-    <ImageView
+
+    <ImageButton
         android:id="@+id/phototaken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
-        android:paddingHorizontal="50dp"
-        android:paddingVertical="0dp"
-        android:src="@drawable/plus" />
+        android:fontFamily="@font/andika_new_basic_bold"
+        android:paddingHorizontal="1000dp"
+        android:paddingVertical="50dp"
+        android:src="@drawable/plus"
+        android:text="@string/ajouter_une_photo" />
 
 
 </LinearLayout>
