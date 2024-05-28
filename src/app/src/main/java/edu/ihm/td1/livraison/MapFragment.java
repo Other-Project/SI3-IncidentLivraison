@@ -6,6 +6,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
@@ -21,6 +22,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -35,6 +37,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
@@ -89,6 +92,7 @@ public class MapFragment extends Fragment {
         centerOnPos.setOnClickListener(view -> locationUtility.setFollowPosition(true));
 
         mOverlay = createOverlay();
+
         map.getOverlays().add(mOverlay);
 
         initGpsListener();
@@ -144,27 +148,30 @@ public class MapFragment extends Fragment {
     public void updateOrders(Order order) {
         collection.remove(order);
         orderToOverlayItem(order).ifPresent(mOverlay::removeItem);
+        map.invalidate();
     }
 
     private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
         ArrayList<OverlayItem> items = new ArrayList<>();
         int i = 1;
         for (Order o : collection) {
-            items.add(new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition()));
+            OverlayItem item = new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition());
+            items.add(item);
             i++;
         }
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(requireContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+        Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.mapmarker, null);
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(
+                items, icon, null, ItemizedOverlayWithFocus.NOT_SET, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
+                return false;
             }
 
             @Override
             public boolean onItemLongPress(int index, OverlayItem item) {
                 return false;
             }
-        });
+        }, getContext());
         mOverlay.setFocusItemsOnTap(true);
         return mOverlay;
     }
