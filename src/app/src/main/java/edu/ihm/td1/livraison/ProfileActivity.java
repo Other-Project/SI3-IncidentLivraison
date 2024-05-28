@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import edu.ihm.td1.livraison.userFactory.Client;
+import edu.ihm.td1.livraison.userFactory.Livreur;
 import edu.ihm.td1.livraison.userFactory.Sav;
 import edu.ihm.td1.livraison.userFactory.User;
 
@@ -50,11 +51,23 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         TextView prenom = findViewById(R.id.prenom_edit);
+        TextView numTel = findViewById(R.id.num_tel_edit);
+        TextView adresse = findViewById(R.id.adress_edit);
         prenom.setText(user.getPrenom());
         TextView nom = findViewById(R.id.nom_edit);
         nom.setText(user.getNom());
         if(user instanceof Sav){
+            findViewById(R.id.adress).setVisibility(View.INVISIBLE);
+            findViewById(R.id.num_tel).setVisibility(View.INVISIBLE);
             return;
+        }else if(user instanceof Livreur){
+            Livreur livreur = (Livreur) user;
+            numTel.setText("0"+livreur.getNumTelephone());
+            findViewById(R.id.adress).setVisibility(View.INVISIBLE);
+        }else{
+            Client client = (Client) user;
+            numTel.setText("0"+client.getNumTelephone());
+            adresse.setText(client.getAdresse().toString());
         }
         /*
         TextView numTel = findViewById(R.id.num_tel_edit);

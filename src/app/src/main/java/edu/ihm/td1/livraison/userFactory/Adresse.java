@@ -48,4 +48,9 @@ public class Adresse implements Parcelable {
         dest.writeString(rue);
         dest.writeInt(numero);
     }
+
+    @Override
+    public String toString() {
+        return numero+" rue "+rue+", "+ville+", "+pays;
+    }
 }
