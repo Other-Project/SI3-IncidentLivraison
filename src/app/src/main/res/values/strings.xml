@@ -15,7 +15,10 @@
     <string name="deliveries_map">Livraisons en cours</string>
     <string name="next_delivery">Prochaines Livraisons</string>
     <string name="next_delivery_distance">%.2f km</string>
+    <string name="picture">Photo</string>
     <string name="ajouter_une_photo">Ajouter une photo</string>
+    <string name="retake_picture">Changer de photo</string>
+    <string name="remove_picture">Supprimer la photo</string>
     <string name="sac_dos_dora_adulte">Sac à dos Dora adulte</string>
     <string name="envoyer">Envoyer</string>
     <string name="signalement">Signalement</string>
