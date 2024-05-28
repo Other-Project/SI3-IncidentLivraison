@@ -22,7 +22,7 @@ public class ListFragment extends Fragment {
     private List<Parcelable> itemList = new ArrayList<>();
 
     private ListAdapter listAdapter;
-    private View currentView;
+    private String title;
 
     public ListFragment(){}
 
@@ -33,7 +33,7 @@ public class ListFragment extends Fragment {
     }
 
     public void setTitle(String str){
-        ((TextView)this.currentView.findViewById(R.id.listTitle)).setText(str);
+        this.title = str;
     }
 
     public void notifyCollectionReady(){
@@ -48,9 +48,10 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_liste_livraisons, container, false);
-        this.currentView = rootView;
         // Log.d(TAG, "in onCreateView(), collection = " + collection);
         ListView listView = rootView.findViewById(R.id.List);
+        TextView textView = rootView.findViewById(R.id.listTitle);
+        textView.setText(this.title);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,9 +64,9 @@ public class ListFragment extends Fragment {
                     Log.d(TAG, "click sur une order");
                 }else{
                     if(getResources().getBoolean(R.bool.is_tablet)){
-                        TabletActivity.setReport(itemList.get(i));
+                        TabletActivity.setReport((Report) itemList.get(i));
                     }
-                    if(!((Report)itemList.get(i)).isTreated()){
+                    else if(!((Report)itemList.get(i)).isTreated()){
                         Intent intent = new Intent(getContext(), ReviewReportActivity.class );
                         intent.putExtra("report",itemList.get(i));
                         startActivity(intent);
