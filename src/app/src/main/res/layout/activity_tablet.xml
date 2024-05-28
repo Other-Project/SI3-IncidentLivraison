@@ -9,14 +9,21 @@
         android:layout_width="700dp"
         android:layout_height="match_parent"
         android:layout_weight="0">
-            <!-- Contenu de l'activité A pour la tablette -->
         <LinearLayout
             android:id="@+id/lists"
-            android:layout_width="match_parent"
+            android:layout_width="700dp"
             android:layout_height="match_parent"
             android:divider="@drawable/empty_divider"
             android:orientation="vertical"
             android:showDividers="middle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test "
+                android:textAlignment="center"
+                android:fontFamily="@font/andika_new_basic_bold"
+                android:textSize="20sp" />
+
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/pending"
                     android:name="edu.ihm.td1.livraison.ListFragment"
@@ -30,6 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
         </LinearLayout>
     </ScrollView>
 
@@ -43,7 +51,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <!--
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/toolbar"
                 android:name="edu.ihm.td1.livraison.Toolbar"
@@ -60,7 +68,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintBottom_toTopOf="@id/text_signalement"
-                android:background="@color/grey" />
+                android:background="@color/grey" />  -->
 
             <TextView
                 android:id="@+id/text_text_signalement"
@@ -85,8 +93,8 @@
                 android:text="Je ne suis pas content ..."
                 app:layout_constraintBottom_toTopOf="@id/image_signalement"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragmentObjectDisplay" />
+                app:layout_constraintEnd_toEndOf="parent"/>
+                <!--app:layout_constraintTop_toBottomOf="@id/fragmentObjectDisplay"-->
 
             <TextView
                 android:id="@+id/text_img"

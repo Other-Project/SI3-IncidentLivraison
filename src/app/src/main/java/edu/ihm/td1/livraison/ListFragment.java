@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -57,6 +58,9 @@ public class ListFragment extends Fragment {
                     startActivity(intent);
                     Log.d(TAG, "click sur une order");
                 }else{
+                    if(getResources().getBoolean(R.bool.is_tablet)){
+                        TabletActivity.setReport(itemList.get(i));
+                    }
                     if(!((Report)itemList.get(i)).isTreated()){
                         Intent intent = new Intent(getContext(), ReviewReportActivity.class );
                         intent.putExtra("report",itemList.get(i));
@@ -64,9 +68,9 @@ public class ListFragment extends Fragment {
                         Log.d(TAG,"click sur un report");
                     }
                 }
-
             }
         });
         return rootView;
     }
+
 }
