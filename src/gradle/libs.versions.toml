@@ -14,6 +14,7 @@ firebaseMessaging = "24.0.0"
 osmdroid = "6.0.2"
 preference = "1.2.1"
 playServicesLocation = "21.2.0"
+androidsvg = "1.4"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -30,6 +31,7 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid"}
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+androidsvg = { group = "com.caverock", name = "androidsvg", version.ref = "androidsvg" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
