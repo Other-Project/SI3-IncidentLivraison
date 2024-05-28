@@ -28,8 +28,6 @@ public class ReviewReportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_report);
 
-
-
         Log.d(TAG, "Lancement de l'activity");
         report = (Report)getIntent().getParcelableExtra("report");
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
