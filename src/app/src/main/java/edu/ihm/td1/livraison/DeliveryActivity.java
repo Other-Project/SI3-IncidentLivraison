@@ -1,23 +1,14 @@
 package edu.ihm.td1.livraison;
 
-import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
-
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import edu.ihm.td1.livraison.userFactory.User;
-import edu.ihm.td1.livraison.userFactory.UserFactory;
 /**
  * This is the View
  * ViewModel : {@link DeliveryViewModel}
@@ -61,24 +52,5 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
         if (!(arg instanceof Order)) return;
         deliveryAdapter.notifyDataSetChanged();
         mapFragment.updateOrders((Order) arg);
-        //Send notification
-        Order delivery = (Order) arg;
-        String title = "Livraison validée";
-        String message = "Pour l'adresse : "+delivery.getAddress();
-        sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_DEFAULT );
-
-    }
-    private void sendNotificationOnChannel(String title, String content, String channelId, int priority) {
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.check)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setPriority(priority);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            return;
-        }
-        NotificationManagerCompat.from(this).notify(0, notification.build());
     }
 }

@@ -1,20 +1,12 @@
 package edu.ihm.td1.livraison;
 
-import static edu.ihm.td1.livraison.Notification.CHANNEL_1_ID;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Locale;
 
@@ -25,21 +17,6 @@ import edu.ihm.td1.livraison.userFactory.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private void sendNotificationOnChannel(String title, String content, String channelId, int priority) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icone_client);
-        android.app.Notification notification = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.check)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setPriority(priority)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap))
-                .setTimeoutAfter(5000)
-                .build();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
-        else NotificationManagerCompat.from(this).notify(0, notification);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +29,8 @@ public class ProfileActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(click -> {
             String title = "Livraisoon";
             String message = "Modifications enregristrées";
-            sendNotificationOnChannel(title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_HIGH);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icone_client);
+            Notification.sendNotificationOnChannel(this, title, message, bitmap);
         });
 
         TextView prenom = findViewById(R.id.prenom_edit);
