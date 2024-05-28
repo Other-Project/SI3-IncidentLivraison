@@ -148,6 +148,7 @@ public class MapFragment extends Fragment {
     public void updateOrders(Order order) {
         collection.remove(order);
         orderToOverlayItem(order).ifPresent(mOverlay::removeItem);
+        map.invalidate();
     }
 
     private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
@@ -155,44 +156,24 @@ public class MapFragment extends Fragment {
         int i = 1;
         for (Order o : collection) {
             OverlayItem item = new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition());
-            item.setMarker(ResourcesCompat.getDrawable(getResources(), R.drawable.mapmarker, null));
             items.add(item);
             i++;
         }
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(requireContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+        Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.mapmarker, null);
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(
+                items, icon, null, ItemizedOverlayWithFocus.NOT_SET, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
+                return false;
             }
 
             @Override
             public boolean onItemLongPress(int index, OverlayItem item) {
                 return false;
             }
-        });
+        }, getContext());
         mOverlay.setFocusItemsOnTap(true);
         return mOverlay;
-    }
-
-    private void addMarkers() {
-        int i = 1;
-        for (Order o : collection) {
-            createMarker(o.getPosition(), "Livraison n°" + i, o.getAddress());
-            i++;
-        }
-    }
-
-    public void createMarker(GeoPoint geoPoint, String title, String description) {
-        Marker marker = new Marker(map);
-        marker.setPosition(geoPoint);
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-
-        Drawable pointerDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.mapmarker, null);
-        marker.setIcon(pointerDrawable);
-
-        marker.setTitle(title);
-        marker.setSnippet(description);
     }
 
     private Optional<OverlayItem> orderToOverlayItem(Order order) {
