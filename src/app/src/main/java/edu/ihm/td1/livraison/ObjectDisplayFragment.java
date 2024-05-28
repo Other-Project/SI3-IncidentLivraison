@@ -21,7 +21,7 @@ public class ObjectDisplayFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ARG_ITEM = "item";
-
+    View currentView;
     // TODO: Rename and change types of parameters
     private Parcelable item;
 
@@ -53,12 +53,31 @@ public class ObjectDisplayFragment extends Fragment {
         }
     }
 
+    public void setItem(Parcelable p){
+        item = p;
+    }
+
+    public void changeDisplayedObject(){
+        ImageView img = currentView.findViewById(R.id.imageColis);
+        TextView txt = currentView.findViewById(R.id.textView);
+        if(item instanceof Order){
+            Order o = (Order)item;
+            img.setImageResource(o.getImage());
+            txt.setText(o.fullDesc());
+        }else if(item instanceof Report){
+            Report r = (Report)item;
+            img.setImageResource(r.getOrder().getImage());
+            txt.setText(r.getOrder().getDescription());
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         item = getArguments().getParcelable(ARG_ITEM);
         View rootView = inflater.inflate(R.layout.fragment_object_display, container, false);
+        this.currentView = rootView;
         ImageView img = rootView.findViewById(R.id.imageColis);
         TextView txt = rootView.findViewById(R.id.textView);
         if(item instanceof Order){
