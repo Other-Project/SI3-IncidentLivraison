@@ -4,8 +4,8 @@ public class LivreurFactory extends UserFactory<LivreurFactory,Livreur>{
     private long numTelephone;
 
     public LivreurFactory() {
-        setNom("Zion");
-        setPrenom("Eva");
+        setNom("Honnete");
+        setPrenom("Camille");
         setImageProfile("?");
         numTelephone = 786703245;
     }

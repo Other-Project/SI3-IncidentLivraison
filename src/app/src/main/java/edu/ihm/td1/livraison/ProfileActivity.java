@@ -30,7 +30,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(priority)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap))
+                .setTimeoutAfter(5000);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
             return;
@@ -47,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         findViewById( R.id.button ).setOnClickListener( click -> {
             String title = "Livraisoon";
             String message = "Modifications enregristré";
-            sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_DEFAULT );
+            sendNotificationOnChannel( title, message, CHANNEL_1_ID, NotificationCompat.PRIORITY_HIGH );
         });
 
         TextView prenom = findViewById(R.id.prenom_edit);
@@ -59,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
         if(user instanceof Sav){
             findViewById(R.id.adress).setVisibility(View.INVISIBLE);
             findViewById(R.id.num_tel).setVisibility(View.INVISIBLE);
-            return;
         }else if(user instanceof Livreur){
             Livreur livreur = (Livreur) user;
             numTel.setText("0"+livreur.getNumTelephone());
@@ -69,18 +69,5 @@ public class ProfileActivity extends AppCompatActivity {
             numTel.setText("0"+client.getNumTelephone());
             adresse.setText(client.getAdresse().toString());
         }
-        /*
-        TextView numTel = findViewById(R.id.num_tel_edit);
-        numTel.setText(user.getNumeroTelephone());
-        if(user instanceof Client){
-            Client client = (Client) user;
-            View adresse = findViewById(R.id.adress);
-            adresse.setVisibility(View.VISIBLE);
-            TextView adresse_edit = findViewById(R.id.adress_edit);
-            adresse_edit.setText(client.getAdresse());
-        }else{
-            View adresse = findViewById(R.id.adress);
-            adresse.setVisibility(View.INVISIBLE);
-        }*/
     }
 }
