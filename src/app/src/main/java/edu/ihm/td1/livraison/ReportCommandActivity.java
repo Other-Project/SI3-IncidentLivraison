@@ -2,14 +2,12 @@ package edu.ihm.td1.livraison;
 
 import static android.widget.Toast.makeText;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 public class ReportCommandActivity extends AppCompatActivity implements IPictureActivity, ISavePictureActivity {
 
@@ -17,30 +15,27 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
     private PictureFragment picturefragment;
     private SavePictureFragment savepicturefragment;
     private Order order;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_command);
 
         picturefragment = (PictureFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentPicture);
-        if (picturefragment == null) {
-            picturefragment = new PictureFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.phototaken, picturefragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
-        savepicturefragment = (SavePictureFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentSavePicture);
-        if (savepicturefragment == null) {
-            savepicturefragment = new SavePictureFragment(this);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.phototaken, savepicturefragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+        assert picturefragment != null;
+        picturefragment.setOnPictureChange(picture -> {
+            this.picture = picture;
+            if (picture == null) savepicturefragment.setDisableButtonSave();
+            else savepicturefragment.setEnableButtonSave();
+        });
 
-        order = (Order)getIntent().getParcelableExtra("order");
+        savepicturefragment = (SavePictureFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentSavePicture);
+        assert savepicturefragment != null;
+        savepicturefragment.setActivity(this);
+
+        order = getIntent().getParcelableExtra("order");
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
+        assert objectFrag != null;
         Bundle bundle = new Bundle();
         bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, order);
         objectFrag.setArguments(bundle);
@@ -55,7 +50,6 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
                     Toast toast = makeText(getApplicationContext(), " CAMERA authorisation granted", Toast.LENGTH_LONG);
                     toast.show();
                     picturefragment.takePicture();
-                    savepicturefragment.setEnableButtonSave();
                 } else {
                     Toast toast = makeText(getApplicationContext(), " CAMERA authorisation NOT granted", Toast.LENGTH_LONG);
                     toast.show();
@@ -85,26 +79,6 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
             }
             break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CAMERA) {
-            if (resultCode == RESULT_OK) {
-                picture = (Bitmap) data.getExtras().get("data");
-                picturefragment.setImage(picture);
-                savepicturefragment.setEnableButtonSave();
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Picture canceled", Toast.LENGTH_LONG);
-                toast.show();
-            } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Action failed", Toast.LENGTH_LONG);
-                toast.show();
-            }
-
-        }
-
     }
 
     @Override
