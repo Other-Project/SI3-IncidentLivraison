@@ -154,7 +154,6 @@ public class MapFragment extends Fragment {
             if (item.isPresent()) {
                 tempOverlay.add(item.get());
                 mOverlay.removeItem(item.get());
-                Log.d("TestOrder", "hello");
             }
         } else {
             Optional<OverlayItem> itemToAdd = tempOverlay.stream().filter(

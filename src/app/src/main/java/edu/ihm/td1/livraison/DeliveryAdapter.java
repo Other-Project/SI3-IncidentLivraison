@@ -3,12 +3,10 @@ package edu.ihm.td1.livraison;
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Location;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -51,11 +49,9 @@ public class DeliveryAdapter extends BaseAdapter {
         ImageButton validate = layoutItem.<ImageButton>findViewById(R.id.delivery_done);
         ImageButton cancel = layoutItem.findViewById(R.id.cancel_delivery);
 
-        if (element.getDelivered()) {
-            layoutItem.setAlpha((float) 0.5);
-            cancel.setVisibility(View.VISIBLE);
-            validate.setVisibility(View.INVISIBLE);
-        }
+        layoutItem.setAlpha(element.getDelivered() ? 0.5f : 1);
+        cancel.setVisibility(element.getDelivered() ? View.VISIBLE : View.GONE);
+        validate.setVisibility(element.getDelivered() ? View.GONE : View.VISIBLE);
 
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
         layoutItem.<TextView>findViewById(R.id.distance).setText(currentGPSPostion == null ? null : String.format(res.getString(R.string.next_delivery_distance), element.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
@@ -65,17 +61,13 @@ public class DeliveryAdapter extends BaseAdapter {
         });
 
         validate.setOnClickListener(view -> {
-            layoutItem.setAlpha((float) 0.5);
-            cancel.setVisibility(View.VISIBLE);
-            validate.setVisibility(View.INVISIBLE);
             if (onDeliveryDone != null) onDeliveryDone.accept(element);
+            refreshList();
         });
 
         cancel.setOnClickListener(view -> {
-            layoutItem.setAlpha((float) 1.0);
-            cancel.setVisibility(View.INVISIBLE);
-            validate.setVisibility(View.VISIBLE);
             if (onDeliveryCancel != null) onDeliveryCancel.accept(element);
+            refreshList();
         });
 
         return layoutItem;
@@ -99,7 +91,13 @@ public class DeliveryAdapter extends BaseAdapter {
 
     public void onLocationChanged(@NonNull Location location) {
         this.currentGPSPostion = location;
-        list.sort(Comparator.comparingDouble(o -> o.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
+        refreshList();
+    }
+
+    private void refreshList() {
+        list.sort(Comparator
+                .<Order>comparingInt(o -> o.getDelivered() ? 1 : 0)
+                .thenComparingDouble(o -> o.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
         notifyDataSetChanged();
     }
 }
