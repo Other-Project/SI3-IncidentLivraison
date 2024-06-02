@@ -28,6 +28,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
 
         deliveryAdapter = new DeliveryAdapter(getApplicationContext(), viewModel.getDeliveries());
         deliveryAdapter.setOnDeliveryDone(viewModel::onDeliveryDone);
+        deliveryAdapter.setOnDeliveryCancel(viewModel::onDeliveryCancel);
         deliveryAdapter.setOnDeliveryIssue(viewModel::onDeliveryIssue);
         ((ListView) findViewById(R.id.next_delivery)).setAdapter(deliveryAdapter);
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,8 +37,21 @@ public class DeliveryViewModel extends Observable {
 
         delivery.setDelivered(true);
         Order.ORDERS.put(delivery.getId(), delivery);
-        deliveries.remove(delivery);
+
+        // deliveries.remove(delivery);
         Toast.makeText(context, "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
+
+        this.setChanged();
+        this.notifyObservers(delivery);
+    }
+
+    public void onDeliveryCancel(Order delivery) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(40);
+
+        delivery.setDelivered(false);
+
+        Toast.makeText(context, "Cancelled " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
 
         this.setChanged();
         this.notifyObservers(delivery);
@@ -51,4 +65,6 @@ public class DeliveryViewModel extends Observable {
         it.putExtra("sms_body", "Bonjour, c'est le livreur !\nJ'ai un problème avec votre commande n°" + delivery.getId());
         context.startActivity(it);
     }
+
+
 }

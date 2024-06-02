@@ -55,4 +55,15 @@
         android:scaleType="fitCenter"
         android:src="@drawable/check" />
 
+    <ImageButton
+        android:id="@+id/cancel_delivery"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="#0000"
+        android:contentDescription="@string/delivery_done"
+        android:textAlignment="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/supprimer"
+        android:visibility="invisible"/>
+
 </LinearLayout>
