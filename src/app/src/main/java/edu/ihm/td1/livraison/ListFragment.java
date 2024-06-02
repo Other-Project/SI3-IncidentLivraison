@@ -63,8 +63,11 @@ public class ListFragment extends Fragment {
                     startActivity(intent);
                     Log.d(TAG, "click sur une order");
                 }else{
-                    if(getResources().getBoolean(R.bool.is_tablet)){
+                    if(getResources().getBoolean(R.bool.is_tablet) && !((Report)itemList.get(i)).isTreated()){
                         TabletActivity.setReport((Report) itemList.get(i));
+                        TabletActivity.notifyDataHasChanged();
+                        TabletActivity.objectDisplayFragment.setItem(itemList.get(i));
+                        TabletActivity.objectDisplayFragment.changeDisplayedObject();
                     }
                     else if(!((Report)itemList.get(i)).isTreated()){
                         Intent intent = new Intent(getContext(), ReviewReportActivity.class );
