@@ -23,6 +23,7 @@ public class Order implements Parcelable {
     private String description;
     private int image;
     private boolean delivered;
+    private final boolean mustBeDisplayed = true;
     private String address;
     private long date;
     private GeoPoint position;

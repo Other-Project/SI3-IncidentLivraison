@@ -153,7 +153,6 @@ public class MapFragment extends Fragment {
             Optional<OverlayItem> item = orderToOverlayItem(order);
             if (item.isPresent()) {
                 tempOverlay.add(item.get());
-                Log.d("TestOrder", Boolean.toString(item.isPresent()));
                 mOverlay.removeItem(item.get());
                 Log.d("TestOrder", "hello");
             }
@@ -161,32 +160,19 @@ public class MapFragment extends Fragment {
             Optional<OverlayItem> itemToAdd = tempOverlay.stream().filter(
                     oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst();
             itemToAdd.ifPresent(overlayItem -> mOverlay.addItem(overlayItem));
-            itemToAdd.ifPresent(overlayItem -> tempOverlay.remove(overlayItem));
+            itemToAdd.ifPresent(tempOverlay::remove);
         }
 
         map.invalidate();
     }
-
-    /*
-    public void updateOrders(Order order) {
-        if (order.getDelivered()) {
-            ordersToDeliver.remove(order);
-            ordersDelivered.add(order);
-        } else {
-            ordersToDeliver.add(order);
-            ordersDelivered.remove(order);
-        }
-
-        map.invalidate();
-    }
-     */
 
     private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
         ArrayList<OverlayItem> items = new ArrayList<>();
         int i = 1;
         for (Order o : ordersToDeliver) {
             OverlayItem item = new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition());
-            items.add(item);
+            if (o.getDelivered()) tempOverlay.add(item);
+            else items.add(item);
             i++;
         }
 

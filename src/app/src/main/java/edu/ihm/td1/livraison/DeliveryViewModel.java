@@ -22,7 +22,7 @@ public class DeliveryViewModel extends Observable {
     public DeliveryViewModel(Context context) {
         this.context = context;
         deliveries.addAll(OrderMap.getAllOrders().stream()
-                .filter(order -> !order.getDelivered())
+                //.filter(order -> !order.getDelivered())
                 .collect(Collectors.toList()));
     }
 

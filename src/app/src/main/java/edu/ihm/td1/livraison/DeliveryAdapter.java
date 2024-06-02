@@ -3,6 +3,7 @@ package edu.ihm.td1.livraison;
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,12 @@ public class DeliveryAdapter extends BaseAdapter {
         ImageButton validate = layoutItem.<ImageButton>findViewById(R.id.delivery_done);
         ImageButton cancel = layoutItem.findViewById(R.id.cancel_delivery);
 
+        if (element.getDelivered()) {
+            layoutItem.setAlpha((float) 0.5);
+            cancel.setVisibility(View.VISIBLE);
+            validate.setVisibility(View.INVISIBLE);
+        }
+
         layoutItem.<TextView>findViewById(R.id.address).setText(element.getAddress());
         layoutItem.<TextView>findViewById(R.id.distance).setText(currentGPSPostion == null ? null : String.format(res.getString(R.string.next_delivery_distance), element.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
 
@@ -60,13 +67,13 @@ public class DeliveryAdapter extends BaseAdapter {
         validate.setOnClickListener(view -> {
             layoutItem.setAlpha((float) 0.5);
             cancel.setVisibility(View.VISIBLE);
-            view.setVisibility(View.INVISIBLE);
+            validate.setVisibility(View.INVISIBLE);
             if (onDeliveryDone != null) onDeliveryDone.accept(element);
         });
 
         cancel.setOnClickListener(view -> {
             layoutItem.setAlpha((float) 1.0);
-            view.setVisibility(View.INVISIBLE);
+            cancel.setVisibility(View.INVISIBLE);
             validate.setVisibility(View.VISIBLE);
             if (onDeliveryCancel != null) onDeliveryCancel.accept(element);
         });
