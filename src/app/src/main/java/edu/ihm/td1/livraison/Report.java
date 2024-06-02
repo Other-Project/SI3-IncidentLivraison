@@ -11,15 +11,15 @@ import java.util.List;
 
 public class Report implements Parcelable {
     public static List<Report> REPORTS = new ArrayList<>(List.of(
-            new Report(Order.ORDERS.get(0),"Trop petit","",false ,1),
-            new Report(Order.ORDERS.get(1),"Il ne parle pas, déçu de la marchandise","",false ,2),
-            new Report(Order.ORDERS.get(2),"Pas assez rose","",false ,3),
-            new Report(Order.ORDERS.get(3),"La fermeture ne marche pas","",false ,4),
-            new Report(Order.ORDERS.get(4), "Il fait 2cm de haut", "", false, 5),
-            new Report(Order.ORDERS.get(5),"Il est troué","",true,6),
-            new Report(Order.ORDERS.get(6), "Il ne chante pas 'Sac-à-dos Sac-à-dos'", "", true, 7),
-            new Report(Order.ORDERS.get(7),"Une bretelle est déchirée","",true,8),
-            new Report(Order.ORDERS.get(8),"Il manque la carte","",true,9)
+            new Report(OrderMap.getOrder(0), "Trop petit", "", false, 1),
+            new Report(OrderMap.getOrder(1), "Il ne parle pas, déçu de la marchandise", "", false, 2),
+            new Report(OrderMap.getOrder(2), "Pas assez rose", "", false, 3),
+            new Report(OrderMap.getOrder(3), "La fermeture ne marche pas", "", false, 4),
+            new Report(OrderMap.getOrder(4), "Il fait 2cm de haut", "", false, 5),
+            new Report(OrderMap.getOrder(5), "Il est troué", "", true, 6),
+            new Report(OrderMap.getOrder(6), "Il ne chante pas 'Sac-à-dos Sac-à-dos'", "", true, 7),
+            new Report(OrderMap.getOrder(7), "Une bretelle est déchirée", "", true, 8),
+            new Report(OrderMap.getOrder(8), "Il manque la carte", "", true, 9)
     ));
     Order order;
     String descriptionProbleme;
