@@ -21,7 +21,7 @@ public class DeliveryViewModel extends Observable {
 
     public DeliveryViewModel(Context context) {
         this.context = context;
-        deliveries.addAll(Order.ORDERS.values().stream()
+        deliveries.addAll(OrderMap.getAllOrders().stream()
                 .filter(order -> !order.getDelivered())
                 .collect(Collectors.toList()));
     }
@@ -35,7 +35,7 @@ public class DeliveryViewModel extends Observable {
         vibrator.vibrate(40);
 
         delivery.setDelivered(true);
-        Order.ORDERS.put(delivery.getId(), delivery);
+        OrderMap.addOrder(delivery);
         deliveries.remove(delivery);
         Toast.makeText(context, "Done " + delivery.getAddress(), Toast.LENGTH_SHORT).show();
 
