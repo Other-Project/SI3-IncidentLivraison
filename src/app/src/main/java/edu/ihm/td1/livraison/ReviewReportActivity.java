@@ -29,7 +29,7 @@ public class ReviewReportActivity extends AppCompatActivity {
         signalementTraite.setOnClickListener(view -> {
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            Report.setIsTreated(report, true);
+            Report.setIsTreated(report.getId(), true);
             startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
         });
 

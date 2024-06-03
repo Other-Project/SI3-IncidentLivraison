@@ -4,15 +4,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import edu.ihm.td1.livraison.userFactory.User;
-import edu.ihm.td1.livraison.userFactory.UserFactory;
 
 public class ReportListActivity extends AppCompatActivity {
     @Override
@@ -41,8 +37,8 @@ public class ReportListActivity extends AppCompatActivity {
         Bundle bundlePending = new Bundle();
         Bundle bundleFinished = new Bundle();
 
-        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
-        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(Report::isTreated).collect(Collectors.toList()));
+        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
+        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(Report::isTreated).collect(Collectors.toList()));
 
         fragmentPending.setArguments(bundlePending);
         fragmentFinished.setArguments(bundleFinished);

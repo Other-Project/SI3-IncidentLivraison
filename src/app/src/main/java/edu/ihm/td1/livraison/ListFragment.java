@@ -7,24 +7,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ListFragment extends Fragment {
-    private static String TAG = "ListFragment";
-    private List<Parcelable> itemList = new ArrayList<>();
+    private String TAG = getClass().getSimpleName();
+    private final List<Parcelable> itemList = new ArrayList<>();
 
     private ListAdapter listAdapter;
     private String title;
 
-    public ListFragment(){}
+    public ListFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,17 +31,18 @@ public class ListFragment extends Fragment {
         listAdapter = new ListAdapter(getContext(), itemList);
     }
 
-    public void setTitle(String str){
+    public void setTitle(String str) {
         this.title = str;
     }
 
-    public void notifyCollectionReady(){
+    public void notifyCollectionReady() {
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            itemList.clear();
-            itemList.addAll((Collection<? extends Parcelable>) bundle.get("list"));
-            listAdapter.notifyDataSetChanged();
-        }
+        if (bundle == null) return;
+        ArrayList<Parcelable> list = bundle.getParcelableArrayList("list");
+        if (list == null) return;
+        itemList.clear();
+        itemList.addAll(list);
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -53,28 +53,23 @@ public class ListFragment extends Fragment {
         TextView textView = rootView.findViewById(R.id.listTitle);
         textView.setText(this.title);
         listView.setAdapter(listAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(itemList.get(0) instanceof Order){
-
-                    Intent intent = new Intent(getContext(),OrderViewActivity.class);
-                    intent.putExtra("order",itemList.get(i));
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            if (itemList.get(0) instanceof Order) {
+                Intent intent = new Intent(getContext(), OrderViewActivity.class);
+                intent.putExtra("order", itemList.get(i));
+                startActivity(intent);
+                Log.d(TAG, "click sur une order");
+            } else {
+                if (getResources().getBoolean(R.bool.is_tablet) && !((Report) itemList.get(i)).isTreated()) {
+                    TabletActivity.setReport((Report) itemList.get(i));
+                    TabletActivity.notifyDataHasChanged();
+                    TabletActivity.objectDisplayFragment.setItem(itemList.get(i));
+                    TabletActivity.objectDisplayFragment.changeDisplayedObject();
+                } else if (!((Report) itemList.get(i)).isTreated()) {
+                    Intent intent = new Intent(getContext(), ReviewReportActivity.class);
+                    intent.putExtra("report", itemList.get(i));
                     startActivity(intent);
-                    Log.d(TAG, "click sur une order");
-                }else{
-                    if(getResources().getBoolean(R.bool.is_tablet) && !((Report)itemList.get(i)).isTreated()){
-                        TabletActivity.setReport((Report) itemList.get(i));
-                        TabletActivity.notifyDataHasChanged();
-                        TabletActivity.objectDisplayFragment.setItem(itemList.get(i));
-                        TabletActivity.objectDisplayFragment.changeDisplayedObject();
-                    }
-                    else if(!((Report)itemList.get(i)).isTreated()){
-                        Intent intent = new Intent(getContext(), ReviewReportActivity.class );
-                        intent.putExtra("report",itemList.get(i));
-                        startActivity(intent);
-                        Log.d(TAG,"click sur un report");
-                    }
+                    Log.d(TAG, "click sur un report");
                 }
             }
         });

@@ -6,11 +6,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Report implements Parcelable {
-    public static List<Report> REPORTS = new ArrayList<>(List.of(
+    public static Map<Integer, Report> REPORTS = new HashMap<>(Stream.of(
             new Report(0, "Trop petit", R.drawable.sac_report6, false, 1),
             new Report(1, "Il ne parle pas, déçu de la marchandise", R.drawable.sac_report1, false, 2),
             new Report(2, "Pas assez rose", R.drawable.sac_report2, false, 3),
@@ -20,12 +22,12 @@ public class Report implements Parcelable {
             new Report(6, "Il ne chante pas 'Sac-à-dos Sac-à-dos'", R.drawable.sac_report6, true, 7),
             new Report(7, "Une bretelle est déchirée", R.drawable.sac_report1, true, 8),
             new Report(8, "Il manque la carte", R.drawable.sac_report2, true, 9)
-    ));
-    private int order;
-    private String descriptionProbleme;
-    private int imgProblem;
+    ).collect(Collectors.toMap(Report::getId, r -> r)));
+    private final int order;
+    private final String descriptionProbleme;
+    private final int imgProblem;
     private Boolean isTreated;
-    private int id;
+    private final int id;
 
     public Report(int order, String desc, int img, Boolean treadted, int id) {
         this.order = order;
@@ -65,7 +67,7 @@ public class Report implements Parcelable {
     @NonNull
     @Override
     public String toString() {
-        return "Report : "+descriptionProbleme+","+imgProblem+","+order;
+        return "Report : " + descriptionProbleme + "," + imgProblem + "," + order;
     }
 
     @Override
@@ -85,25 +87,21 @@ public class Report implements Parcelable {
         return OrderMap.getOrder(order);
     }
 
-    public int getImgProblem(){
+    public int getImgProblem() {
         return imgProblem;
     }
 
-    public static void setIsTreated(Report report, boolean b) {
-        boolean found = false;
-        for(Report r : REPORTS){
-            if(r.id == report.getId()){
-                r.isTreated=b;
-                found = true;
-                Log.d("report : ", r.toString());
-            }
+    public static void setIsTreated(int report, boolean b) {
+        Report r = REPORTS.get(report);
+        if (r == null) {
+            Log.d("not found", String.valueOf(report));
+            return;
         }
-        if(!found) {
-            Log.d("not find", report.toString());
-        }
+        r.isTreated = b;
+
     }
 
-    private int getId() {
+    public int getId() {
         return id;
     }
 

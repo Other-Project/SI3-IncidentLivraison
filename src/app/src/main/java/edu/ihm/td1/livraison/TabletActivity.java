@@ -48,8 +48,8 @@ public class TabletActivity extends AppCompatActivity {
         Bundle bundlePending = new Bundle();
         Bundle bundleFinished = new Bundle();
 
-        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
-        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(Report::isTreated).collect(Collectors.toList()));
+        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
+        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(Report::isTreated).collect(Collectors.toList()));
 
         fragmentPending.setArguments(bundlePending);
         fragmentFinished.setArguments(bundleFinished);
@@ -61,7 +61,7 @@ public class TabletActivity extends AppCompatActivity {
         fragmentFinished.notifyCollectionReady();
 
         if (report == null || report.isTreated()) {
-            List<Report> reportListPending = Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
+            List<Report> reportListPending = Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
             if(!reportListPending.isEmpty()){
                 report = reportListPending.get(0);
@@ -90,7 +90,7 @@ public class TabletActivity extends AppCompatActivity {
         signalementTraite.setOnClickListener(view -> {
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
-            Report.setIsTreated(report, true);
+            Report.setIsTreated(report.getId(), true);
             this.onRefresh();
             this.refreshReport();
         });
@@ -99,7 +99,7 @@ public class TabletActivity extends AppCompatActivity {
 
     private void refreshReport() {
         if (report == null || report.isTreated()) {
-            List<Report> reportListPending = Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
+            List<Report> reportListPending = Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
             if(!reportListPending.isEmpty()){
                 report = reportListPending.get(0);
@@ -160,8 +160,8 @@ public class TabletActivity extends AppCompatActivity {
         Bundle bundlePending = new Bundle();
         Bundle bundleFinished = new Bundle();
 
-        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
-        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.stream().filter(Report::isTreated).collect(Collectors.toList()));
+        bundlePending.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList()));
+        bundleFinished.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) Report.REPORTS.values().stream().filter(Report::isTreated).collect(Collectors.toList()));
 
         fragmentPending.setArguments(bundlePending);
         fragmentFinished.setArguments(bundleFinished);
