@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
@@ -28,7 +29,7 @@ public class TabletActivity extends AppCompatActivity {
     public static Report report;
     public static ObjectDisplayFragment objectDisplayFragment;
     public static TextView textView;
-    public final static Report NO_REPORT = new Report( new Order(0, "Pas de commandes à traiter", 0 ,true,"",0), "Pas de commandes à traiter", "", false,0);
+    public final static Report NO_REPORT = new Report( new Order(0, "Pas de commandes à traiter", 0 ,true,"",0), "Pas de commandes à traiter", R.drawable.logo, false,0);
     public static void setReport(Report r) {
         report = r;
     }
@@ -83,6 +84,11 @@ public class TabletActivity extends AppCompatActivity {
         Bundle bundle1 = new Bundle();
         bundle1.putParcelable(ObjectDisplayFragment.ARG_ITEM, report);
         objectFrag.setArguments(bundle1);
+        TextView text = findViewById(R.id.text_signalement);
+        setTextView(text);
+        text.setText(report.descriptionProbleme);
+        ImageView image = findViewById(R.id.image_signalement);
+        image.setImageResource(report.getImgProblem());
         //Deuxième activité :
         //this.refreshReport();
 
@@ -113,8 +119,7 @@ public class TabletActivity extends AppCompatActivity {
         }
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
         setObjectDisplayFragment(objectFrag);
-        Log.d("Report", (report==null)? "null" : "not null");/*
-        */
+        Log.d("Report", (report==null)? "null" : "not null");
         objectFrag.setItem(report);
         objectFrag.changeDisplayedObject();
 
@@ -122,6 +127,7 @@ public class TabletActivity extends AppCompatActivity {
         setTextView(text);
         text.setText(report.descriptionProbleme);
         ImageView image = findViewById(R.id.image_signalement);
+        image.setImageResource(report.getImgProblem());
 
     }
 
