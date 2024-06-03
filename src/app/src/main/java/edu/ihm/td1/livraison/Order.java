@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import org.osmdroid.util.GeoPoint;
 
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.Random;
 
 import edu.ihm.td1.livraison.userFactory.Client;
@@ -19,15 +20,17 @@ import edu.ihm.td1.livraison.userFactory.ClientFactory;
  * ViewModel : {@link DeliveryViewModel}
  */
 public class Order implements Parcelable {
-    private int id;
-    private String description;
-    private int image;
+
+    private final int id;
+    private final String description;
+    private final int image;
     private boolean delivered;
+    private boolean mustBeDisplayed = true;
     private String address;
     private long date;
     private GeoPoint position;
 
-    private Client destinatedTo;
+    private final Client destinatedTo;
 
     public Order(int id, String desc, int img, boolean del, String a, long d) {
         this.id = id;
@@ -51,6 +54,19 @@ public class Order implements Parcelable {
         //UserFactory factory = new UserFactory();
         this.destinatedTo = new ClientFactory().build();
         position = createPosition();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public String getAddress() {
@@ -137,4 +153,10 @@ public class Order implements Parcelable {
             return new Order[size];
         }
     };
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "(#" + id + ") " + description + " ; " + address;
+    }
 }

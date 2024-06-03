@@ -64,6 +64,6 @@
         android:textAlignment="center"
         android:scaleType="fitCenter"
         android:src="@drawable/supprimer"
-        android:visibility="invisible"/>
+        android:visibility="gone" />
 
 </LinearLayout>
