@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -79,6 +80,8 @@ public class ListFragment extends Fragment {
                     startActivity(intent);
                     Log.d(TAG, "click sur un report");
                 }
+            }else{
+                Toast.makeText(getContext(), "Ce signalement à déjà été traité", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;
