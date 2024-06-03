@@ -25,21 +25,19 @@ public class Order implements Parcelable {
     private final String description;
     private final int image;
     private boolean delivered;
-    private boolean mustBeDisplayed = true;
-    private String address;
-    private long date;
-    private GeoPoint position;
+    private final String address;
+    private final long date;
+    private final GeoPoint position;
 
     private final Client destinatedTo;
 
-    public Order(int id, String desc, int img, boolean del, String a, long d) {
+    public Order(int id, String desc, int img, boolean del, String a, long d, int clientId) {
         this.id = id;
         description = desc;
         image = img;
         delivered = del;
         this.address = a;
         this.date = d;
-        //UserFactory factory = new UserFactory();
         this.destinatedTo = new ClientFactory().build();
         position = createPosition();
     }
@@ -51,8 +49,7 @@ public class Order implements Parcelable {
         image = in.readInt();
         delivered = in.readInt() == 1;
         date = in.readLong();
-        //UserFactory factory = new UserFactory();
-        this.destinatedTo = new ClientFactory().build();
+        this.destinatedTo = in.readParcelable(Client.class.getClassLoader());
         position = createPosition();
     }
 
@@ -127,19 +124,19 @@ public class Order implements Parcelable {
         dest.writeInt(image);
         dest.writeInt(delivered ? 1 : 0);
         dest.writeLong(date);
+        dest.writeParcelable(getDestinatedTo(), flags);
     }
 
     public String fullDesc(){
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
-        String res = (this.getDelivered() ? getDescription()+"\n"
-                                            +"est arrivé au "+this.address+"\n"
+        return (this.getDelivered() ? getDescription()+"\n"
+                                            +"est arrivé au "+ this.address+"\n"
                                             +"le "+d.format(this.getDate())
                                             :
                                             getDescription()+"\n"
-                                            +"arrivera au "+this.address+"\n"
+                                            +"arrivera au "+ this.address+"\n"
                                             +"le "+d.format(this.getDate())
         );
-        return res;
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {

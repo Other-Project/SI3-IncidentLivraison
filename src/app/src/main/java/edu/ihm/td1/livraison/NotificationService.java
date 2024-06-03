@@ -3,7 +3,6 @@ package edu.ihm.td1.livraison;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;

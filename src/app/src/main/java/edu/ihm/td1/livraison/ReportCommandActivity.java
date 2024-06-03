@@ -14,7 +14,6 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
     private Bitmap picture;
     private PictureFragment picturefragment;
     private SavePictureFragment savepicturefragment;
-    private Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class ReportCommandActivity extends AppCompatActivity implements IPicture
         assert savepicturefragment != null;
         savepicturefragment.setActivity(this);
 
-        order = getIntent().getParcelableExtra("order");
+        Order order = getIntent().getParcelableExtra("order");
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
         assert objectFrag != null;
         Bundle bundle = new Bundle();

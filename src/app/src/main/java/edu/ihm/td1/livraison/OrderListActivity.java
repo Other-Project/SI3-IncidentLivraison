@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 

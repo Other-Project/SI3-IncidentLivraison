@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.stream.Collectors;
 
 /**
  * This is the View Model
@@ -21,9 +20,7 @@ public class DeliveryViewModel extends Observable {
 
     public DeliveryViewModel(Context context) {
         this.context = context;
-        deliveries.addAll(OrderMap.getAllOrders().stream()
-                //.filter(order -> !order.getDelivered())
-                .collect(Collectors.toList()));
+        deliveries.addAll(new ArrayList<>(OrderMap.getAllOrders()));
     }
 
     public ArrayList<Order> getDeliveries() {
