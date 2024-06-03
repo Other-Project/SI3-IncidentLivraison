@@ -48,7 +48,7 @@ public class ReviewReportActivity extends AppCompatActivity {
         text.setText(report.descriptionProbleme);
 
         ImageView image = findViewById(R.id.image_signalement);
-        //image.setImageResource(report.imgProblem);
+        image.setImageResource(report.imgProblem);
 
     }
 }

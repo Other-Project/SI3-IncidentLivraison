@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +22,7 @@ public class ListFragment extends Fragment {
     private List<Parcelable> itemList = new ArrayList<>();
 
     private ListAdapter listAdapter;
-
+    private String title;
 
     public ListFragment(){}
 
@@ -31,6 +32,9 @@ public class ListFragment extends Fragment {
         listAdapter = new ListAdapter(getContext(), itemList);
     }
 
+    public void setTitle(String str){
+        this.title = str;
+    }
 
     public void notifyCollectionReady(){
         Bundle bundle = getArguments();
@@ -46,6 +50,8 @@ public class ListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_liste_livraisons, container, false);
         // Log.d(TAG, "in onCreateView(), collection = " + collection);
         ListView listView = rootView.findViewById(R.id.List);
+        TextView textView = rootView.findViewById(R.id.listTitle);
+        textView.setText(this.title);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,16 +63,22 @@ public class ListFragment extends Fragment {
                     startActivity(intent);
                     Log.d(TAG, "click sur une order");
                 }else{
-                    if(!((Report)itemList.get(i)).isTreated()){
+                    if(getResources().getBoolean(R.bool.is_tablet) && !((Report)itemList.get(i)).isTreated()){
+                        TabletActivity.setReport((Report) itemList.get(i));
+                        TabletActivity.notifyDataHasChanged();
+                        TabletActivity.objectDisplayFragment.setItem(itemList.get(i));
+                        TabletActivity.objectDisplayFragment.changeDisplayedObject();
+                    }
+                    else if(!((Report)itemList.get(i)).isTreated()){
                         Intent intent = new Intent(getContext(), ReviewReportActivity.class );
                         intent.putExtra("report",itemList.get(i));
                         startActivity(intent);
                         Log.d(TAG,"click sur un report");
                     }
                 }
-
             }
         });
         return rootView;
     }
+
 }
