@@ -97,7 +97,7 @@ public class DeliveryAdapter extends BaseAdapter {
     private void refreshList() {
         list.sort(Comparator
                 .<Order>comparingInt(o -> o.getDelivered() ? 1 : 0)
-                .thenComparingDouble(o -> o.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
+                .thenComparingDouble(o -> currentGPSPostion == null ? 0 :  o.getDistance(currentGPSPostion.getLatitude(), currentGPSPostion.getLongitude())));
         notifyDataSetChanged();
     }
 }
