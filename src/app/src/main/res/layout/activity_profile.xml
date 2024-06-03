@@ -123,9 +123,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="25dp"
         android:text="Enregistrer les modifications"
         android:fontFamily="@font/andika_new_basic_bold"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/prenom"
         app:layout_constraintTop_toBottomOf="@id/adress" />
 </androidx.constraintlayout.widget.ConstraintLayout>
