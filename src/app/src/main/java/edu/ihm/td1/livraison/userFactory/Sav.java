@@ -4,32 +4,16 @@ import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 
-public class Sav implements User{
-    protected Sav() {
+public class Sav extends User{
 
+    protected Sav(String prenom, String nom, String imgProfile){
+        super(prenom,nom,imgProfile);
     }
+
     protected Sav(Parcel in) {
-
-    }
-    @Override
-    public String getPrenom() {
-        return "Therese";
+        super(in.readString(), in.readString(), in.readString());
     }
 
-    @Override
-    public String getNom() {
-        return "Ponsable";
-    }
-
-    @Override
-    public String getNumeroTelephone() {
-        return "0767676767";
-    }
-
-    @Override
-    public String getAdresse() {
-        return null;
-    }
     @Override
     public int describeContents() {
         return 0;
@@ -39,8 +23,6 @@ public class Sav implements User{
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(getPrenom());
         dest.writeString(getNom());
-        dest.writeString(getNumeroTelephone());
-        dest.writeString(getAdresse());
     }
     public static final Creator<Sav> CREATOR = new Creator<Sav>() {
         @Override

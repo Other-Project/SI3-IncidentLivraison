@@ -26,16 +26,6 @@ public class ReportListActivity extends AppCompatActivity {
         fragmentFinished.setTitle(getString(R.string.TreatedReports));
         fragmentPending.setTitle(getString(R.string.PendingReports));
 
-        UserFactory userFactory = new UserFactory();
-        User user = userFactory.getUser("SAV");
-        // data setup
-        Toolbar toolbar= (Toolbar) getSupportFragmentManager().findFragmentById(R.id.toolbar);
-        assert toolbar != null;
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("User", user);
-        toolbar.setArguments(bundle); // send data to fragment
-        toolbar.notifyClientIsReady(findViewById(R.id.toolbar).findViewById(R.id.client_toolbar));
-
         int currentOrientation = getResources().getConfiguration().orientation;
         ((LinearLayout) findViewById(R.id.lists)).setOrientation(currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
     }

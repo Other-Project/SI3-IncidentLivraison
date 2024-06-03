@@ -8,16 +8,10 @@ import androidx.annotation.NonNull;
 import org.osmdroid.util.GeoPoint;
 
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import edu.ihm.td1.livraison.userFactory.Client;
-import edu.ihm.td1.livraison.userFactory.User;
-import edu.ihm.td1.livraison.userFactory.UserFactory;
+import edu.ihm.td1.livraison.userFactory.ClientFactory;
 
 /**
  * This is the Model
@@ -25,20 +19,6 @@ import edu.ihm.td1.livraison.userFactory.UserFactory;
  * ViewModel : {@link DeliveryViewModel}
  */
 public class Order implements Parcelable {
-
-    public static final HashMap<Integer, Order> ORDERS = new HashMap<>(Stream.of(
-            new Order(0, "Sac à dos Dora", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,5,18,9,0).getTimeInMillis()),
-            new Order(1, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,5,25,9,0).getTimeInMillis()),
-            new Order(2, "Sac Dora Taille Enfant", R.drawable.sac, false, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,12,18,9,0).getTimeInMillis()),
-            new Order(3, "Sac Dora Taille Enfant", R.drawable.sac, false, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,7,14,9,0).getTimeInMillis()),
-            new Order(4, "Sac Dora Taille Enfant", R.drawable.sac, false, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,9,28,9,0).getTimeInMillis()),
-            new Order(5, "Sac à dos Dora Taille Adulte", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,8,1,9,0).getTimeInMillis()),
-            new Order(6, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "435 Rue du Chemin, Valbonne 06560", new GregorianCalendar(2024,8,25,9,0).getTimeInMillis()),
-            new Order(7, "Sac Dora Edition limitée Taille Adulte", R.drawable.sac, true, "25 avenue de l’église, Biot 06510", new GregorianCalendar(2024,8,18,9,0).getTimeInMillis()),
-            new Order(8, "Sac Dora Edition limitée Taille Enfant", R.drawable.sac, true, "1 bis rue de l’étoile, Antibes 06600", new GregorianCalendar(2024,8,8,9,0).getTimeInMillis())
-    ).collect(Collectors.toMap(Order::getId, Function.identity())));
-
-
     private int id;
     private String description;
     private int image;
@@ -47,7 +27,7 @@ public class Order implements Parcelable {
     private long date;
     private GeoPoint position;
 
-    private User destinatedTo;
+    private Client destinatedTo;
 
     public Order(int id, String desc, int img, boolean del, String a, long d) {
         this.id = id;
@@ -56,8 +36,8 @@ public class Order implements Parcelable {
         delivered = del;
         this.address = a;
         this.date = d;
-        UserFactory factory = new UserFactory();
-        this.destinatedTo = factory.getUser("CLIENT");
+        //UserFactory factory = new UserFactory();
+        this.destinatedTo = new ClientFactory().build();
         position = createPosition();
     }
 
@@ -68,8 +48,8 @@ public class Order implements Parcelable {
         image = in.readInt();
         delivered = in.readInt() == 1;
         date = in.readLong();
-        UserFactory factory = new UserFactory();
-        this.destinatedTo = factory.getUser("CLIENT");
+        //UserFactory factory = new UserFactory();
+        this.destinatedTo = new ClientFactory().build();
         position = createPosition();
     }
 
@@ -116,7 +96,7 @@ public class Order implements Parcelable {
         return date;
     }
 
-    public User getDestinatedTo(){ return destinatedTo; }
+    public Client getDestinatedTo(){ return destinatedTo; }
 
     @Override
     public int describeContents() {

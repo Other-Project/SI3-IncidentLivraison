@@ -7,5 +7,4 @@ public interface ISavePictureActivity {
     int REQUEST_MEDIA_WRITE = 1001;
     void onPictureLoad(Bitmap bimap);
     Bitmap getPictureToSave();
-
 }

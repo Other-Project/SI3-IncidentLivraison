@@ -6,6 +6,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
@@ -21,6 +22,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -48,8 +50,11 @@ public class MapFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private MapView map;
-    private final List<Order> collection = new ArrayList<>();
+    private final List<Order> ordersToDeliver = new ArrayList<>();
+    private List<Order> ordersDelivered = new ArrayList<>();
+
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
+    private final List<OverlayItem> tempOverlay = new ArrayList<>();
     private ImageButton centerOnPos;
 
     private LocationUtility locationUtility;
@@ -75,7 +80,7 @@ public class MapFragment extends Fragment {
         IMapController mapController = map.getController();
         mapController.setZoom(15.0);
 
-        Optional<Order> firstPoint = collection.stream().findFirst();
+        Optional<Order> firstPoint = ordersToDeliver.stream().findFirst();
         mapController.setCenter(firstPoint.isPresent()
                 ? firstPoint.get().getPosition()
                 : new GeoPoint(43.61, 7.07));
@@ -89,6 +94,7 @@ public class MapFragment extends Fragment {
         centerOnPos.setOnClickListener(view -> locationUtility.setFollowPosition(true));
 
         mOverlay = createOverlay();
+
         map.getOverlays().add(mOverlay);
 
         initGpsListener();
@@ -138,33 +144,66 @@ public class MapFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle == null) return;
         ArrayList<Order> list = bundle.getParcelableArrayList("list");
-        if (list != null) collection.addAll(list);
+        if (list != null) ordersToDeliver.addAll(list);
     }
 
     public void updateOrders(Order order) {
-        collection.remove(order);
-        orderToOverlayItem(order).ifPresent(mOverlay::removeItem);
+        if (order.getDelivered()) {
+            ordersDelivered.remove(order);
+            Optional<OverlayItem> item = orderToOverlayItem(order);
+            if (item.isPresent()) {
+                tempOverlay.add(item.get());
+                Log.d("TestOrder", Boolean.toString(item.isPresent()));
+                mOverlay.removeItem(item.get());
+                Log.d("TestOrder", "hello");
+            }
+        } else {
+            Optional<OverlayItem> itemToAdd = tempOverlay.stream().filter(
+                    oi -> oi.getSnippet().equals(order.getAddress()) && oi.getPoint().equals(oi.getPoint())).findFirst();
+            itemToAdd.ifPresent(overlayItem -> mOverlay.addItem(overlayItem));
+            itemToAdd.ifPresent(overlayItem -> tempOverlay.remove(overlayItem));
+        }
+
+        map.invalidate();
     }
+
+    /*
+    public void updateOrders(Order order) {
+        if (order.getDelivered()) {
+            ordersToDeliver.remove(order);
+            ordersDelivered.add(order);
+        } else {
+            ordersToDeliver.add(order);
+            ordersDelivered.remove(order);
+        }
+
+        map.invalidate();
+    }
+     */
 
     private ItemizedOverlayWithFocus<OverlayItem> createOverlay() {
         ArrayList<OverlayItem> items = new ArrayList<>();
         int i = 1;
-        for (Order o : collection) {
-            items.add(new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition()));
+        for (Order o : ordersToDeliver) {
+            OverlayItem item = new OverlayItem("Livraison n°" + i, o.getAddress(), o.getPosition());
+            items.add(item);
             i++;
         }
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(requireContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+
+        Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.mapmarker, null);
+
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<>(
+                items, icon, null, ItemizedOverlayWithFocus.NOT_SET, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
             public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
+                return false;
             }
 
             @Override
             public boolean onItemLongPress(int index, OverlayItem item) {
                 return false;
             }
-        });
+        }, getContext());
         mOverlay.setFocusItemsOnTap(true);
         return mOverlay;
     }

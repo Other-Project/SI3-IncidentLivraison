@@ -44,7 +44,9 @@ dependencies {
     implementation(libs.osmdroid.android)
     implementation(libs.preference)
     implementation(libs.play.services.location)
+    implementation(libs.androidsvg)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

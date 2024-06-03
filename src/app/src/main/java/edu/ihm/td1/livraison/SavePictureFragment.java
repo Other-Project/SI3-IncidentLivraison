@@ -1,5 +1,6 @@
 package edu.ihm.td1.livraison;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
@@ -21,10 +22,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import android.Manifest;
 
 
 public class SavePictureFragment extends Fragment {
+
     private ISavePictureActivity activity;
     private Button buttonSave;
     //private Button buttonLoad;
@@ -52,10 +53,6 @@ public class SavePictureFragment extends Fragment {
 
     }
 
-    public SavePictureFragment(ISavePictureActivity activity) {
-        this.activity = activity;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_save_picture, container, false);
@@ -69,10 +66,11 @@ public class SavePictureFragment extends Fragment {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (activity == null) return;
                 Bitmap picture = activity.getPictureToSave();
                 if(picture != null){
-                    if(ContextCompat.checkSelfPermission( getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                        ActivityCompat.requestPermissions(getActivity(),
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(requireActivity(),
                                 new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},  // selon le tuto
                                 ISavePictureActivity.REQUEST_MEDIA_WRITE);
                     }
@@ -120,7 +118,7 @@ public class SavePictureFragment extends Fragment {
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/*");
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, directoryName);
         contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        requireActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
         File file = new File(directoryName, pictureName);
         FileOutputStream fos = null;
         try{
@@ -131,13 +129,18 @@ public class SavePictureFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    public void setActivity(ISavePictureActivity activity) {
+        this.activity = activity;
+    }
+
     public void setDisableButtonSave() {
-        buttonSave.setEnabled(false);
+        if (buttonSave != null) buttonSave.setEnabled(false);
     }
 
 
     public void setEnableButtonSave() {
-        buttonSave.setEnabled(true);
+        if (buttonSave != null) buttonSave.setEnabled(true);
     }
 
 }
