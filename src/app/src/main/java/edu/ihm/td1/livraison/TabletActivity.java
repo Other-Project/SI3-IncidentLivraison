@@ -3,16 +3,12 @@ package edu.ihm.td1.livraison;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,15 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import edu.ihm.td1.livraison.userFactory.User;
-import edu.ihm.td1.livraison.userFactory.UserFactory;
-
 public class TabletActivity extends AppCompatActivity {
 
     public static Report report;
     public static ObjectDisplayFragment objectDisplayFragment;
     public static TextView textView;
-    public final static Report NO_REPORT = new Report( new Order(0, "Pas de commandes à traiter", 0 ,true,"",0), "Pas de commandes à traiter", R.drawable.logo, false,0);
+    public final static Report NO_REPORT = new Report(0, "Pas de commandes à traiter", R.drawable.logo, false, 0);
     public static void setReport(Report r) {
         report = r;
     }
@@ -67,7 +60,7 @@ public class TabletActivity extends AppCompatActivity {
         fragmentPending.notifyCollectionReady();
         fragmentFinished.notifyCollectionReady();
 
-        if(report==null || report.isTreated) {
+        if (report == null || report.isTreated()) {
             List<Report> reportListPending = Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
             if(!reportListPending.isEmpty()){
@@ -86,7 +79,7 @@ public class TabletActivity extends AppCompatActivity {
         objectFrag.setArguments(bundle1);
         TextView text = findViewById(R.id.text_signalement);
         setTextView(text);
-        text.setText(report.descriptionProbleme);
+        text.setText(report.getDescriptionProbleme());
         ImageView image = findViewById(R.id.image_signalement);
         image.setImageResource(report.getImgProblem());
         //Deuxième activité :
@@ -105,7 +98,7 @@ public class TabletActivity extends AppCompatActivity {
     }
 
     private void refreshReport() {
-        if(report==null || report.isTreated) {
+        if (report == null || report.isTreated()) {
             List<Report> reportListPending = Report.REPORTS.stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
             if(!reportListPending.isEmpty()){
@@ -125,7 +118,7 @@ public class TabletActivity extends AppCompatActivity {
 
         TextView text = findViewById(R.id.text_signalement);
         setTextView(text);
-        text.setText(report.descriptionProbleme);
+        text.setText(report.getDescriptionProbleme());
         ImageView image = findViewById(R.id.image_signalement);
         image.setImageResource(report.getImgProblem());
 
