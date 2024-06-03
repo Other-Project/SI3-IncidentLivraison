@@ -51,8 +51,6 @@ public class MapFragment extends Fragment {
 
     private MapView map;
     private final List<Order> ordersToDeliver = new ArrayList<>();
-    private List<Order> ordersDelivered = new ArrayList<>();
-
     private ItemizedOverlayWithFocus<OverlayItem> mOverlay;
     private final List<OverlayItem> tempOverlay = new ArrayList<>();
     private ImageButton centerOnPos;
@@ -149,7 +147,6 @@ public class MapFragment extends Fragment {
 
     public void updateOrders(Order order) {
         if (order.getDelivered()) {
-            ordersDelivered.remove(order);
             Optional<OverlayItem> item = orderToOverlayItem(order);
             if (item.isPresent()) {
                 tempOverlay.add(item.get());

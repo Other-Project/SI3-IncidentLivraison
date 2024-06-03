@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListFragment extends Fragment {
-    private String TAG = getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
     private final List<Parcelable> itemList = new ArrayList<>();
 
     private ListAdapter listAdapter;
