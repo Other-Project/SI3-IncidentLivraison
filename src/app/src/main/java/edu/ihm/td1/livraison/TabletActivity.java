@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,22 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TabletActivity extends AppCompatActivity {
+public class TabletActivity extends AppCompatActivity implements IMenuSelect {
 
-    public static Report report;
-    public static ObjectDisplayFragment objectDisplayFragment;
-    public static TextView textView;
-    public final static Report NO_REPORT = new Report(0, "Pas de commandes à traiter", R.drawable.logo, false, 0);
-    public static void setReport(Report r) {
-        report = r;
-    }
-    public static void setObjectDisplayFragment(ObjectDisplayFragment o){
+    private Report report;
+    private ObjectDisplayFragment objectDisplayFragment;
+    private TextView textView;
+
+    public void setObjectDisplayFragment(ObjectDisplayFragment o) {
         objectDisplayFragment = o;
     }
-    public static void setTextView(TextView t){ textView = t;}
-    public static void notifyDataHasChanged(){
-        textView.setText(report.getDescriptionProbleme());
+
+    public void setTextView(TextView t) {
+        textView = t;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +40,8 @@ public class TabletActivity extends AppCompatActivity {
 
         ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
         ListFragment fragmentFinished = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.finished);
-        Log.d("Fragment Pending", (fragmentPending==null)? "null" : "not null");
-        Log.d("Fragment Finished", (fragmentFinished==null)? "null" : "not null");
+        Log.d("Fragment Pending", (fragmentPending == null) ? "null" : "not null");
+        Log.d("Fragment Finished", (fragmentFinished == null) ? "null" : "not null");
 
 
         Bundle bundlePending = new Bundle();
@@ -63,12 +62,11 @@ public class TabletActivity extends AppCompatActivity {
         if (report == null || report.isTreated()) {
             List<Report> reportListPending = Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
-            if(!reportListPending.isEmpty()){
+            if (!reportListPending.isEmpty()) {
                 report = reportListPending.get(0);
-                Log.d("Report", (report==null)? "null" : "not null");
-            }
-            else{
-                report = NO_REPORT;
+                Log.d("Report", (report == null) ? "null" : "not null");
+            } else {
+                report = null;
                 Log.d(TAG, "No report");
             }
         }
@@ -88,6 +86,7 @@ public class TabletActivity extends AppCompatActivity {
 
         Button signalementTraite = findViewById(R.id.button_traite);
         signalementTraite.setOnClickListener(view -> {
+            if (report == null) return;
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(40);
             Report.setIsTreated(report.getId(), true);
@@ -101,18 +100,21 @@ public class TabletActivity extends AppCompatActivity {
         if (report == null || report.isTreated()) {
             List<Report> reportListPending = Report.REPORTS.values().stream().filter(order -> !order.isTreated()).collect(Collectors.toList());
             Log.d("ReportListPendaing", reportListPending.toString());
-            if(!reportListPending.isEmpty()){
+            if (!reportListPending.isEmpty()) {
                 report = reportListPending.get(0);
-                Log.d("Report", (report==null)? "null" : "not null");
-            }
-            else{
-                report = NO_REPORT;
+                Log.d("Report", (report == null) ? "null" : "not null");
+            } else {
+                report = null;
                 Log.d(TAG, "No report");
             }
         }
+
+        findViewById(R.id.container_b).setVisibility(report == null ? View.INVISIBLE : View.VISIBLE);
+        if (report == null) return;
+
         ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
         setObjectDisplayFragment(objectFrag);
-        Log.d("Report", (report==null)? "null" : "not null");
+        Log.d("Report", (report == null) ? "null" : "not null");
         objectFrag.setItem(report);
         objectFrag.changeDisplayedObject();
 
@@ -121,7 +123,6 @@ public class TabletActivity extends AppCompatActivity {
         text.setText(report.getDescriptionProbleme());
         ImageView image = findViewById(R.id.image_signalement);
         image.setImageResource(report.getImgProblem());
-
     }
 
     /*
@@ -151,7 +152,6 @@ public class TabletActivity extends AppCompatActivity {
 }
 */
     public void onRefresh() {
-        Log.d("on Resume", "refresh");
         //On initialise les fragments
         ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
         ListFragment fragmentFinished = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.finished);
@@ -172,5 +172,12 @@ public class TabletActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void selectItem(Report item) {
+        report = item;
+        textView.setText(item.getDescriptionProbleme());
+        objectDisplayFragment.setItem(item);
+        objectDisplayFragment.changeDisplayedObject();
+    }
 }
 

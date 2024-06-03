@@ -1,5 +1,6 @@
 package edu.ihm.td1.livraison;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -22,6 +23,9 @@ public class ListFragment extends Fragment {
     private ListAdapter listAdapter;
     private String title;
     private TextView listTitle;
+
+    private IMenuSelect reportMenuSelect;
+
     public ListFragment() {
     }
 
@@ -29,13 +33,16 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         listAdapter = new ListAdapter(getContext(), itemList);
+        Activity act = getActivity();
+        if (act instanceof IMenuSelect)
+            reportMenuSelect = (IMenuSelect) act;
     }
 
     public void setTitle(String str) {
         this.title = str;
     }
 
-    public void refreshTitle(){
+    public void refreshTitle() {
         this.listTitle.setText(this.title);
     }
 
@@ -63,13 +70,10 @@ public class ListFragment extends Fragment {
                 intent.putExtra("order", itemList.get(i));
                 startActivity(intent);
                 Log.d(TAG, "click sur une order");
-            } else {
-                if (getResources().getBoolean(R.bool.is_tablet) && !((Report) itemList.get(i)).isTreated()) {
-                    TabletActivity.setReport((Report) itemList.get(i));
-                    TabletActivity.notifyDataHasChanged();
-                    TabletActivity.objectDisplayFragment.setItem(itemList.get(i));
-                    TabletActivity.objectDisplayFragment.changeDisplayedObject();
-                } else if (!((Report) itemList.get(i)).isTreated()) {
+            } else if (!((Report) itemList.get(i)).isTreated()) {
+                if (reportMenuSelect != null)
+                    reportMenuSelect.selectItem((Report) itemList.get(i));
+                else {
                     Intent intent = new Intent(getContext(), ReviewReportActivity.class);
                     intent.putExtra("report", itemList.get(i));
                     startActivity(intent);

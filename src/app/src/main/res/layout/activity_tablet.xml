@@ -35,16 +35,16 @@
     <!--</ScrollView>-->
 
     <LinearLayout
-        android:id="@+id/container_b"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/lightgrey">
         <!-- Contenu de l'activité B pour la tablette -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_b"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/lightgrey">
+            android:layout_height="match_parent">
             <!--
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/toolbar"
