@@ -33,6 +33,7 @@ public class Toolbar extends Fragment {
         });
 
         TextView profile = rootView.findViewById(R.id.client_toolbar);
+        profile.setVisibility(connectedUser == null ? View.INVISIBLE : View.VISIBLE);
         profile.setOnClickListener(view -> {
             if (connectedUser == null) return;
             Intent intent = new Intent(getContext(), ProfileActivity.class);
