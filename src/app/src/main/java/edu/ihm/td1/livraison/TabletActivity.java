@@ -131,32 +131,7 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
         image.setImageResource(report.getImgProblem());
     }
 
-    /*
 
-
-    //deuxième activité
-    Log.d(TAG, "Lancement de l'activity");
-    report = (Report)getIntent().getParcelableExtra("report");
-    ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
-    Button signalementTraite = findViewById(R.id.button_traite);
-
-    signalementTraite.setOnClickListener(view -> {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(40);
-        Report.setIsTreated(report, true);
-        startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
-    });
-
-    Bundle bundle1 = new Bundle();
-    bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, report);
-    objectFrag.setArguments(bundle1);
-
-    TextView text = findViewById(R.id.text_signalement);
-    text.setText(report.descriptionProbleme);
-
-    ImageView image = findViewById(R.id.image_signalement);
-}
-*/
     public void onRefresh() {
         //On initialise les fragments
         ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
