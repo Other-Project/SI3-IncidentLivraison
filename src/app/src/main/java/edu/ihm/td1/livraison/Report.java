@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class Report implements Parcelable {
     public static Map<Integer, Report> REPORTS = new HashMap<>(Stream.of(
-            new Report(0, "Trop petit", R.drawable.sac_report6, false, 1),
+            new Report(0, "Trop petit", R.drawable.sac_report5, false, 1),
             new Report(1, "Il ne parle pas, déçu de la marchandise", R.drawable.sac_report1, false, 2),
             new Report(2, "Pas assez rose", R.drawable.sac_report2, false, 3),
             new Report(3, "La fermeture ne marche pas", R.drawable.sac_report3, false, 4),

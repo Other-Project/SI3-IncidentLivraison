@@ -23,6 +23,7 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
     private Report report;
     private ObjectDisplayFragment objectDisplayFragment;
     private TextView textView;
+    private ImageView imageView;
 
     public void setObjectDisplayFragment(ObjectDisplayFragment o) {
         objectDisplayFragment = o;
@@ -30,6 +31,10 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
 
     public void setTextView(TextView t) {
         textView = t;
+    }
+
+    public void setImageView(ImageView t) {
+        imageView = t;
     }
 
     @Override
@@ -79,6 +84,7 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
         setTextView(text);
         text.setText(report.getDescriptionProbleme());
         ImageView image = findViewById(R.id.image_signalement);
+        setImageView(image);
         image.setImageResource(report.getImgProblem());
         //Deuxième activité :
         //this.refreshReport();
@@ -125,6 +131,32 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
         image.setImageResource(report.getImgProblem());
     }
 
+    /*
+
+
+    //deuxième activité
+    Log.d(TAG, "Lancement de l'activity");
+    report = (Report)getIntent().getParcelableExtra("report");
+    ObjectDisplayFragment objectFrag = (ObjectDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentObjectDisplay);
+    Button signalementTraite = findViewById(R.id.button_traite);
+
+    signalementTraite.setOnClickListener(view -> {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(40);
+        Report.setIsTreated(report, true);
+        startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
+    });
+
+    Bundle bundle1 = new Bundle();
+    bundle.putParcelable(ObjectDisplayFragment.ARG_ITEM, report);
+    objectFrag.setArguments(bundle1);
+
+    TextView text = findViewById(R.id.text_signalement);
+    text.setText(report.descriptionProbleme);
+
+    ImageView image = findViewById(R.id.image_signalement);
+}
+*/
     public void onRefresh() {
         //On initialise les fragments
         ListFragment fragmentPending = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.pending);
@@ -149,6 +181,7 @@ public class TabletActivity extends AppCompatActivity implements IMenuSelect {
     @Override
     public void selectItem(Report item) {
         report = item;
+        imageView.setImageResource(report.getImgProblem());
         textView.setText(item.getDescriptionProbleme());
         objectDisplayFragment.setItem(item);
         objectDisplayFragment.changeDisplayedObject();
