@@ -21,7 +21,7 @@ public class ListFragment extends Fragment {
 
     private ListAdapter listAdapter;
     private String title;
-
+    private TextView listTitle;
     public ListFragment() {
     }
 
@@ -33,6 +33,10 @@ public class ListFragment extends Fragment {
 
     public void setTitle(String str) {
         this.title = str;
+    }
+
+    public void refreshTitle(){
+        this.listTitle.setText(this.title);
     }
 
     public void notifyCollectionReady() {
@@ -50,8 +54,8 @@ public class ListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_liste_livraisons, container, false);
         // Log.d(TAG, "in onCreateView(), collection = " + collection);
         ListView listView = rootView.findViewById(R.id.List);
-        TextView textView = rootView.findViewById(R.id.listTitle);
-        textView.setText(this.title);
+        this.listTitle = rootView.findViewById(R.id.listTitle);
+        this.listTitle.setText(this.title);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             if (itemList.get(0) instanceof Order) {
