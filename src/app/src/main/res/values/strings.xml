@@ -29,4 +29,5 @@
     <string name="logo_de_l_app">logo de l\'app</string>
     <string name="add_to_calendar">Ajouter un évènement au Calendrier</string>
     <string name="report_problem">Signaler un problème</string>
+    <string name="logout">Se déconnecter</string>
 </resources>

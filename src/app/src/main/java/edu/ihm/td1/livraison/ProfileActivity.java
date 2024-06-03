@@ -14,6 +14,7 @@ import edu.ihm.td1.livraison.userFactory.Client;
 import edu.ihm.td1.livraison.userFactory.Livreur;
 import edu.ihm.td1.livraison.userFactory.Sav;
 import edu.ihm.td1.livraison.userFactory.User;
+import edu.ihm.td1.livraison.userFactory.UserMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -22,7 +23,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        User user = getIntent().getParcelableExtra("User");
+        int userId = getIntent().getIntExtra("User", -1);
+        User user = UserMap.getUser(userId);
         assert user != null;
 
         setContentView(R.layout.activity_profile);

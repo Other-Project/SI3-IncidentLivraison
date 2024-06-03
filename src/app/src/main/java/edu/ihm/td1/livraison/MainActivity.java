@@ -9,20 +9,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.function.Consumer;
-
-import edu.ihm.td1.livraison.userFactory.Client;
-import edu.ihm.td1.livraison.userFactory.ClientFactory;
-import edu.ihm.td1.livraison.userFactory.Livreur;
-import edu.ihm.td1.livraison.userFactory.LivreurFactory;
-import edu.ihm.td1.livraison.userFactory.SavFactory;
-import edu.ihm.td1.livraison.userFactory.UserFactory;
 
 public class MainActivity extends AppCompatActivity {
     public final String TAG = "Livraison" + getClass().getSimpleName();
@@ -37,17 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView deliveryButton = findViewById(R.id.icone_livreur);
         deliveryButton.setOnClickListener(view ->{
-            Toolbar.setUser(new LivreurFactory().build());
+            Toolbar.setUser(1);
             startActivity(new Intent(getApplicationContext(), DeliveryActivity.class));
         } );
 
         ImageView clientButton = findViewById(R.id.icone_client);
 
-        clientButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), OrderListActivity.class)));
+        clientButton.setOnClickListener(view -> {
+            Toolbar.setUser(0);
+            startActivity(new Intent(getApplicationContext(), OrderListActivity.class));
+        });
        
 
         ImageView savButton = findViewById(R.id.icone_service_client);
         savButton.setOnClickListener(view -> {
+            Toolbar.setUser(2);
             if(isTablet()){
                 Log.d(TAG, "En mode tablette");
                 startActivity(new Intent(getApplicationContext(), TabletActivity.class));

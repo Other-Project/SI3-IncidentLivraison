@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="10dp"
-        android:text="Eva Zion"
+        android:text=""
         android:fontFamily="@font/andika_new_basic_bold"
         android:textSize="25sp"
         android:textColor="@color/black"
@@ -27,8 +27,9 @@
         android:layout_width="44dp"
         android:layout_height="46dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/logout"
-        android:layout_gravity="right"/>
+        android:layout_gravity="end"
+        android:contentDescription="@string/logout" />
 
 </androidx.appcompat.widget.Toolbar>

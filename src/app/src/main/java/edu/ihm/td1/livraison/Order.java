@@ -32,14 +32,13 @@ public class Order implements Parcelable {
 
     private final Client destinatedTo;
 
-    public Order(int id, String desc, int img, boolean del, String a, long d) {
+    public Order(int id, String desc, int img, boolean del, String a, long d, int clientId) {
         this.id = id;
         description = desc;
         image = img;
         delivered = del;
         this.address = a;
         this.date = d;
-        //UserFactory factory = new UserFactory();
         this.destinatedTo = new ClientFactory().build();
         position = createPosition();
     }
@@ -51,8 +50,7 @@ public class Order implements Parcelable {
         image = in.readInt();
         delivered = in.readInt() == 1;
         date = in.readLong();
-        //UserFactory factory = new UserFactory();
-        this.destinatedTo = new ClientFactory().build();
+        this.destinatedTo = in.readParcelable(Client.class.getClassLoader());
         position = createPosition();
     }
 
@@ -127,6 +125,7 @@ public class Order implements Parcelable {
         dest.writeInt(image);
         dest.writeInt(delivered ? 1 : 0);
         dest.writeLong(date);
+        dest.writeParcelable(getDestinatedTo(), flags);
     }
 
     public String fullDesc(){
