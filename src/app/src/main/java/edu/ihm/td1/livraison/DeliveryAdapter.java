@@ -46,7 +46,7 @@ public class DeliveryAdapter extends BaseAdapter {
         Resources res = context.getResources();
         Order element = list.get(position);
 
-        ImageButton validate = layoutItem.<ImageButton>findViewById(R.id.delivery_done);
+        ImageButton validate = layoutItem.findViewById(R.id.delivery_done);
         ImageButton cancel = layoutItem.findViewById(R.id.cancel_delivery);
 
         layoutItem.setAlpha(element.getDelivered() ? 0.5f : 1);

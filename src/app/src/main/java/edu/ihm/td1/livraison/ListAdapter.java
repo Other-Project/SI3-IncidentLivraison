@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,9 +15,9 @@ import java.util.List;
 
 public class ListAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<? extends Parcelable> list;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final List<? extends Parcelable> list;
+    private final LayoutInflater inflater;
 
     public ListAdapter(Context ctx, List<? extends Parcelable> list) {
         context = ctx;
@@ -57,13 +56,10 @@ public class ListAdapter extends BaseAdapter {
         }
 
         ImageView image = convertView.findViewById(R.id.image);
-        image.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (context instanceof OrderListActivity) {
-                    ((OrderListActivity)context).startActivity(new Intent(context, ReportCommandActivity.class));
+        image.setOnClickListener(v -> {
+            if (context instanceof OrderListActivity) {
+                ((OrderListActivity)context).startActivity(new Intent(context, ReportCommandActivity.class));
 
-                }
             }
         });
         return convertView;

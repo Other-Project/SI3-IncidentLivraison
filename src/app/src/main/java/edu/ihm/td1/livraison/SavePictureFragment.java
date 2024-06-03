@@ -63,21 +63,18 @@ public class SavePictureFragment extends Fragment {
 
         buttonSave = rootView.findViewById(R.id.button_save);
         setDisableButtonSave();
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (activity == null) return;
-                Bitmap picture = activity.getPictureToSave();
-                if(picture != null){
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                        ActivityCompat.requestPermissions(requireActivity(),
-                                new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},  // selon le tuto
-                                ISavePictureActivity.REQUEST_MEDIA_WRITE);
-                    }
-                    else{ //permission is still granted
-                        saveToInternalStorage(picture);
-                        setDisableButtonSave();
-                    }
+        buttonSave.setOnClickListener(v -> {
+            if (activity == null) return;
+            Bitmap picture = activity.getPictureToSave();
+            if(picture != null){
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},  // selon le tuto
+                            ISavePictureActivity.REQUEST_MEDIA_WRITE);
+                }
+                else{ //permission is still granted
+                    saveToInternalStorage(picture);
+                    setDisableButtonSave();
                 }
             }
         });

@@ -15,7 +15,6 @@ import java.util.Observer;
  * Model : {@link Order}
  */
 public class DeliveryActivity extends AppCompatActivity implements Observer {
-    private DeliveryViewModel viewModel;
     private DeliveryAdapter deliveryAdapter;
     private MapFragment mapFragment;
 
@@ -23,7 +22,7 @@ public class DeliveryActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
-        viewModel = new DeliveryViewModel(this);
+        DeliveryViewModel viewModel = new DeliveryViewModel(this);
         viewModel.addObserver(this);
 
         deliveryAdapter = new DeliveryAdapter(getApplicationContext(), viewModel.getDeliveries());

@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,9 +36,9 @@ public class OrderListActivity extends AppCompatActivity {
         fragmentPending.notifyCollectionReady();
         fragmentFinished.notifyCollectionReady();
 
-        fragmentFinished.setTitle(getString(R.string.titlePendingDeliveries));
+        fragmentPending.setTitle(getString(R.string.titlePendingDeliveries));
+        fragmentFinished.setTitle(getString(R.string.titleFinishedDeliveries));
         fragmentFinished.refreshTitle();
-        fragmentPending.setTitle(getString(R.string.titleFinishedDeliveries));
         fragmentPending.refreshTitle();
 
         int currentOrientation = getResources().getConfiguration().orientation;

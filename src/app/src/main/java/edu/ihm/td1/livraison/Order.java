@@ -25,10 +25,9 @@ public class Order implements Parcelable {
     private final String description;
     private final int image;
     private boolean delivered;
-    private boolean mustBeDisplayed = true;
-    private String address;
-    private long date;
-    private GeoPoint position;
+    private final String address;
+    private final long date;
+    private final GeoPoint position;
 
     private final Client destinatedTo;
 
@@ -130,15 +129,14 @@ public class Order implements Parcelable {
 
     public String fullDesc(){
         SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy");
-        String res = (this.getDelivered() ? getDescription()+"\n"
-                                            +"est arrivé au "+this.address+"\n"
+        return (this.getDelivered() ? getDescription()+"\n"
+                                            +"est arrivé au "+ this.address+"\n"
                                             +"le "+d.format(this.getDate())
                                             :
                                             getDescription()+"\n"
-                                            +"arrivera au "+this.address+"\n"
+                                            +"arrivera au "+ this.address+"\n"
                                             +"le "+d.format(this.getDate())
         );
-        return res;
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
